@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "451665608503",
+    "firebase_url": "https://litebulb-22ebd.firebaseio.com",
+    "project_id": "litebulb-22ebd",
+    "storage_bucket": "litebulb-22ebd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:451665608503:android:594423304df0a7ab",
+        "android_client_info": {
+          "package_name": "com.example.admin.litebulb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "451665608503-q0q3fbeehl8decuj9ejscol0442nvjtb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.admin.litebulb",
+            "certificate_hash": "70cd4fff2d048fcb5c75f776f154dd3a9cc8aca3"
+          }
+        },
+        {
+          "client_id": "451665608503-fefdrvrhtrlb1g6u0re1lmu9f84vtk4l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXWNY8RRfGUMzfLRje1Q2qPniTARzvjfI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "451665608503-fefdrvrhtrlb1g6u0re1lmu9f84vtk4l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
