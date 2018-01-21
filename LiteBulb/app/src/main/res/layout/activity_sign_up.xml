@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -14,45 +13,50 @@
         tools:context="com.example.disha.attendancemanagement.LoginActivity">
 
         <EditText
-            android:id="@+id/user"
+            android:id="@+id/name"
             style="@style/Widget.AppCompat.EditText"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
             android:layout_marginTop="102dp"
             android:drawableLeft="@mipmap/person"
             android:ems="10"
             android:hint="Name"
             android:inputType="textPersonName"
             android:textColor="@color/colorAccent"
+            android:textColorHint="@color/common_google_signin_btn_text_dark_default"
             tools:layout_editor_absoluteX="39dp"
-            tools:layout_editor_absoluteY="108dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            tools:layout_editor_absoluteY="108dp" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/pass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@mipmap/lock"
             android:ems="10"
+            android:textColorHint="@color/common_google_signin_btn_text_dark_default"
+
             android:hint="Password"
             android:inputType="textPassword"
-            android:layout_below="@+id/user"
+            android:layout_below="@+id/name"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/mail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
             android:drawableLeft="@mipmap/mail"
             android:hint="Email"
-            android:layout_below="@+id/editText3"
+            android:textColorHint="@color/common_google_signin_btn_text_dark_default"
+
+            android:layout_below="@+id/phone"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentRight="true"
@@ -67,21 +71,25 @@
             android:textColor="@color/common_google_signin_btn_text_dark_default"
             android:textSize="18sp"
             tools:layout_editor_absoluteX="115dp"
+            android:textColorHint="@color/common_google_signin_btn_text_dark_default"
+
             tools:layout_editor_absoluteY="343dp"
             android:layout_marginLeft="62dp"
             android:layout_marginStart="62dp"
-            android:layout_below="@+id/editText2"
+            android:layout_below="@+id/mail"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
         <EditText
-            android:id="@+id/editText3"
+            android:id="@+id/phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@mipmap/phone1"
             android:ems="10"
             android:hint="Phone Number"
-            android:layout_below="@+id/editText"
+            android:textColorHint="@color/common_google_signin_btn_text_dark_default"
+
+            android:layout_below="@+id/pass"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentRight="true"

@@ -8,18 +8,25 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class LoginActivity extends AppCompatActivity {
-    public EditText user1;
-    public EditText pass1;
-    public String userid,password;
-    public TextView register_button;
-    int quantity=0;
-
-
+    public EditText user;
+    public EditText pass;
+   // public String userid,password;
+    Button login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        user = (EditText) findViewById(R.id.name);
+        pass=(EditText) findViewById(R.id.pass);
+        login=(Button) findViewById(R.id.log);
+
+
+
+
+
+
 
     }
 }
