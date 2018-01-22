@@ -28,6 +28,7 @@
             android:hint="Name"
             android:inputType="textPersonName"
             android:textColor="@color/colorAccent"
+            android:textColorHint="@color/common_google_signin_btn_text_dark_default"
             tools:layout_editor_absoluteX="39dp"
             tools:layout_editor_absoluteY="108dp" />
 
@@ -70,6 +71,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/pass"
+            android:background="?attr/colorAccent"
             android:bottomLeftRadius="2dp"
             android:bottomRightRadius="2dp"
             android:elevation="20dp"
@@ -86,44 +88,59 @@
             android:layout_height="150dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
+            android:visibility="visible"
             app:srcCompat="@drawable/studio" />
 
         <ImageButton
             android:id="@+id/imageButton2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
-            app:srcCompat="@mipmap/google"
             android:layout_alignTop="@+id/imageButton3"
+            android:layout_toEndOf="@+id/remember_me"
             android:layout_toRightOf="@+id/remember_me"
-            android:layout_toEndOf="@+id/remember_me" />
+            android:background="@color/colorPrimaryDark"
+            android:visibility="visible"
+            app:srcCompat="@mipmap/google" />
 
         <ImageButton
             android:id="@+id/imageButton3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
-            app:srcCompat="@mipmap/fb2"
-            android:layout_marginTop="36dp"
             android:layout_below="@+id/remember_me"
+            android:layout_marginEnd="17dp"
+            android:layout_marginRight="17dp"
+            android:layout_marginTop="36dp"
             android:layout_toLeftOf="@+id/imageButton2"
             android:layout_toStartOf="@+id/imageButton2"
-            android:layout_marginRight="17dp"
-            android:layout_marginEnd="17dp" />
+            android:background="@color/colorPrimaryDark"
+            android:visibility="visible"
+            app:srcCompat="@mipmap/fb2" />
 
         <EditText
             android:id="@+id/pass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPassword"
-            android:drawableLeft="@mipmap/lock"
-            android:hint="Enter your password"
-            android:layout_below="@+id/name"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/name"
+            android:drawableLeft="@mipmap/lock"
+            android:ems="10"
+            android:hint="Enter your password"
+            android:inputType="textPassword"
+            android:textColorHint="@color/common_google_signin_btn_text_dark_default" />
+
+        <Button
+            android:id="@+id/sign_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/remember_me"
+            android:layout_marginEnd="21dp"
+            android:layout_marginRight="21dp"
+            android:text="Sign Up" />
 
     </RelativeLayout>
 </ScrollView>
