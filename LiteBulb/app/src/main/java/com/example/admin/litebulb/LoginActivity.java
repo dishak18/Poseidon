@@ -14,13 +14,14 @@ import com.android.volley.Request.Method;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-//import com.example.admin.litebulb.SystemBarTintManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+
+//import com.example.admin.litebulb.SystemBarTintManager;
 
 public class LoginActivity extends Activity {
     private static final String TAG = SignUpActivity.class.getSimpleName();
@@ -40,7 +41,8 @@ public class LoginActivity extends Activity {
         inputName = (EditText) findViewById(R.id.name);
         inputPassword = (EditText) findViewById(R.id.pass);
         btnLogin = (Button) findViewById(R.id.log);
-        btnLinkToRegister = (Button) findViewById(R.id.sign_up);
+        btnLinkToRegister = (Button) findViewById(R.id.register);
+        //CheckBox remember=(CheckBox)findViewById(R.id.rem) ;
         /*SystemBarTintManager tintManager = new SystemBarTintManager(this);
         tintManager.setStatusBarTintEnabled(true);
         tintManager.setStatusBarTintResource(R.color.ColorPrimary);*/
@@ -107,13 +109,11 @@ public class LoginActivity extends Activity {
         pDialog.setMessage("Logging in ...");
         showDialog();
 
-        StringRequest strReq = new StringRequest(Method.POST,
-                AppConfig.URL_LOGIN, new Response.Listener<String>() {
-
-
+        StringRequest strReq = new StringRequest(Method.POST, AppConfig.URL_LOGIN, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e(TAG, "Login Response: " + response.toString());
+                Log.e("Login", "Login Response: " + response.toString());
+                Log.e("LOGIN ACTIVITY", name+"");
                 hideDialog();
 
                 try {
@@ -156,7 +156,8 @@ public class LoginActivity extends Activity {
                 }
 
             }
-        }, new Response.ErrorListener() {
+        }
+        , new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -165,7 +166,8 @@ public class LoginActivity extends Activity {
                         error.getMessage(), Toast.LENGTH_LONG).show();
                 hideDialog();
             }
-        }) {
+        })
+        {
 
             @Override
             protected Map<String, String> getParams() {

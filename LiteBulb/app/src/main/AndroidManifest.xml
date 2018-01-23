@@ -24,6 +24,7 @@
             android:name=".SignUpActivity"
             android:parentActivityName=".LoginActivity" />
         <activity android:name=".MainActivity" />
+        <activity android:name=".SplashActivity"></activity>
     </application>
 
 </manifest>
