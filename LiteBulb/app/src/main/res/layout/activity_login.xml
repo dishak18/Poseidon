@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="12dp"
-                android:padding="20dp"
+                android:padding="10dp"
                 android:text="Remember Me"
                 android:textColor="#fff"
                  />
@@ -103,7 +103,8 @@
                 android:padding="16dp"
                 android:text="Sign Up"
                 android:textAllCaps="false"
-                 />
+                android:textColor="@color/common_google_signin_btn_text_dark_default" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
