@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.android.volley.Request.Method;
@@ -22,12 +23,6 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.example.admin.litebulb.R;
-import com.example.admin.litebulb.AppConfig;
-import com.example.admin.litebulb.AppController;
-import com.example.admin.litebulb.SQLiteHandler;
-import com.example.admin.litebulb.SessionManager;
-
 public class SignUpActivity extends Activity {
     private static final String TAG = SignUpActivity.class.getSimpleName();
     private Button btnRegister;
@@ -38,6 +33,8 @@ public class SignUpActivity extends Activity {
     private ProgressDialog pDialog;
     private SessionManager session;
     private SQLiteHandler db;
+    private ImageButton back_btn;
+    private Button backToLoginButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,6 +47,8 @@ public class SignUpActivity extends Activity {
         inputPassword = (EditText) findViewById(R.id.pass);
         inputPhone = (EditText) findViewById(R.id.phone);
         btnRegister = (Button) findViewById(R.id.register);
+        back_btn=(ImageButton) findViewById(R.id.back);
+        backToLoginButton=(Button) findViewById(R.id.backToLogin);
         // btnLinkToLogin = (Button) findViewById(R.id.btnLinkToLoginScreen);
 
         // Progress dialog
@@ -99,6 +98,25 @@ public class SignUpActivity extends Activity {
                 finish();
             }
         });*/
+        back_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(SignUpActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+
+            }
+        });
+        backToLoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent=new Intent(SignUpActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
 
     }
 

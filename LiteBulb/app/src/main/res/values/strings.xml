@@ -10,4 +10,27 @@
     <string name="welcome">Welcome</string>
     <string name="btn_logout">LOGOUT</string>
     <string name="name">Fullname</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_authors">Authors</string>
+    <string name="title_featured">Featured</string>
+    <string name="title_collections">Collections</string>
+    <string name="title_popular">Popular</string>
+    <string name="Open">IIIT Kota</string>
+    <string name="Close">IIIT Kota</string>
+    <string name="edittext_hint_password"><font size="15"><i>Password</i></font></string>
+    <string name="edittext_hint_username"><font size="15"><i>Username</i></font></string>
+    <string name="edittext_hint_email"><font size="15"><i>Email Address</i></font></string>
+    <string name="edittext_hint_phone"><font size="15"><i>Phone number</i></font></string>
+    <string name="title_center">Add Collections!</string>
+    <string name="search_title">Search here</string>
+    <string name="search_hint">Search here</string>
+    <string name="digital"><center><b>START YOUR OWN DIGITAL\nMARKETPLACE</b></center></string>
+    <string name="action_settings">Settings</string>
+    <string name="action_add_favourite">Add to Favourites</string>
+    <string name="action_play_next">Play Next</string>
+    <string name="backdrop_title">LOVE MUSIC</string>
+    <string name="backdrop_subtitle">This season top 20 albums</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment"></string>
 </resources>

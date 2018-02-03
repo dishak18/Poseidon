@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <tabs>
+        <tab
+            id="@+id/tab_featured"
+            icon="@drawable/ic_featured"
+            title="Featured" />
+        <tab
+            id="@+id/tab_authors"
+            icon="@drawable/ic_authors"
+            title="Authors" />
+        <tab
+            id="@+id/tab_center"
+            icon="@drawable/ic_center"
+            activeColor="#FF0000"
+            title="" />
+        <tab
+            id="@+id/tab_popular"
+            icon="@drawable/ic_popular"
+            title="Popular" />
+         <tab
+            id="@+id/tab_collections"
+            icon="@drawable/ic_collections"
+            title="Collections" />
+
+    </tabs>
