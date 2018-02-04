@@ -73,6 +73,6 @@
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
-    <include layout="@layout/content_frag3" />
+    <include layout="@layout/feautured_authors" />
 
 </android.support.design.widget.CoordinatorLayout>

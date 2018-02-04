@@ -16,9 +16,6 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-/**
- * Created by Ravi Tamada on 18/05/16.
- */
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.MyViewHolder> {
 
     private Context mContext;
@@ -131,7 +128,6 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.MyViewHolder
 
     public interface AlbumsAdapterListener {
         void onAddToFavoriteSelected(int position);
-
         void onPlayNextSelected(int position);
 
         void onCardSelected(int position, ImageView thumbnail);

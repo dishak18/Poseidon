@@ -24,39 +24,24 @@
         android:layout_marginBottom="30dp"
         android:background="@color/input_register"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/collapsing_toolbar"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
-            app:expandedTitleMarginEnd="64dp"
-            app:expandedTitleMarginStart="48dp"
-            app:expandedTitleTextAppearance="@android:color/transparent"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:orientation="vertical">
 
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:gravity="center_horizontal"
-                    android:layout_gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:text="@string/digital"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/backdrop_title" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/digital"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/backdrop_title" />
 
                 </LinearLayout>
-
-        </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
         <ScrollView
@@ -66,8 +51,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-    <include layout="@layout/content_frag3" />
+    <include layout="@layout/feautured_authors" />
     <include layout="@layout/weekly_freebies" />
+        <include layout="@layout/featured_items" />
     </LinearLayout>
         </ScrollView>
     </LinearLayout>

@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -26,7 +24,7 @@ import java.util.List;
 
 
 public class BlankFragment3 extends Fragment {
-    private RecyclerView recyclerView, recyclerView2;
+    private RecyclerView recyclerView, recyclerView2, recyclerView3;
     private AlbumAdapter adapter;
     private List<album> albumList;
     Activity referenceActivity;
@@ -42,26 +40,33 @@ public class BlankFragment3 extends Fragment {
         Toolbar toolbar = (Toolbar) parentHolder.findViewById(R.id.toolbar);
         //       ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
 
-        initCollapsingToolbar();
+//        initCollapsingToolbar();
 
         recyclerView = (RecyclerView) parentHolder.findViewById(R.id.recycler_view);
         recyclerView2 = (RecyclerView) parentHolder.findViewById(R.id.recycler_view_weekly);
+        recyclerView3 = (RecyclerView) parentHolder.findViewById(R.id.recycler_view_featured);
 
         albumList = new ArrayList<>();
         adapter = new AlbumAdapter(getActivity(), albumList );
         Log.e("Hahahahahahhaha", adapter+"");
         RecyclerView.LayoutManager mLayoutManager= new LinearLayoutManager(getActivity(), GridLayoutManager.HORIZONTAL, false);
         RecyclerView.LayoutManager mLayoutManager2= new LinearLayoutManager(getActivity(),  LinearLayoutManager.HORIZONTAL, false);
-       // RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
+        RecyclerView.LayoutManager mLayoutManager3= new LinearLayoutManager(getActivity(),  LinearLayoutManager.HORIZONTAL, false);
+
+        // RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView.setLayoutManager(mLayoutManager);
        // recyclerView.setLayoutManager(layoutManager);
         recyclerView2.setLayoutManager(mLayoutManager2);
+        recyclerView3.setLayoutManager(mLayoutManager3);
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
         recyclerView2.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
         recyclerView2.setItemAnimator(new DefaultItemAnimator());
         recyclerView2.setAdapter(adapter);
+        recyclerView3.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
+        recyclerView3.setItemAnimator(new DefaultItemAnimator());
+        recyclerView3.setAdapter(adapter);
 
 
         prepareAlbums();
@@ -83,7 +88,7 @@ public class BlankFragment3 extends Fragment {
      * Initializing collapsing toolbar
      * Will show and hide the toolbar title on scroll
      */
-    private void initCollapsingToolbar() {
+ /*   private void initCollapsingToolbar() {
         final CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) parentHolder.findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setTitle(" ");
@@ -110,7 +115,7 @@ public class BlankFragment3 extends Fragment {
             }
         });
     }
-
+*/
     /**
      * Adding few albums for testing
      */
