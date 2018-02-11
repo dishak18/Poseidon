@@ -1,18 +1,17 @@
 package com.example.admin.litebulb;
-/**
- * Created by Lincoln on 18/05/16.
- */
-public class album {
-    private String name;
-    private int numOfSongs;
-    private int thumbnail;
 
-    public album() {
+public class album extends ImageLoader{
+    private String name;
+    private String price;
+    private String thumbnail;
+    public album(){
+
     }
 
-    public album(String name, int numOfSongs, int thumbnail) {
+
+    public album(String name, String price, String thumbnail) {
         this.name = name;
-        this.numOfSongs = numOfSongs;
+        this.price = price;
         this.thumbnail = thumbnail;
     }
 
@@ -24,19 +23,21 @@ public class album {
         this.name = name;
     }
 
-    public int getNumOfSongs() {
-        return numOfSongs;
+    public String getprice() {
+        return price;
     }
 
-    public void setNumOfSongs(int numOfSongs) {
-        this.numOfSongs = numOfSongs;
+    public void setprice(String price) {
+        this.price = price;
     }
+    
 
-    public int getThumbnail() {
+    public String getThumbnail() {
         return thumbnail;
     }
-
-    public void setThumbnail(int thumbnail) {
+    public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
     }
+
+
 }

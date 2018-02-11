@@ -122,25 +122,6 @@ public class BlankFragment1 extends Fragment {
                 R.drawable.album10,
                 R.drawable.album11};
 
-        album a = new album("True Romance", 13, covers[0]);
-        albumList.add(a);
-
-        a = new album("Xscpae", 8, covers[1]);
-        albumList.add(a);
-
-        a = new album("Maroon 5", 11, covers[2]);
-        albumList.add(a);
-
-        a = new album("Born to Die", 12, covers[3]);
-        albumList.add(a);
-
-        a = new album("Honeymoon", 14, covers[4]);
-        albumList.add(a);
-
-        a = new album("I Need a Doctor", 1, covers[5]);
-        albumList.add(a);
-
-
     }
 
     /**

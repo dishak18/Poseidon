@@ -1,24 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/myprofile"
-        android:title="My Profile"
-        android:icon="@drawable/ic_popular">
+        android:id="@+id/categories"
+        android:checked="false"
+        android:title="Categories"/>
+    <group>
 
-    </item>
-    <item
-        android:id="@+id/settings"
-        android:title="Settings"
-        android:icon="@drawable/ic_featured">
+            <item
+                android:id="@+id/all_files"
+                android:title="All Files"
+                android:icon="@drawable/ic_a_home">
+            </item>
+            <item
+                android:id="@+id/site_templates"
+                android:title="Site Templates"
+                android:icon="@drawable/ic_action_name">
+            </item>
+            <item
+                android:id="@+id/wordpress"
+                android:title="Wordpress"
+                android:icon="@drawable/ic_a_wordpress">
 
-    </item>
-    <item
-        android:id="@+id/editprofile"
-        android:title="Edit Profile"
-        android:icon="@drawable/ic_camera">
+            </item>
+            <item
+                android:id="@+id/psd_templates"
+                android:title="PSD Templates"
+                android:icon="@drawable/ic_psd_templates">
 
-    </item>
+            </item>
+            <item
+                android:id="@+id/joomla"
+                android:title="Joomla"
+                android:icon="@drawable/ic_camera">
 
+            </item>
+            <item
+                android:id="@+id/magento"
+                android:title="Magento"
+                android:icon="@drawable/ic_camera">
+
+            </item>
+            <item
+                android:id="@+id/email_templates"
+                android:title="E-mail Templates"
+                android:icon="@drawable/ic_camera">
+
+            </item>
+            <item
+                android:id="@+id/others"
+                android:title="Others"
+                android:icon="@drawable/ic_email">
+
+            </item>
+            <item
+                android:id="@+id/forum"
+                android:title="Forum"
+                android:icon="@drawable/ic_email">
+
+            </item>
+
+
+    </group>
 
 </menu>

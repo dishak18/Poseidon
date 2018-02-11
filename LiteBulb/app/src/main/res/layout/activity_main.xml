@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <android.support.v4.widget.DrawerLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -13,7 +14,6 @@
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <!-- This could be your fragment container, or something -->
     <FrameLayout
         android:id="@+id/contentContainer"
         android:layout_width="wrap_content"
@@ -21,27 +21,8 @@
         android:layout_above="@+id/bottomBar"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
-        <!--<fragment android:name="com.example.admin.litebulb.BlankFragment3"
-            android:id="@+id/fragment_center"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />-->
-
-        <!--
-
-        <fragment
-            android:id="@+id/article_fragment"
-            android:name="com.example.admin.litebulb.BlankFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/bottomBar"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="38dp"
-            android:layout_marginStart="38dp"
-            android:layout_weight="2" />
--->
     </FrameLayout>
+
 
     <com.roughike.bottombar.BottomBar
         android:id="@+id/bottomBar"
@@ -55,18 +36,42 @@
         app:bb_showShadow="true"
         android:scrollbars="horizontal"/>
 </RelativeLayout>
+
         <android.support.design.widget.NavigationView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@android:color/transparent"
             android:id="@+id/nav_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="start"
+            android:tag="Categories"
+            app:itemTextColor="#fff"
+            android:background="@drawable/gradient_background"
             app:headerLayout="@layout/navigation_header"
+            app:itemIconTint="#fff"
             app:menu="@menu/navigation_menu">
+            <ExpandableListView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@android:color/white"
+                android:layout_marginTop="192dp"
+                android:id="@+id/navigationmenu">
+            </ExpandableListView>
+
+        </android.support.design.widget.NavigationView>
+        <android.support.design.widget.NavigationView
+            android:id="@+id/users_nav_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:tag="Categories"
+            app:itemTextColor="#fff"
+            android:background="@drawable/gradient_background"
+            app:headerLayout="@layout/navigation_header"
+            app:itemIconTint="#fff"
+            app:menu="@menu/users_menu">
 
         </android.support.design.widget.NavigationView>
     </android.support.v4.widget.DrawerLayout>
 
 
 
-</RelativeLayout>
+</LinearLayout>

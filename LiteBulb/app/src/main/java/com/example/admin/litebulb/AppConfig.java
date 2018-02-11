@@ -10,4 +10,5 @@ public class AppConfig {
 
     // Server user register url
     public static String URL_REGISTER = "http://192.168.1.3/android_login_api/register.php";
+    public static String URL_PHOTOS = "http://192.168.1.3/LiteStudio/uploads";
 }

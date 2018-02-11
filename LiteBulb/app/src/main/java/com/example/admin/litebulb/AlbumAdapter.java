@@ -41,7 +41,6 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.MyViewHolder
     public AlbumAdapter(Context mContext, List<album> albumList) {
         this.mContext = mContext;
         this.albumList = albumList;
-        this.listener = listener;
     }
 
     @Override
@@ -56,7 +55,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.MyViewHolder
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         album album = albumList.get(position);
         holder.title.setText(album.getName());
-        holder.count.setText(album.getNumOfSongs() + " songs");
+        holder.count.setText(album.getprice() + " songs");
 
         /*loading album cover using Glide library*/
         Glide.with(mContext).load(album.getThumbnail()).into(holder.thumbnail);
@@ -75,12 +74,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.MyViewHolder
             }
         });
 
-        holder.thumbnail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onCardSelected(position, holder.thumbnail);
-            }
-        });
+
     }
 
     /**

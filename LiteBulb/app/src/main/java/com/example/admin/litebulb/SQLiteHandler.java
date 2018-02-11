@@ -1,8 +1,5 @@
 package com.example.admin.litebulb;
 
-/**
- * Created by ADMIN on 1/22/2018.
- */
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
