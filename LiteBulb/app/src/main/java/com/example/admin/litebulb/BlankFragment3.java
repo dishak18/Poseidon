@@ -1,7 +1,6 @@
 package com.example.admin.litebulb;
 
 import android.app.Activity;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -9,11 +8,9 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,6 +20,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import SQL.AppConfig;
 
 
 public class BlankFragment3 extends Fragment {
@@ -54,14 +53,13 @@ public class BlankFragment3 extends Fragment {
         adapter_featured_items = new AlbumAdapter(getActivity(), featured_items );
         adapter_featured_authors = new AlbumAdapter(getActivity(), featured_authors );
         adapter_weekly_free = new AlbumAdapter(getActivity(), weekly_free );
-       // Log.e("Hahahahahahhaha", adapter_featured_items+"");
         RecyclerView.LayoutManager mLayoutManager= new LinearLayoutManager(getActivity(), GridLayoutManager.HORIZONTAL, false);
         RecyclerView.LayoutManager mLayoutManager2= new LinearLayoutManager(getActivity(),  LinearLayoutManager.HORIZONTAL, false);
         RecyclerView.LayoutManager mLayoutManager3= new LinearLayoutManager(getActivity(),  LinearLayoutManager.HORIZONTAL, false);
 
         // RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView.setLayoutManager(mLayoutManager);
-       // recyclerView.setLayoutManager(layoutManager);
+        // recyclerView.setLayoutManager(layoutManager);
         recyclerView2.setLayoutManager(mLayoutManager2);
         recyclerView3.setLayoutManager(mLayoutManager3);
         //recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
@@ -72,15 +70,10 @@ public class BlankFragment3 extends Fragment {
         recyclerView2.setAdapter(adapter_featured_items);
         //recyclerView3.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
         recyclerView3.setItemAnimator(new DefaultItemAnimator());
-       recyclerView3.setAdapter(adapter_featured_authors);
-
-
-
-
+        recyclerView3.setAdapter(adapter_featured_authors);
         prepareAlbums();
         adapter_featured_items.notifyDataSetChanged();
         adapter_weekly_free.notifyDataSetChanged();
-
         return parentHolder;
     }
 
@@ -96,20 +89,11 @@ public class BlankFragment3 extends Fragment {
                         fire.setName(dataSnapshot1.child("name").getValue(String.class));
                         fire.setprice(dataSnapshot1.child("price").getValue(String.class));
                         // Image url
-                        String image_url = "http://192.168.1.3/LiteStudio/uploads"+dataSnapshot1.child("thumbnail").getValue(String.class);
-                        int loader = R.drawable.loader;
-
-                        // ImageLoader class instance
-                        ImageLoader imgLoader = new ImageLoader(referenceActivity.getApplicationContext());
-                        ImageView thumbnail2=(ImageView) parentHolder.findViewById(R.id.thumbnail);
-                        // whenever you want to load an image from url
-                        // call DisplayImage function
-                        // url - image url to load
-                        // loader - loader image, will be displayed before getting image
-                        // image - ImageView
-                        imgLoader.DisplayImage(image_url, loader, thumbnail2);
-
-                        //fire.setThumbnail(dataSnapshot1.child("thumbnail").getValue(String.class));
+                        String half_url=dataSnapshot1.child("thumbnail").getValue(String.class);
+                        //half_url.replaceAll("_", "");
+                        String image_url = AppConfig.URL_PHOTOS+dataSnapshot1.child("thumbnail").getValue(String.class);
+                        //Log.e("This is the URL", image_url);
+                        fire.setThumbnail(image_url);
                         featured_items.add(fire);
                         adapter_featured_items.notifyDataSetChanged();
                     }
@@ -118,14 +102,12 @@ public class BlankFragment3 extends Fragment {
                         album fire2 = new album();
                         fire2.setName(dataSnapshot1.child("name").getValue(String.class));
                         fire2.setprice(dataSnapshot1.child("price").getValue(String.class));
-                        fire2.setThumbnail(dataSnapshot1.child("thumbnail").getValue(String.class));
+                        String image_url = AppConfig.URL_PHOTOS+dataSnapshot1.child("thumbnail").getValue(String.class);
+                        fire2.setThumbnail(image_url);
                         weekly_free.add(fire2);
                         adapter_weekly_free.notifyDataSetChanged();
                     }
-
-
                 }
-
             }
 
             @Override
@@ -136,9 +118,13 @@ public class BlankFragment3 extends Fragment {
         });
 
     }
-    private int dpToPx(int dp) {
-
-        Resources r = getResources();
-        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
-    }
 }
+
+
+
+
+
+
+
+
+

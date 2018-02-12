@@ -21,6 +21,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.MyViewHolder
     private Context mContext;
     private List<album> albumList;
     private AlbumsAdapterListener listener;
+    public ImageView thumbnail, overflow;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title, count;
@@ -55,10 +56,13 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.MyViewHolder
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         album album = albumList.get(position);
         holder.title.setText(album.getName());
-        holder.count.setText(album.getprice() + " songs");
-
+        holder.count.setText(album.getprice());
         /*loading album cover using Glide library*/
-        Glide.with(mContext).load(album.getThumbnail()).into(holder.thumbnail);
+        Glide.with(mContext)
+                .load(album.getThumbnail())
+                .placeholder(R.drawable.loader)
+                .error(R.drawable.studio)
+                .into(holder.thumbnail);
 
         holder.overflow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,3 +131,8 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.MyViewHolder
         void onCardSelected(int position, ImageView thumbnail);
     }
 }
+
+
+
+
+

@@ -1,14 +1,12 @@
 package com.example.admin.litebulb;
 
-public class album extends ImageLoader{
+public class album{
     private String name;
     private String price;
     private String thumbnail;
     public album(){
 
     }
-
-
     public album(String name, String price, String thumbnail) {
         this.name = name;
         this.price = price;

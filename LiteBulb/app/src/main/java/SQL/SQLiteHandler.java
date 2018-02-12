@@ -1,4 +1,4 @@
-package com.example.admin.litebulb;
+package SQL;
 
 import android.content.ContentValues;
 import android.content.Context;
