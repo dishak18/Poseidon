@@ -2,6 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+    <group>
     <item
         android:id="@+id/portfolio"
         android:title="Portfolio" />
@@ -26,4 +27,5 @@
     <item
         android:id="@+id/withdrawel"
         android:title="Withdrawel" />
+    </group>
 </menu>

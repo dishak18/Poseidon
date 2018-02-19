@@ -16,16 +16,16 @@ import com.android.volley.Request.Method;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.example.admin.litebulb.SQL.AppConfig;
+import com.example.admin.litebulb.SQL.AppController;
+import com.example.admin.litebulb.SQL.SQLiteHandler;
+import com.example.admin.litebulb.SQL.SessionManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import SQL.AppConfig;
-import SQL.AppController;
-import SQL.SQLiteHandler;
 
 public class SignUpActivity extends Activity {
     private static final String TAG = SignUpActivity.class.getSimpleName();

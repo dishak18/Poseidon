@@ -2,17 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="100dp"
+    android:layout_marginTop="50dp"
     android:gravity="bottom"
     android:orientation="vertical">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Username"
+        android:text="Categories"
         android:textSize="20sp"
         android:layout_gravity="center"
         android:gravity="center"
         android:textColor="#fff"/>
-
-
 </LinearLayout>

@@ -1,5 +1,6 @@
 package com.example.admin.litebulb;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
@@ -16,6 +17,9 @@ import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 
+
+import com.example.admin.litebulb.Adapters.ExpandableListAdapter;
+import com.example.admin.litebulb.Models.ExpandedMenuModel;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
@@ -42,14 +46,7 @@ public class MainActivity extends AppCompatActivity {
         expandableList= (ExpandableListView) findViewById(R.id.navigationmenu);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
+
         actionBarDrawerToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
        //final NavigationView nav_view=(NavigationView)findViewById(R.id.nav_view);
@@ -144,7 +141,6 @@ public class MainActivity extends AppCompatActivity {
         ExpandedMenuModel item2 = new ExpandedMenuModel();
         item2.setIconName("heading2");
         listDataHeader.add(item2);
-
         ExpandedMenuModel item3 = new ExpandedMenuModel();
         item3.setIconName("heading3");
         listDataHeader.add(item3);
@@ -187,8 +183,10 @@ public class MainActivity extends AppCompatActivity {
         manager.beginTransaction().replace(R.id.contentContainer, new BlankFragment1()).commit();
     }
     public void switchToFragment2() {
-        FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction().replace(R.id.contentContainer, new BlankFragment2()).commit();
+       // FragmentManager manager = getSupportFragmentManager();
+        //manager.beginTransaction().replace(R.id.contentContainer, new BlankFragment2()).commit();
+        Intent intent=new Intent(MainActivity.this, CategoriesTabs.class);
+        startActivity(intent);
     }
     public void switchToFragment3() {
         FragmentManager manager = getSupportFragmentManager();

@@ -31,4 +31,5 @@
     <string name="backdrop_title">LOVE MUSIC</string>
     <string name="backdrop_subtitle">This season top 20 albums</string>
     <string name="hello_blank_fragment"></string>
+    <string name="view"><u>View All</u></string>
 </resources>

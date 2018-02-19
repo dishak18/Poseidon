@@ -12,5 +12,6 @@ public class BlankFragment2 extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_blank_fragment2, container, false);
+
     }
 }
