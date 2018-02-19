@@ -1,4 +1,4 @@
-package com.example.admin.litebulb;
+package com.example.admin.litebulb.BottomBarFragments;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import com.example.admin.litebulb.Adapters.AdapterFeaturedAll;
 import com.example.admin.litebulb.Adapters.AlbumAdapterWeeklyFreebies;
 import com.example.admin.litebulb.Models.album;
+import com.example.admin.litebulb.R;
 import com.example.admin.litebulb.SQL.AppConfig;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,7 +28,7 @@ import java.util.List;
 
 
 public class BlankFragment1 extends Fragment {
-    private RecyclerView rvWeekly, rvFeaturedItems, rvFeaturedAuthors;
+    private RecyclerView rvFeaturedItems;
     private AlbumAdapterWeeklyFreebies adapter_weekly_free;
     private AdapterFeaturedAll adapter_featured_items;
     private List<album> featured_items;

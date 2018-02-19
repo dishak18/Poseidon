@@ -19,6 +19,10 @@ import android.widget.ExpandableListView;
 import android.widget.Toast;
 
 import com.example.admin.litebulb.Adapters.ExpandableListAdapter;
+import com.example.admin.litebulb.BottomBarFragments.BlankFragment1;
+import com.example.admin.litebulb.BottomBarFragments.BlankFragment3;
+import com.example.admin.litebulb.BottomBarFragments.BlankFragment4;
+import com.example.admin.litebulb.BottomBarFragments.BlankFragment5;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     ExpandableListView expandableList;
     ExpandableListAdapter mMenuAdapter;
     NavigationView navigationView;
+    BottomBar bottomBar;
     private DatabaseReference mCategoriesRef;
     ArrayList<String> mLocation=new ArrayList<>();
     ArrayAdapter<String> list_adapter;
@@ -120,18 +125,12 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });*/
-        BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
+        bottomBar= (BottomBar) findViewById(R.id.bottomBar);
         bottomBar.setDefaultTabPosition(2);
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
                 if (tabId == R.id.tab_featured) {
-                    // The tab with id R.id.tab_favorites was selected,
-                    // change your content accordingly.
-                    //mTextMessage.setText(R.string.title_home);
-/*
-                    Intent intent=new Intent(MainActivity.this, TrialActivity.class);
-                    startActivity(intent);*/
                     switchToFragment1();
                 }
                 else if(tabId==R.id.tab_authors)

@@ -1,12 +1,10 @@
-package com.example.admin.litebulb;
+package com.example.admin.litebulb.BottomBarFragments;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,8 +23,10 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.admin.litebulb.Adapters.AdapterAuthors;
 import com.example.admin.litebulb.Adapters.AdapterFeatured;
 import com.example.admin.litebulb.Adapters.AlbumAdapterWeeklyFreebies;
+import com.example.admin.litebulb.LoginActivity;
 import com.example.admin.litebulb.Models.Users_get;
 import com.example.admin.litebulb.Models.album;
+import com.example.admin.litebulb.R;
 import com.example.admin.litebulb.SQL.AppConfig;
 import com.example.admin.litebulb.SQL.AppController;
 import com.google.firebase.database.DataSnapshot;
@@ -119,20 +119,21 @@ public class BlankFragment3 extends Fragment {
         view_weekly.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent intent=new Intent(referenceActivity, LoginActivity.class);
-                startActivity(intent);
+                /*BlankFragment1 fragment1 = new BlankFragment1();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.contentContainer, fragment1);
+                fragmentTransaction.addToBackStack(null);*/
+                // fragmentTransaction.commit();
             }
         });
         view_featured_items.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BlankFragment1 fragment1 = new BlankFragment1();
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.contentContainer, fragment1);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+
+                View view= getActivity().findViewById(R.id.tab_featured);
+                view.performClick();
+
 
             }
         });
