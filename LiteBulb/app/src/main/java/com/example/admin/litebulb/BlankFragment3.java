@@ -149,31 +149,52 @@ public class BlankFragment3 extends Fragment {
     }
     
     private void prepareCards() {
+
         myRef.addValueEventListener(new ValueEventListener() {
+            int count_weekly=0;
+            int count_featured_items=0;
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     if (dataSnapshot1.child("free_request").getValue().equals("true") && dataSnapshot1.child("free_file").getValue().equals("true")) {
-                        album fire2 = new album();
-                        fire2.setName((dataSnapshot1.child("name").getValue(String.class)).replace("&amp;", ""));
-                        fire2.setprice(dataSnapshot1.child("price").getValue(String.class));
-                        String image_url = AppConfig.URL_PHOTOS + dataSnapshot1.child("thumbnail").getValue(String.class);
-                        fire2.setThumbnail(image_url);
-                        weekly_free.add(fire2);
-                        adapter_weekly_free.notifyDataSetChanged();
+                        count_weekly++;
+                        if(count_weekly>4)
+                        {
+
+                        }
+                        else
+                        {
+                            album fire2 = new album();
+                            fire2.setName((dataSnapshot1.child("name").getValue(String.class)).replace("&amp;", ""));
+                            fire2.setprice(dataSnapshot1.child("price").getValue(String.class));
+                            String image_url = AppConfig.URL_PHOTOS + dataSnapshot1.child("thumbnail").getValue(String.class);
+                            fire2.setThumbnail(image_url);
+                            weekly_free.add(fire2);
+                            adapter_weekly_free.notifyDataSetChanged();
+                        }
+
                     }
                     if (!dataSnapshot1.child("weekly_from").getValue().equals("0000-00-00") && !dataSnapshot1.child("weekly_to").getValue().equals("0000-00-00")) {
-                        album fire = new album();
-                        fire.setName((dataSnapshot1.child("name").getValue(String.class)).replace("&amp;", ""));
-                        fire.setprice(dataSnapshot1.child("price").getValue(String.class));
-                        //Image url
-                        //String half_url = dataSnapshot1.child("thumbnail").getValue(String.class);
-                        //half_url.replaceAll("_", "");
-                        String image_url = AppConfig.URL_PHOTOS + dataSnapshot1.child("thumbnail").getValue(String.class);
-                        //Log.e("This is the URL", image_url);
-                        fire.setThumbnail(image_url);
-                        featured_items.add(fire);
-                        adapter_featured_items.notifyDataSetChanged();
+                        if(count_featured_items>4)
+                        {
+
+                        }
+                        else
+                        {
+                            album fire = new album();
+                            fire.setName((dataSnapshot1.child("name").getValue(String.class)).replace("&amp;", ""));
+                            fire.setprice(dataSnapshot1.child("price").getValue(String.class));
+                            //Image url
+                            //String half_url = dataSnapshot1.child("thumbnail").getValue(String.class);
+                            //half_url.replaceAll("_", "");
+                            String image_url = AppConfig.URL_PHOTOS + dataSnapshot1.child("thumbnail").getValue(String.class);
+                            //Log.e("This is the URL", image_url);
+                            fire.setThumbnail(image_url);
+                            featured_items.add(fire);
+                            adapter_featured_items.notifyDataSetChanged();
+                        }
+
 
                     }
                 }
@@ -210,6 +231,7 @@ public class BlankFragment3 extends Fragment {
 
                         try {
                             jsonResponse = "";
+                            int count_featured_authors=0;
                             for (int i = 0; i < response.length(); i++) {
 
                                 JSONObject person = (JSONObject) response.get(i);
@@ -223,6 +245,10 @@ public class BlankFragment3 extends Fragment {
 
                                 if(featured_author.equals("true"))
                                 {
+                                    if(count_featured_authors>4)
+                                    {
+                                        break;
+                                    }
                                     Users_get fire3= new Users_get();
                                     //Log.e("BLANKFRAGMENT3", "in the loop for the "+i+"th time with name "+ name);
                                     fire3.setUsername(name);
@@ -230,10 +256,6 @@ public class BlankFragment3 extends Fragment {
                                     fire3.setItems(items);
                                     fire3.setSales(sales);
                                     fire3.setThumbnail(image_url);
-                                /*jsonResponse += "Name: " + name + "\n\n";
-                                jsonResponse += "Email: " + featured_author + "\n\n";
-                                jsonResponse += "Home: " + sales + "\n\n";
-                                jsonResponse += "Mobile: " + items + "\n\n\n";*/
                                     featured_authors.add(fire3);
                                     adapter_featured_authors.notifyDataSetChanged();
                                 }

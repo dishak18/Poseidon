@@ -10,22 +10,24 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 
-
 import com.example.admin.litebulb.Adapters.ExpandableListAdapter;
-import com.example.admin.litebulb.Models.ExpandedMenuModel;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -33,8 +35,11 @@ public class MainActivity extends AppCompatActivity {
     NavigationView rightNavigationView;
     ExpandableListView expandableList;
     ExpandableListAdapter mMenuAdapter;
-    List<ExpandedMenuModel> listDataHeader;
-    HashMap<ExpandedMenuModel, List<String>> listDataChild;
+    NavigationView navigationView;
+    private DatabaseReference mCategoriesRef;
+    ArrayList<String> mLocation=new ArrayList<>();
+    ArrayAdapter<String> list_adapter;
+    //HashMap<ExpandedMenuModel, List<String>> listDataChild;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,17 +48,22 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout=(DrawerLayout)findViewById(R.id.d1);
         actionBarDrawerToggle= new ActionBarDrawerToggle(this,drawerLayout, R.string.Open, R.string.Close);
         actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
-        expandableList= (ExpandableListView) findViewById(R.id.navigationmenu);
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        //expandableList= (ExpandableListView) findViewById(R.id.navigationmenu);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
 
         actionBarDrawerToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
        //final NavigationView nav_view=(NavigationView)findViewById(R.id.nav_view);
+        mCategoriesRef = FirebaseDatabase.getInstance().getReference().child("categories");
         rightNavigationView = (NavigationView) findViewById(R.id.users_nav_view);
 
 
-    rightNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        list_adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, mLocation);
+
+
+
+        rightNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 // Handle Right navigation view item clicks here.
@@ -74,7 +84,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         prepareListData();
-        mMenuAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild, expandableList);
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                // Handle Right navigation view item clicks here.
+                int id = item.getItemId();
+                String title=item.getTitle().toString();
+                Log.e("MAINACTIVITY", title+" This is it");
+
+                Intent intent= new Intent(MainActivity.this, CategoriesTabs.class);
+                intent.putExtra("title", title);
+                startActivity(intent);
+
+                drawerLayout.closeDrawer(GravityCompat.END); /*Important Line*/
+                return true;
+            }
+        });
+        /*mMenuAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild, expandableList);
 
         // setting list adapter
         expandableList.setAdapter(mMenuAdapter);
@@ -92,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                 //Log.d("DEBUG", "heading clicked");
                 return false;
             }
-        });
+        });*/
         BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
         bottomBar.setDefaultTabPosition(2);
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
@@ -109,12 +136,10 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else if(tabId==R.id.tab_authors)
                 {
-
                     switchToFragment2();
                 }
                 else if(tabId==R.id.tab_center)
                 {
-
                     switchToFragment3();
                 }
                 else if(tabId==R.id.tab_popular)
@@ -131,7 +156,30 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     private void prepareListData() {
-        listDataHeader = new ArrayList<ExpandedMenuModel>();
+        mCategoriesRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot categories : dataSnapshot.getChildren()){
+                    if(categories.child("sub_of").getValue(String.class).equalsIgnoreCase("0")){
+                        String name=categories.child("meta_title").getValue(String.class);
+                        Menu menu = navigationView.getMenu();
+                        //Menu submenu = menu.addSubMenu("New Super SubMenu");
+
+                        menu.add(name);
+
+                        navigationView.invalidate();
+                        mLocation.add(name);
+                       // list_adapter.notifyDataSetChanged();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        /*listDataHeader = new ArrayList<ExpandedMenuModel>();
         listDataChild = new HashMap<ExpandedMenuModel, List<String>>();
 
         ExpandedMenuModel item1 = new ExpandedMenuModel();
@@ -155,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
         heading2.add("Submenu of item 2");
 
         listDataChild.put(listDataHeader.get(0), heading1);// Header, Child data
-        listDataChild.put(listDataHeader.get(1), heading2);
+        listDataChild.put(listDataHeader.get(1), heading2);*/
 
     }
 

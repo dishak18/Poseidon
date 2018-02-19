@@ -45,17 +45,16 @@
             android:tag="Categories"
             app:itemTextColor="#fff"
             android:background="@drawable/gradient_background"
-            app:headerLayout="@layout/navigation_header_left">
-
-            <!--app:itemIconTint="#fff"
-            app:menu="@menu/navigation_menu"-->
-            <ExpandableListView
+            app:headerLayout="@layout/navigation_header_left"
+            app:itemIconTint="#fff">
+            <!--app:menu="@menu/navigation_menu">-->
+<!--            <ExpandableListView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@android:color/white"
                 android:layout_marginTop="192dp"
                 android:id="@+id/navigationmenu">
-            </ExpandableListView>
+            </ExpandableListView>-->
 
         </android.support.design.widget.NavigationView>
         <android.support.design.widget.NavigationView
