@@ -3,9 +3,11 @@ package com.example.admin.litebulb;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -18,20 +20,31 @@ import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.admin.litebulb.Adapters.ExpandableListAdapter;
 import com.example.admin.litebulb.BottomBarFragments.BlankFragment1;
+import com.example.admin.litebulb.BottomBarFragments.BlankFragment2;
 import com.example.admin.litebulb.BottomBarFragments.BlankFragment3;
 import com.example.admin.litebulb.BottomBarFragments.BlankFragment4;
 import com.example.admin.litebulb.BottomBarFragments.BlankFragment5;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.example.admin.litebulb.SQL.AppConfig;
+import com.example.admin.litebulb.SQL.AppController;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.roughike.bottombar.BottomBar;
+import com.roughike.bottombar.OnTabReselectListener;
 import com.roughike.bottombar.OnTabSelectListener;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+
+import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -56,7 +69,12 @@ public class MainActivity extends AppCompatActivity {
         //expandableList= (ExpandableListView) findViewById(R.id.navigationmenu);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        BlankFragment3 fragment3=new BlankFragment3();
 
+        FragmentTransaction transaction2 = getSupportFragmentManager().beginTransaction();
+        transaction2.replace(R.id.contentContainer, fragment3);
+        transaction2.addToBackStack(null);
+        transaction2.commit();
         actionBarDrawerToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
        //final NavigationView nav_view=(NavigationView)findViewById(R.id.nav_view);
@@ -88,21 +106,29 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-        prepareListData();
+       // prepareListData();
+        makeJsonArrayRequest();
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
-                // Handle Right navigation view item clicks here.
-                int id = item.getItemId();
                 String title=item.getTitle().toString();
                 Log.e("MAINACTIVITY", title+" This is it");
 
                 Intent intent= new Intent(MainActivity.this, CategoriesTabs.class);
                 intent.putExtra("title", title);
                 startActivity(intent);
+                drawerLayout.closeDrawer(GravityCompat.END);
+                return true;
+            }
+        });
+        rightNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-                drawerLayout.closeDrawer(GravityCompat.END); /*Important Line*/
+                Intent intent= new Intent(MainActivity.this, CategoriesTabs.class);
+                startActivity(intent);
+                drawerLayout.closeDrawer(GravityCompat.END);
                 return true;
             }
         });
@@ -127,6 +153,33 @@ public class MainActivity extends AppCompatActivity {
         });*/
         bottomBar= (BottomBar) findViewById(R.id.bottomBar);
         bottomBar.setDefaultTabPosition(2);
+        bottomBar.setOnTabReselectListener(new OnTabReselectListener() {
+            @Override
+            public void onTabReSelected(int tabId) {
+                if (tabId == R.id.tab_featured) {
+                    switchToFragment1();
+                }
+                else if(tabId==R.id.tab_authors)
+                {
+                    switchToFragment2();
+                }
+                else if(tabId==R.id.tab_center)
+                {
+                    switchToFragment3();
+                }
+                else if(tabId==R.id.tab_popular)
+                {
+
+                    switchToFragment4();
+                }
+                else if(tabId==R.id.tab_collections)
+                {
+
+                    switchToFragment5();
+                }
+
+            }
+        });
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
@@ -154,67 +207,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    private void prepareListData() {
-        mCategoriesRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot categories : dataSnapshot.getChildren()){
-                    if(categories.child("sub_of").getValue(String.class).equalsIgnoreCase("0")){
-                        String name=categories.child("meta_title").getValue(String.class);
-                        Menu menu = navigationView.getMenu();
-                        //Menu submenu = menu.addSubMenu("New Super SubMenu");
-
-                        menu.add(name);
-
-                        navigationView.invalidate();
-                        mLocation.add(name);
-                       // list_adapter.notifyDataSetChanged();
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-        /*listDataHeader = new ArrayList<ExpandedMenuModel>();
-        listDataChild = new HashMap<ExpandedMenuModel, List<String>>();
-
-        ExpandedMenuModel item1 = new ExpandedMenuModel();
-        item1.setIconName("heading1");
-        listDataHeader.add(item1);
-
-        ExpandedMenuModel item2 = new ExpandedMenuModel();
-        item2.setIconName("heading2");
-        listDataHeader.add(item2);
-        ExpandedMenuModel item3 = new ExpandedMenuModel();
-        item3.setIconName("heading3");
-        listDataHeader.add(item3);
-
-        // Adding child data
-        List<String> heading1 = new ArrayList<String>();
-        heading1.add("Submenu of item 1");
-
-        List<String> heading2 = new ArrayList<String>();
-        heading2.add("Submenu of item 2");
-        heading2.add("Submenu of item 2");
-        heading2.add("Submenu of item 2");
-
-        listDataChild.put(listDataHeader.get(0), heading1);// Header, Child data
-        listDataChild.put(listDataHeader.get(1), heading2);*/
-
-    }
-
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
-        } else if (drawerLayout.isDrawerOpen(GravityCompat.END)) {  /*Closes the Appropriate Drawer*/
+        }
+        if (drawerLayout.isDrawerOpen(GravityCompat.END)) {  /*Closes the Appropriate Drawer*/
             drawerLayout.closeDrawer(GravityCompat.END);
         } else {
             super.onBackPressed();
-            System.exit(0);
         }
     }
 
@@ -225,27 +226,74 @@ public class MainActivity extends AppCompatActivity {
 
         return true;
     }
+    private void makeJsonArrayRequest() {
+
+        JsonArrayRequest req = new JsonArrayRequest(AppConfig.URL_CATEGORIES,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+
+                                JSONObject person = (JSONObject) response.get(i);
+
+                                String meta_title = person.getString("meta_title");
+                                int sub_of = person.getInt("sub_of");
+
+                                if (sub_of == 0) {
+                                    Menu menu = navigationView.getMenu();
+                                    //Menu submenu = menu.addSubMenu("New Super SubMenu");
+
+                                    menu.add(meta_title);
+
+                                    navigationView.invalidate();
+                                    mLocation.add(meta_title);
+                                    // list_adapter.notifyDataSetChanged();
+                                }
+                            }
+                            /*txtResponse.setText(jsonResponse);*/
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(MainActivity.this,
+                                    "Error: " + e.getMessage(),
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
+                Toast.makeText(MainActivity.this,
+                        error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        try{
+            AppController.getInstance().addToRequestQueue(req);
+
+        }catch(Exception e)
+        {
+            Log.e("MainActivity", e+ " This is the error");
+        }
+    }
     public void switchToFragment1() {
         FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction().replace(R.id.contentContainer, new BlankFragment1()).commit();
+        manager.beginTransaction().replace(R.id.contentContainer, new BlankFragment1()).addToBackStack(null).commit();
     }
     public void switchToFragment2() {
-       // FragmentManager manager = getSupportFragmentManager();
-        //manager.beginTransaction().replace(R.id.contentContainer, new BlankFragment2()).commit();
-        Intent intent=new Intent(MainActivity.this, CategoriesTabs.class);
-        startActivity(intent);
+        FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction().replace(R.id.contentContainer, new BlankFragment2()).addToBackStack(null).commit();
     }
     public void switchToFragment3() {
         FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction().replace(R.id.contentContainer, new BlankFragment3()).commit();
+        manager.beginTransaction().replace(R.id.contentContainer, new BlankFragment3()).addToBackStack(null).commit();
     }
     public void switchToFragment4() {
         FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction().replace(R.id.contentContainer, new BlankFragment4()).commit();
+        manager.beginTransaction().replace(R.id.contentContainer, new BlankFragment4()).addToBackStack(null).commit();
     }
     public void switchToFragment5() {
         FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction().replace(R.id.contentContainer, new BlankFragment5()).commit();
+        manager.beginTransaction().replace(R.id.contentContainer, new BlankFragment5()).addToBackStack(null).commit();
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

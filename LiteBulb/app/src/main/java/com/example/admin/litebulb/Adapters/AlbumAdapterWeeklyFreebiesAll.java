@@ -62,12 +62,12 @@ public class AlbumAdapterWeeklyFreebiesAll extends RecyclerView.Adapter<AlbumAda
                 .error(R.drawable.studio)
                 .into(holder.thumbnail);
 
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
+        /*holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 listener.onCardSelected(position, holder.thumbnail);
             }
-        });
+        });*/
 
 
     }
@@ -79,7 +79,7 @@ public class AlbumAdapterWeeklyFreebiesAll extends RecyclerView.Adapter<AlbumAda
 
     public interface AlbumsAdapterListener {
 
-        void onCardSelected(int position, ImageView thumbnail);
+       /* void onCardSelected(int position, ImageView thumbnail);*/
     }
 }
 

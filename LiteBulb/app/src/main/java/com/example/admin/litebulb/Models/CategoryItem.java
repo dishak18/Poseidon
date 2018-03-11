@@ -6,6 +6,7 @@ public class CategoryItem {
     String price;
     String category;
     String itemId;
+    String thumbnail;
 
     public CategoryItem(){}
 
@@ -52,11 +53,19 @@ public class CategoryItem {
     public void setCategory(String category) {
         this.category = category;
     }
+    public String getThumbnail() {
+        return thumbnail;
+    }
 
-    public CategoryItem(String name, String byInfo, String price, String category) {
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
+    public CategoryItem(String name, String byInfo, String price, String category, String thumbnail) {
         this.name = name;
         this.byInfo = byInfo;
         this.price = price;
         this.category = category;
+        this.thumbnail=thumbnail;
     }
 }

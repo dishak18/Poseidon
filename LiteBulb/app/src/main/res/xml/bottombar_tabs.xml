@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
     <tabs>
+
         <tab
             id="@+id/tab_featured"
             icon="@drawable/ic_featured"

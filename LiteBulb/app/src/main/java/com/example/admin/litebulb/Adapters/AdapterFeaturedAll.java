@@ -62,12 +62,12 @@ public class AdapterFeaturedAll extends RecyclerView.Adapter<AdapterFeaturedAll.
                 .error(R.drawable.studio)
                 .into(holder.thumbnail);
 
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
+        /*holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 listener.onCardSelected(position, holder.thumbnail);
             }
-        });
+        });*/
 
 
     }
@@ -79,7 +79,7 @@ public class AdapterFeaturedAll extends RecyclerView.Adapter<AdapterFeaturedAll.
 
     public interface AlbumsAdapterListener {
 
-        void onCardSelected(int position, ImageView thumbnail);
+        /*void onCardSelected(int position, ImageView thumbnail);*/
     }
 }
 

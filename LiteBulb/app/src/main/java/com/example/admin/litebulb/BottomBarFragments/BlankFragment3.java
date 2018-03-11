@@ -2,9 +2,10 @@ package com.example.admin.litebulb.BottomBarFragments;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,18 +23,18 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.admin.litebulb.Adapters.AdapterAuthors;
 import com.example.admin.litebulb.Adapters.AdapterFeatured;
+import com.example.admin.litebulb.Adapters.AdapterItems;
 import com.example.admin.litebulb.Adapters.AlbumAdapterWeeklyFreebies;
-import com.example.admin.litebulb.LoginActivity;
 import com.example.admin.litebulb.Models.Users_get;
 import com.example.admin.litebulb.Models.album;
 import com.example.admin.litebulb.R;
 import com.example.admin.litebulb.SQL.AppConfig;
 import com.example.admin.litebulb.SQL.AppController;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.example.admin.litebulb.ViewAllFeaturedAuthors;
+import com.example.admin.litebulb.ViewAllItems;
+import com.example.admin.litebulb.ViewAllWeeklyFragment;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,22 +47,18 @@ import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
 
 
 public class BlankFragment3 extends Fragment {
-    private RecyclerView rvWeekly, rvFeaturedItems, rvFeaturedAuthors;
+    private RecyclerView rvWeekly, rvFeaturedItems, rvFeaturedAuthors, rvItems;
     private AlbumAdapterWeeklyFreebies adapter_weekly_free;
     private AdapterFeatured adapter_featured_items;
+    private AdapterItems adapter_items_all;
     private AdapterAuthors adapter_featured_authors;
-    private List<album> featured_items, weekly_free;
+    private List<album> featured_items, weekly_free, items_all;
     private ProgressDialog pDialog;
-    private TextView view_featured_items, view_featured_authors, view_weekly;
+    private TextView view_featured_items, view_featured_authors, view_weekly, view_items;
 
-    private TextView txtResponse;
-
-    // temporary string to show the parsed response
-    private String jsonResponse;
     private List<Users_get> featured_authors;
     Activity referenceActivity;
     DatabaseReference myRef ;
-    private JSONArray result;
     FirebaseDatabase database;
     String tag_json_arry = "json_array_req";
     View parentHolder;
@@ -71,7 +68,7 @@ public class BlankFragment3 extends Fragment {
         // Inflate the layout for this fragment
         referenceActivity = getActivity();
         database = FirebaseDatabase.getInstance();
-        myRef = database.getReference().child("items");
+        //myRef = database.getReference().child("items");
         parentHolder = inflater.inflate(R.layout.fragment_blank_fragment3, container,
                 false);
         pDialog = new ProgressDialog(referenceActivity);
@@ -81,24 +78,30 @@ public class BlankFragment3 extends Fragment {
         rvWeekly = (RecyclerView) parentHolder.findViewById(R.id.recycler_view_weekly);
         rvFeaturedItems = (RecyclerView) parentHolder.findViewById(R.id.recycler_view_featured);
         rvFeaturedAuthors = (RecyclerView) parentHolder.findViewById(R.id.recycler_view);
+        rvItems = (RecyclerView) parentHolder.findViewById(R.id.recycler_view_items);
 
         view_featured_authors=(TextView) parentHolder.findViewById(R.id.view_featured_authors);
         view_featured_items=(TextView) parentHolder.findViewById(R.id.view_featured_items);
         view_weekly=(TextView) parentHolder.findViewById(R.id.view_weekly);
+        view_items=(TextView) parentHolder.findViewById(R.id.view_items);
 
         featured_items = new ArrayList<>();
         featured_authors = new ArrayList<>();
         weekly_free = new ArrayList<>();
+        items_all = new ArrayList<>();
         adapter_featured_items = new AdapterFeatured(getActivity(), featured_items );
+        adapter_items_all = new AdapterItems(getActivity(), items_all );
         adapter_featured_authors = new AdapterAuthors(getActivity(), featured_authors );
         adapter_weekly_free = new AlbumAdapterWeeklyFreebies(getActivity(), weekly_free );
         RecyclerView.LayoutManager mLayoutManager= new LinearLayoutManager(getActivity(), GridLayoutManager.HORIZONTAL, false);
         RecyclerView.LayoutManager mLayoutManager2= new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         RecyclerView.LayoutManager mLayoutManager3= new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView.LayoutManager mLayoutManager4= new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
 
         rvWeekly.setLayoutManager(mLayoutManager);
         rvFeaturedItems.setLayoutManager(mLayoutManager2);
         rvFeaturedAuthors.setLayoutManager(mLayoutManager3);
+        rvItems.setLayoutManager(mLayoutManager4);
         //rvWeekly.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
         rvWeekly.setItemAnimator(new DefaultItemAnimator());
         rvWeekly.setAdapter(adapter_weekly_free);
@@ -108,23 +111,30 @@ public class BlankFragment3 extends Fragment {
         //rvFeaturedAuthors.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
         rvFeaturedAuthors.setItemAnimator(new DefaultItemAnimator());
         rvFeaturedAuthors.setAdapter(adapter_featured_authors);
-        prepareCards();
-        makeJsonArrayRequest();
-        //listView = (ListView) parentHolder.findViewById(R.id.listView);
-        //getJSON(AppConfig.URL_USER_FEATURED);
+
+        rvItems.setItemAnimator(new DefaultItemAnimator());
+        rvItems.setAdapter(adapter_items_all);
+        //prepareCards();
+        makeJsonArrayRequestForFeaturedAuthors();
+        makeJsonArrayRequestForWeeklyAndItems();
+
         adapter_weekly_free.notifyDataSetChanged();
         adapter_featured_items.notifyDataSetChanged();
         adapter_featured_authors.notifyDataSetChanged();
+        adapter_items_all.notifyDataSetChanged();
 
         view_weekly.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*BlankFragment1 fragment1 = new BlankFragment1();
+                ViewAllWeeklyFragment fragment1 = new ViewAllWeeklyFragment();
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.contentContainer, fragment1);
-                fragmentTransaction.addToBackStack(null);*/
-                // fragmentTransaction.commit();
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+                View view= getActivity().findViewById(R.id.tab_center);
+                view.clearFocus();
+
             }
         });
         view_featured_items.setOnClickListener(new View.OnClickListener() {
@@ -137,19 +147,40 @@ public class BlankFragment3 extends Fragment {
 
             }
         });
+        view_items.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ViewAllItems fragment1 = new ViewAllItems();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.contentContainer, fragment1);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+                View view= getActivity().findViewById(R.id.tab_center);
+                view.clearFocus();
+
+
+            }
+        });
         view_featured_authors.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent intent=new Intent(referenceActivity, LoginActivity.class);
-                startActivity(intent);
+                ViewAllFeaturedAuthors fragment1 = new ViewAllFeaturedAuthors();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.contentContainer, fragment1);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+                View view= getActivity().findViewById(R.id.tab_center);
+                view.clearFocus();
             }
         });
 
         return parentHolder;
     }
     
-    private void prepareCards() {
+    /*private void prepareCards() {
 
         myRef.addValueEventListener(new ValueEventListener() {
             int count_weekly=0;
@@ -174,7 +205,6 @@ public class BlankFragment3 extends Fragment {
                             weekly_free.add(fire2);
                             adapter_weekly_free.notifyDataSetChanged();
                         }
-
                     }
                     if (!dataSnapshot1.child("weekly_from").getValue().equals("0000-00-00") && !dataSnapshot1.child("weekly_to").getValue().equals("0000-00-00")) {
                         if(count_featured_items>4)
@@ -208,7 +238,7 @@ public class BlankFragment3 extends Fragment {
                 Log.e("Hello", "Failed to read value.", error.toException());
             }
         });
-    }
+    }*/
 
     private void showpDialog() {
         if (!pDialog.isShowing())
@@ -219,7 +249,7 @@ public class BlankFragment3 extends Fragment {
         if (pDialog.isShowing())
             pDialog.dismiss();
     }
-    private void makeJsonArrayRequest() {
+    private void makeJsonArrayRequestForFeaturedAuthors() {
 
         showpDialog();
 
@@ -227,11 +257,7 @@ public class BlankFragment3 extends Fragment {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        //Log.e(TAG, "This is it"+response.toString());
-
-
                         try {
-                            jsonResponse = "";
                             int count_featured_authors=0;
                             for (int i = 0; i < response.length(); i++) {
 
@@ -246,6 +272,7 @@ public class BlankFragment3 extends Fragment {
 
                                 if(featured_author.equals("true"))
                                 {
+                                    count_featured_authors++;
                                     if(count_featured_authors>4)
                                     {
                                         break;
@@ -263,10 +290,7 @@ public class BlankFragment3 extends Fragment {
                                 else {
                                     continue;
                                 }
-
-
                             }
-                            /*txtResponse.setText(jsonResponse);*/
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Toast.makeText(referenceActivity,
@@ -293,5 +317,114 @@ public class BlankFragment3 extends Fragment {
             Log.e("BlankFragment3", e+ " This is the error");
         }
     }
+
+
+
+
+
+
+
+    private void makeJsonArrayRequestForWeeklyAndItems() {
+
+        showpDialog();
+
+        JsonArrayRequest req = new JsonArrayRequest(AppConfig.URL_ITEM,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            int count_weekly=0;
+                            int count_featured_items=0;
+                            int count_items=0;
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject item = (JSONObject) response.get(i);
+
+                                String name = item.getString("name");
+                                String free_request = item.getString("free_request");
+                                String free_file = item.getString("free_file");
+                                int price = item.getInt("price");
+                                String weekly_from=item.getString("weekly_from");
+                                String weekly_to=item.getString("weekly_to");
+                                String thumbnail=item.getString("thumbnail");
+                                String image_url = AppConfig.URL_PHOTOS +thumbnail;
+
+                                if(count_items>4)
+                                {
+
+                                }
+                                else
+                                {
+                                    album fire5= new album();
+                                    //Log.e("BLANKFRAGMENT3", "in the loop for the "+i+"th time with name "+ name);
+                                    fire5.setName(name);
+                                    fire5.setprice(price);
+                                    fire5.setThumbnail(image_url);
+                                    items_all.add(fire5);
+                                    adapter_items_all.notifyDataSetChanged();
+                                    count_items++;
+                                }
+
+
+                                if(free_request.equals("true")&&free_file.equals("true"))
+                                {
+                                    count_weekly++;
+                                    if(count_weekly>4)
+                                    {
+                                        break;
+                                    }
+                                    else{
+                                        album fire3= new album();
+                                        //Log.e("BLANKFRAGMENT3", "in the loop for the "+i+"th time with name "+ name);
+                                        fire3.setName(name);
+                                        fire3.setprice(price);
+                                        fire3.setThumbnail(image_url);
+                                        weekly_free.add(fire3);
+                                        adapter_weekly_free.notifyDataSetChanged();
+                                    }
+
+                                }
+                                if (!weekly_from.equals("0000-00-00") && !weekly_to.equals("0000-00-00")) {
+                                    count_featured_items++;
+                                    if (count_featured_items > 4) {
+                                        break;
+
+                                    } else {
+                                        album fire3= new album();
+                                        //Log.e("BLANKFRAGMENT3", "in the loop for the "+i+"th time with name "+ name);
+                                        fire3.setName(name);
+                                        fire3.setprice(price);
+                                        fire3.setThumbnail(image_url);
+                                        featured_items.add(fire3);
+                                        adapter_featured_items.notifyDataSetChanged();
+                                    }
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(referenceActivity,
+                                    "Error: " + e.getMessage(),
+                                    Toast.LENGTH_LONG).show();
+                        }
+
+                        hidepDialog();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
+                Toast.makeText(referenceActivity,
+                        error.getMessage(), Toast.LENGTH_SHORT).show();
+                hidepDialog();
+            }
+        });
+        try{
+            AppController.getInstance().addToRequestQueue(req, tag_json_arry);
+
+        }catch(Exception e)
+        {
+            Log.e("BlankFragment3", e+ " This is the error");
+        }
+    }
+
 
 }

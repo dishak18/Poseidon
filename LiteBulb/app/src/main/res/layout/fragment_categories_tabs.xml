@@ -8,12 +8,20 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="10dp"
         android:orientation="vertical">
+
         <Spinner
             android:id="@+id/sub_categories_dropdown"
             android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
             android:layout_height="wrap_content"
-            android:spinnerMode="dropdown"></Spinner>
+            android:spinnerMode="dropdown"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="285dp" />
         <TextView
             android:id="@+id/no_item_text"
             android:layout_width="wrap_content"
@@ -22,7 +30,8 @@
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:text="No items to show"
+            android:text="Oops! No items to show"
+            android:textSize="24sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="@+id/constraintLayout"
             tools:layout_constraintLeft_creator="1"

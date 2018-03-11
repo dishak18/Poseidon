@@ -6,6 +6,8 @@ public class TabsModel {
     private String subOf;
     private String categoryId;
 
+
+
     public String getCategoryId() {
         return categoryId;
     }
@@ -29,6 +31,7 @@ public class TabsModel {
     public void setMetaTitle(String metaTitle) {
         this.metaTitle = metaTitle;
     }
+
 
     public String getSubOf() {
         return subOf;

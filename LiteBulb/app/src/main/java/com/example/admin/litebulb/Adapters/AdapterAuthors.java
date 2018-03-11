@@ -61,7 +61,6 @@ public class AdapterAuthors extends RecyclerView.Adapter<AdapterAuthors.MyViewHo
                 .placeholder(R.drawable.loader)
                 .error(R.drawable.studio)
                 .into(holder.thumbnail);
-
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

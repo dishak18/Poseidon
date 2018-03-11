@@ -4,33 +4,29 @@ package com.example.admin.litebulb;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.android.volley.Request.Method;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.example.admin.litebulb.SQL.AppConfig;
-import com.example.admin.litebulb.SQL.AppController;
 import com.example.admin.litebulb.SQL.SQLiteHandler;
 import com.example.admin.litebulb.SQL.SessionManager;
 
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 
 public class SignUpActivity extends Activity {
     private static final String TAG = SignUpActivity.class.getSimpleName();
     private Button btnRegister;
     private Button btnLinkToLogin;
+    JSONParser jsonParser=new JSONParser();
     private EditText inputFullName;
     private EditText inputEmail;
     private EditText inputPassword, inputPhone;
@@ -39,6 +35,7 @@ public class SignUpActivity extends Activity {
     private SQLiteHandler db;
     private ImageButton back_btn;
     private Button backToLoginButton;
+    int i=0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,21 +73,30 @@ public class SignUpActivity extends Activity {
 
         // Register Button Click event
         btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    AttemptLogin attemptLogin= new AttemptLogin();
+                    attemptLogin.execute(inputFullName.getText().toString(),inputPassword.getText().toString(),inputEmail.getText().toString());
+
+            }
+        });
+
+        /*btnRegister.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 String name = inputFullName.getText().toString().trim();
                 String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
-                String phone_no=inputPhone.getText().toString().trim();
+               // String phone_no=inputPhone.getText().toString().trim();
 
-                if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty()&&!phone_no.isEmpty()) {
-                    registerUser(name, email, password, phone_no);
+                if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty()) {
+                    registerUser(name, email, password);
                 } else {
                     Toast.makeText(getApplicationContext(),
                             "Please enter your details!", Toast.LENGTH_LONG)
                             .show();
                 }
             }
-        });
+        });*/
 
    /*     // Link to Login Screen
         btnLinkToLogin.setOnClickListener(new View.OnClickListener() {
@@ -128,8 +134,8 @@ public class SignUpActivity extends Activity {
      * Function to store user in MySQL database will post params(tag, name,
      * email, password) to register url
      * */
-    private void registerUser(final String name, final String email,
-                              final String password, final String phone_no) {
+   /* private void registerUser(final String username, final String email,
+                              final String password) {
         // Tag used to cancel the request
         String tag_string_req = "req_register";
 
@@ -151,15 +157,15 @@ public class SignUpActivity extends Activity {
                         Log.e("SIGNUPACTIVITY", "NO ERROR");
                         // User successfully stored in MySQL
                         // Now store the user in sqlite
-                        String uid = jObj.getString("uid");
+                        String uid = jObj.getString("user_id");
 ////PHONE NUMBER FEILD TO BE ADDED IN DB AND HERE ALSO
                         JSONObject user = jObj.getJSONObject("user");
-                        String name = user.getString("name");
+                        String username = user.getString("username");
                         String email = user.getString("email");
-                        String created_at = user.getString("created_at");
+                        String created_at = user.getString("register_datetime");
 
                         // Inserting row in users table
-                        db.addUser(name, email, uid, created_at);
+                        db.addUser(username, email, uid, created_at);
 
                         Toast.makeText(SignUpActivity.this, "User successfully registered. Try login now!", Toast.LENGTH_LONG).show();
 
@@ -197,7 +203,7 @@ public class SignUpActivity extends Activity {
             protected Map<String, String> getParams() {
                 // Posting params to register url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("name", name);
+                params.put("username", username);
                 params.put("email", email);
                 params.put("password", password);
 
@@ -208,7 +214,7 @@ public class SignUpActivity extends Activity {
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
-    }
+    }*/
 
     private void showDialog() {
         if (!pDialog.isShowing())
@@ -219,6 +225,60 @@ public class SignUpActivity extends Activity {
         if (pDialog.isShowing())
             pDialog.dismiss();
     }
+
+    private class AttemptLogin extends AsyncTask<String, String, JSONObject> {
+
+        @Override
+
+        protected void onPreExecute() {
+
+            super.onPreExecute();
+
+        }
+
+        @Override
+
+        protected JSONObject doInBackground(String... args) {
+
+
+
+            String email = args[2];
+            String password = args[1];
+            String name= args[0];
+
+            ArrayList params = new ArrayList();
+            params.add(new BasicNameValuePair("username", name));
+            params.add(new BasicNameValuePair("password", password));
+            if(email.length()>0)
+                params.add(new BasicNameValuePair("email",email));
+
+            JSONObject json = jsonParser.makeHttpRequest(AppConfig.URL, "POST", params);
+
+
+            return json;
+
+        }
+
+        protected void onPostExecute(JSONObject result) {
+
+            // dismiss the dialog once product deleted
+            //Toast.makeText(getApplicationContext(),result,Toast.LENGTH_LONG).show();
+
+            try {
+                if (result != null) {
+                    Toast.makeText(getApplicationContext(),result.getString("message"),Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Unable to retrieve any data from server", Toast.LENGTH_LONG).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+
+    }
+
 }
 
 

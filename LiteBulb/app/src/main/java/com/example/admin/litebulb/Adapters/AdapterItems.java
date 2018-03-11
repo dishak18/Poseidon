@@ -15,7 +15,7 @@ import com.example.admin.litebulb.Models.album;
 
 import java.util.List;
 
-public class AdapterFeatured extends RecyclerView.Adapter<AdapterFeatured.MyViewHolder> {
+public class AdapterItems extends RecyclerView.Adapter<AdapterItems.MyViewHolder> {
 
     private Context mContext;
     private List<album> albumList;
@@ -37,7 +37,7 @@ public class AdapterFeatured extends RecyclerView.Adapter<AdapterFeatured.MyView
     }
 
 
-    public AdapterFeatured(Context mContext, List<album> albumList) {
+    public AdapterItems(Context mContext, List<album> albumList) {
         this.mContext = mContext;
         this.albumList = albumList;
     }

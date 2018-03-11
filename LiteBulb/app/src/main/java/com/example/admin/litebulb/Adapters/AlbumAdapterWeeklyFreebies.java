@@ -45,7 +45,7 @@ public class AlbumAdapterWeeklyFreebies extends RecyclerView.Adapter<AlbumAdapte
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_weekly_freebies, parent, false);
+                .inflate(R.layout.card_weekly_freebies_all, parent, false);
 
         return new MyViewHolder(itemView);
     }
@@ -62,12 +62,12 @@ public class AlbumAdapterWeeklyFreebies extends RecyclerView.Adapter<AlbumAdapte
                 .error(R.drawable.studio)
                 .into(holder.thumbnail);
 
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
+        /*holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 listener.onCardSelected(position, holder.thumbnail);
             }
-        });
+        });*/
 
 
     }
@@ -79,7 +79,7 @@ public class AlbumAdapterWeeklyFreebies extends RecyclerView.Adapter<AlbumAdapte
 
     public interface AlbumsAdapterListener {
 
-        void onCardSelected(int position, ImageView thumbnail);
+        /*void onCardSelected(int position, ImageView thumbnail);*/
     }
 }
 

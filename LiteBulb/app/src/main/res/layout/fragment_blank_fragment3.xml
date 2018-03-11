@@ -1,51 +1,30 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main_content"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:fitsSystemWindows="true">
+    tools:context="com.example.admin.litebulb.BottomBarFragments.BlankFragment3">
+
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_width="match_parent">
-
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/detail_backdrop_height"
-        android:fitsSystemWindows="true"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="30dp"
-        android:background="@color/input_register"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:orientation="vertical">
-
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="@dimen/detail_backdrop_height"
                 android:layout_gravity="center"
                 android:gravity="center"
+                android:textAllCaps="true"
+                android:background="@color/input_register"
                 android:text="@string/digital"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/backdrop_title" />
 
-                </LinearLayout>
-
-    </android.support.design.widget.AppBarLayout>
         <ScrollView
             android:layout_width="match_parent"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
             android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
@@ -131,6 +110,33 @@
                 android:focusable="true"/>
         </LinearLayout>
         <include layout="@layout/rv_feautured_authors" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="10"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="8"
+                android:layout_height="match_parent"
+                android:textColor="#000000"
+                android:text="All Items"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:layout_gravity="end"
+                android:gravity="end"
+                android:id="@+id/view_items"
+                android:textSize="@dimen/view_size"
+                android:text="@string/view"
+                android:clickable="true"
+                android:focusable="true"/>
+        </LinearLayout>
+        <include layout="@layout/rv_items_all" />
         <!-- this is our listview where we will display the fetched data -->
 
 
@@ -139,5 +145,4 @@
     </LinearLayout>
         </ScrollView>
     </LinearLayout>
-
-</android.support.design.widget.CoordinatorLayout>
+</FrameLayout>

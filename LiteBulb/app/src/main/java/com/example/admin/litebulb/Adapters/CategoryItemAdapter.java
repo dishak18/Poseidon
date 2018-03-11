@@ -1,5 +1,6 @@
 package com.example.admin.litebulb.Adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,16 +12,19 @@ import com.example.admin.litebulb.Models.CategoryItem;
 
 import java.util.ArrayList;
 
-/**
- * Created on 13/2/18.
- */
-
 public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemViewholder>{
+    public Context mContext;
 
     private ArrayList<CategoryItem> categoryItems = new ArrayList<>();
-
-    public CategoryItemAdapter(ArrayList<CategoryItem> categoryItems){
+    public CategoryItemAdapter() {
+    }
+    public CategoryItemAdapter(ArrayList<CategoryItem> categoryItems) {
         this.categoryItems = categoryItems;
+    }
+
+    public CategoryItemAdapter(ArrayList<CategoryItem> categoryItems, final Context mContext){
+        this.categoryItems = categoryItems;
+        this.mContext = mContext;
     }
 
     @Override
@@ -32,7 +36,7 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemViewho
 
     @Override
     public void onBindViewHolder(CategoryItemViewholder holder, final int position) {
-        holder.populate(categoryItems.get(position));
+        holder.populate(categoryItems.get(position), mContext);
     }
 
     @Override

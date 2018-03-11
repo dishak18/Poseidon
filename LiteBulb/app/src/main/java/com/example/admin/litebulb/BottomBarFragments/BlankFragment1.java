@@ -11,20 +11,29 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.admin.litebulb.Adapters.AdapterFeaturedAll;
 import com.example.admin.litebulb.Adapters.AlbumAdapterWeeklyFreebies;
 import com.example.admin.litebulb.Models.album;
 import com.example.admin.litebulb.R;
 import com.example.admin.litebulb.SQL.AppConfig;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.example.admin.litebulb.SQL.AppController;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
 
 
 public class BlankFragment1 extends Fragment {
@@ -55,39 +64,74 @@ public class BlankFragment1 extends Fragment {
         rvFeaturedItems.setLayoutManager(new LinearLayoutManager(getContext()));
         rvFeaturedItems.setItemAnimator(new DefaultItemAnimator());
         rvFeaturedItems.setAdapter(adapter_featured_items);
-        prepareCards();
+      //  prepareCards();
+        makeJsonArrayRequestForFeaturedItems();
 
         adapter_featured_items.notifyDataSetChanged();
         return parentHolder;
     }
 
-    private void prepareCards() {
+    private void makeJsonArrayRequestForFeaturedItems() {
 
-        myRef.addValueEventListener(new ValueEventListener() {
-            int count=0;
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    if (!dataSnapshot1.child("weekly_from").getValue().equals("0000-00-00") && !dataSnapshot1.child("weekly_to").getValue().equals("0000-00-00")) {
-                        album fire = new album();
-                        fire.setName((dataSnapshot1.child("name").getValue(String.class)).replace("&amp;", ""));
-                        fire.setprice(dataSnapshot1.child("price").getValue(String.class));
-                        String image_url = AppConfig.URL_PHOTOS + dataSnapshot1.child("thumbnail").getValue(String.class);
-                        //Log.e("This is the URL", image_url);
-                        fire.setThumbnail(image_url);
-                        featured_items.add(fire);
-                        adapter_featured_items.notifyDataSetChanged();
+        JsonArrayRequest req = new JsonArrayRequest(AppConfig.URL_ITEM,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            int count_featured_items=0;
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject item = (JSONObject) response.get(i);
 
+                                String name = item.getString("name");
+                                int price = item.getInt("price");
+                                String weekly_from=item.getString("weekly_from");
+                                String weekly_to=item.getString("weekly_to");
+                                String thumbnail=item.getString("thumbnail");
+                                String image_url = AppConfig.URL_PHOTOS +thumbnail;
+
+                                if (!weekly_from.equals("0000-00-00") && !weekly_to.equals("0000-00-00")) {
+                                    if (count_featured_items > 4) {
+                                        break;
+
+                                    } else {
+                                        album fire3= new album();
+                                        //Log.e("BLANKFRAGMENT3", "in the loop for the "+i+"th time with name "+ name);
+                                        fire3.setName(name);
+                                        fire3.setprice(price);
+                                        fire3.setThumbnail(image_url);
+                                        featured_items.add(fire3);
+                                        adapter_featured_items.notifyDataSetChanged();
+
+                                    }
+                                }
+                                else
+                                {
+                                    continue;
+                                }
+
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(referenceActivity,
+                                    "Error: " + e.getMessage(),
+                                    Toast.LENGTH_LONG).show();
+                        }
                     }
-                }
-            }
-
+                }, new Response.ErrorListener() {
             @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-
-                Log.e("Hello", "Failed to read value.", error.toException());
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
+                Toast.makeText(referenceActivity,
+                        error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+        try{
+            AppController.getInstance().addToRequestQueue(req);
+
+        }catch(Exception e)
+        {
+            Log.e("BlankFragment3", e+ " This is the error");
+        }
     }
 }

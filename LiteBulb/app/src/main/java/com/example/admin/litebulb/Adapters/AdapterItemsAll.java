@@ -15,7 +15,7 @@ import com.example.admin.litebulb.Models.album;
 
 import java.util.List;
 
-public class AdapterFeatured extends RecyclerView.Adapter<AdapterFeatured.MyViewHolder> {
+public class AdapterItemsAll extends RecyclerView.Adapter<AdapterItemsAll.MyViewHolder> {
 
     private Context mContext;
     private List<album> albumList;
@@ -37,7 +37,7 @@ public class AdapterFeatured extends RecyclerView.Adapter<AdapterFeatured.MyView
     }
 
 
-    public AdapterFeatured(Context mContext, List<album> albumList) {
+    public AdapterItemsAll(Context mContext, List<album> albumList) {
         this.mContext = mContext;
         this.albumList = albumList;
     }
@@ -45,7 +45,7 @@ public class AdapterFeatured extends RecyclerView.Adapter<AdapterFeatured.MyView
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_featured, parent, false);
+                .inflate(R.layout.card_featured_items_view_all, parent, false);
 
         return new MyViewHolder(itemView);
     }
@@ -62,7 +62,7 @@ public class AdapterFeatured extends RecyclerView.Adapter<AdapterFeatured.MyView
                 .error(R.drawable.studio)
                 .into(holder.thumbnail);
 
-/*        holder.cardView.setOnClickListener(new View.OnClickListener() {
+        /*holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 listener.onCardSelected(position, holder.thumbnail);
@@ -79,7 +79,7 @@ public class AdapterFeatured extends RecyclerView.Adapter<AdapterFeatured.MyView
 
     public interface AlbumsAdapterListener {
 
-        /*void onCardSelected(int position, ImageView thumbnail);*/
+       /* void onCardSelected(int position, ImageView thumbnail);*/
     }
 }
 

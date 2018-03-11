@@ -17,6 +17,7 @@ import com.example.admin.litebulb.Adapters.MoreCategoryItemAdapter;
 import com.example.admin.litebulb.Models.CategoryItem;
 import com.example.admin.litebulb.Models.MoreMainCategory;
 import com.example.admin.litebulb.Models.TabsModel;
+import com.example.admin.litebulb.SQL.AppConfig;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -60,7 +61,7 @@ public class TabFragment extends android.support.v4.app.Fragment {
             itemrv = (RecyclerView) rootView.findViewById(R.id.items_rv);
             subCategories = (Spinner) rootView.findViewById(R.id.sub_categories_dropdown);
             itemrv.setLayoutManager(new LinearLayoutManager(getContext()));
-            categoryItemAdapter = new CategoryItemAdapter(categoryItems);
+            categoryItemAdapter = new CategoryItemAdapter(categoryItems, getContext());
             itemrv.setAdapter(categoryItemAdapter);
 
             mCategoriesRef = FirebaseDatabase.getInstance().getReference().child("categories");
@@ -126,6 +127,8 @@ public class TabFragment extends android.support.v4.app.Fragment {
                                                     ci.setName(items.child("name").getValue(String.class));
                                                     ci.setPrice(items.child("price").getValue(String.class));
                                                     ci.setCategory(categoryIdsPartOf);
+                                                    String image_url = AppConfig.URL_PHOTOS + items.child("thumbnail").getValue(String.class);
+                                                    ci.setThumbnail(image_url);
                                                     categoryItems.add(ci);
                                                     noItemText.setVisibility(View.GONE);
                                                 }
