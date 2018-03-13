@@ -119,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("title", title);
                 startActivity(intent);
                 drawerLayout.closeDrawer(GravityCompat.END);
+                drawerLayout.closeDrawer(GravityCompat.END);
                 return true;
             }
         });
@@ -126,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-                Intent intent= new Intent(MainActivity.this, CategoriesTabs.class);
+                Intent intent= new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
                 drawerLayout.closeDrawer(GravityCompat.END);
                 return true;

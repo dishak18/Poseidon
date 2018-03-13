@@ -19,7 +19,7 @@ public class AdapterAuthors extends RecyclerView.Adapter<AdapterAuthors.MyViewHo
 
     private Context mContext;
     private List<Users_get> albumList;
-    private AlbumsAdapterListener listener;
+    private AdapterAuthorsListener listener;
     public ImageView thumbnail;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -67,8 +67,6 @@ public class AdapterAuthors extends RecyclerView.Adapter<AdapterAuthors.MyViewHo
                 listener.onCardSelected(position, holder.thumbnail);
             }
         });
-
-
     }
 
     @Override
@@ -76,12 +74,11 @@ public class AdapterAuthors extends RecyclerView.Adapter<AdapterAuthors.MyViewHo
         return albumList.size();
     }
 
-    public interface AlbumsAdapterListener {
+    public interface AdapterAuthorsListener {
 
         void onCardSelected(int position, ImageView thumbnail);
     }
 }
-
 
 
 

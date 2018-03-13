@@ -45,7 +45,7 @@ public class AlbumAdapterWeeklyFreebiesAll extends RecyclerView.Adapter<AlbumAda
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_weekly_freebies, parent, false);
+                .inflate(R.layout.card_weekly_freebies_all, parent, false);
 
         return new MyViewHolder(itemView);
     }
