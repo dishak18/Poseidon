@@ -36,6 +36,7 @@ public class AdapterItemClick extends RecyclerView.Adapter<AdapterItemClick.MyVi
             top_image = (ImageView) view.findViewById(R.id.top_image);
             cardView = (CardView) view.findViewById(R.id.card_view);
         }
+
     }
 
 

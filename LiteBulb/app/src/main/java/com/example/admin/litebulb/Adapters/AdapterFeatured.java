@@ -1,8 +1,12 @@
 package com.example.admin.litebulb.Adapters;
 
 import android.content.Context;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +14,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.admin.litebulb.R;
+import com.example.admin.litebulb.ItemClickFragment;
 import com.example.admin.litebulb.Models.album;
+import com.example.admin.litebulb.R;
 
 import java.util.List;
 
@@ -22,19 +27,50 @@ public class AdapterFeatured extends RecyclerView.Adapter<AdapterFeatured.MyView
     private AlbumsAdapterListener listener;
     public ImageView thumbnail;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView title, count;
         public ImageView thumbnail;
         public CardView cardView;
 
         public MyViewHolder(View view) {
             super(view);
+            view.setOnClickListener(this);
             title = (TextView) view.findViewById(R.id.title);
             count = (TextView) view.findViewById(R.id.count);
             thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
             cardView = (CardView) view.findViewById(R.id.card_view);
+            thumbnail.setOnClickListener(this);
+
+            /*view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(mContext, "This is clicked", Toast.LENGTH_SHORT).show();
+                    Log.e("ADAPTER", "This is clicked");
+                }
+            });*/
         }
-    }
+        /*public void OnItemClick(View view)
+        {
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(mContext, "This is clicked", Toast.LENGTH_SHORT).show();
+                    Log.e("ADAPTER", "This is clicked");
+                }
+            });
+        }*/
+        @Override
+        public void onClick(View view) {
+            Log.e("ADAPTERFEATURED", "this has been clicked");
+            ItemClickFragment fragment1 = new ItemClickFragment();
+            FragmentManager fragmentManager =((AppCompatActivity)view.getContext()).getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.contentContainer, fragment1);
+            fragmentTransaction.commit();
+
+
+        }
+   }
 
 
     public AdapterFeatured(Context mContext, List<album> albumList) {
@@ -54,7 +90,7 @@ public class AdapterFeatured extends RecyclerView.Adapter<AdapterFeatured.MyView
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         album album = albumList.get(position);
         holder.title.setText(album.getName());
-        holder.count.setText("$"+album.getprice());
+        holder.count.setText("$" + album.getprice());
         /*loading album cover using Glide library*/
         Glide.with(mContext)
                 .load(album.getThumbnail())
@@ -81,6 +117,7 @@ public class AdapterFeatured extends RecyclerView.Adapter<AdapterFeatured.MyView
 
         /*void onCardSelected(int position, ImageView thumbnail);*/
     }
+
 }
 
 

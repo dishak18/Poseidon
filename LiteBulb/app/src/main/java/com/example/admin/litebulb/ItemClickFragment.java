@@ -36,8 +36,15 @@ public class ItemClickFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         referenceActivity = getActivity();
-        parentHolder = inflater.inflate(R.layout.fragment_item_click, container,
-                false);
+        try{
+            parentHolder = inflater.inflate(R.layout.fragment_item_click, container,
+                    false);
+        }catch (Exception e)
+        {
+            Log.e("ITEMCLICKFRAGMENT", e+" This is the error");
+            throw e;
+        }
+
 
         return parentHolder;
     }
@@ -64,7 +71,6 @@ public class ItemClickFragment extends Fragment {
                                 ItemClick fire=new ItemClick();
                                 fire.setName(name);
                                 fire.setprice(price);
-                                //fire.setPrepaid_price();
                                 fire.setDescription(description);
                                 fire.setThumbnail(image_url);
 

@@ -33,9 +33,6 @@ public class CategoryItemViewholder extends RecyclerView.ViewHolder {
         byInfotv = (TextView) itemView.findViewById(R.id.by_information);
         thumbnail=(ImageView) itemView.findViewById(R.id.thumbnail);
     }
-
-
-
     public void populate(CategoryItem categoryItem, Context context){
         nametv.setText(categoryItem.getName());
         pricetv.setText(categoryItem.getPrice());
@@ -46,4 +43,15 @@ public class CategoryItemViewholder extends RecyclerView.ViewHolder {
                 .error(R.drawable.studio)
                 .into(thumbnail);
     }
+    public void onClick()
+    {
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+            }
+        });
+    }
+
 }
