@@ -4,6 +4,8 @@ package com.example.admin.litebulb.SQL;
 public class AppConfig {
     //studio.litebulb.in
     public static String IP_ADDRESS="http://litebulb.in/studio/";
+    public static String IP_ADDRESS_TEMP="http://192.168.1.4/";
+
     public static String URL_LOGIN = IP_ADDRESS+"android_login_api/login.php";
     public static String URL_REGISTER = IP_ADDRESS+"android_login_api/register.php";
     public static String URL_PHOTOS = IP_ADDRESS+"uploads";

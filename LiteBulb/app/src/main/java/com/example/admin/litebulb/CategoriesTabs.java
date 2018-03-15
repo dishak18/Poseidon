@@ -268,6 +268,7 @@ public class CategoriesTabs extends AppCompatActivity {
                                 JSONObject person = (JSONObject) response.get(i);
 
                                 categories = person.getString("categories");
+                                int item_id=person.getInt("item_id");
 
                                 //add your if code here
 

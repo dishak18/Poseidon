@@ -81,8 +81,6 @@ public class LoginActivity extends Activity {
             public void onClick(View view) {
                 AttemptLogin attemptLogin= new AttemptLogin();
                 attemptLogin.execute(inputName.getText().toString(),inputPassword.getText().toString(),"");
-
-
             }
         });
 

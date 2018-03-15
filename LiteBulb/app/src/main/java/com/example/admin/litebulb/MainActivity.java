@@ -62,7 +62,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        try{
+            setContentView(R.layout.activity_main);
+        }catch(Exception e)
+        {
+            Log.e("MAINACTIVITY","The error is "+e);
+            throw e;
+        }
+
         drawerLayout=(DrawerLayout)findViewById(R.id.d1);
         actionBarDrawerToggle= new ActionBarDrawerToggle(this,drawerLayout, R.string.Open, R.string.Close);
         actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
