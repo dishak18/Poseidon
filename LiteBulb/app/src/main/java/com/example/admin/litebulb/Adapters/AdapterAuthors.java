@@ -1,9 +1,6 @@
 package com.example.admin.litebulb.Adapters;
 
 import android.content.Context;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,9 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.admin.litebulb.ItemClickFragment;
-import com.example.admin.litebulb.R;
 import com.example.admin.litebulb.Models.Users_get;
+import com.example.admin.litebulb.R;
 
 import java.util.List;
 
@@ -31,6 +27,7 @@ public class AdapterAuthors extends RecyclerView.Adapter<AdapterAuthors.MyViewHo
         public TextView title, sales_items;
         public ImageView thumbnail;
         public CardView cardView;
+        public int itemId;
 
         public MyViewHolder(View view) {
             super(view);
@@ -41,13 +38,22 @@ public class AdapterAuthors extends RecyclerView.Adapter<AdapterAuthors.MyViewHo
             cardView = (CardView) view.findViewById(R.id.card_view);
             thumbnail.setOnClickListener(this);
         }
+        public void openItem(int id){
+            itemId = id;
+        }
         public void onClick(View view) {
-            Log.e("ADAPTERAUTHORS", "this has been clicked");
-            ItemClickFragment fragment1 = new ItemClickFragment();
+            Log.e("ADAPTER ITEMS", "this has been clicked + the ID is : "+itemId);
+
+           // Toast.makeText(mContext, "Item Name : "+itemId, Toast.LENGTH_SHORT).show();
+            /*ItemClickFragment fragment1 = new ItemClickFragment();
+            Bundle args = new Bundle();
+            args.putInt("id", itemId);
+            fragment1.setArguments(args);
+            //ItemClickFragment fragment1 = new ItemClickFragment();
             FragmentManager fragmentManager =((AppCompatActivity)view.getContext()).getSupportFragmentManager();
             FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.contentContainer, fragment1);
-            fragmentTransaction.commit();
+            fragmentTransaction.commit();*/
 
 
         }
@@ -64,6 +70,13 @@ public class AdapterAuthors extends RecyclerView.Adapter<AdapterAuthors.MyViewHo
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.card_featured_author, parent, false);
 
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
         return new MyViewHolder(itemView);
     }
 
@@ -78,6 +91,8 @@ public class AdapterAuthors extends RecyclerView.Adapter<AdapterAuthors.MyViewHo
                 .placeholder(R.drawable.loader)
                 .error(R.drawable.studio)
                 .into(holder.thumbnail);
+
+        //holder.openItem(Users_get.getUsername());
        /* holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

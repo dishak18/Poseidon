@@ -339,6 +339,8 @@ public class BlankFragment3 extends Fragment {
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject item = (JSONObject) response.get(i);
 
+                                int id=item.getInt("id");
+
                                 String name = item.getString("name");
                                 String free_request = item.getString("free_request");
                                 String free_file = item.getString("free_file");
@@ -356,6 +358,7 @@ public class BlankFragment3 extends Fragment {
                                 {
                                     album fire5= new album();
                                     //Log.e("BLANKFRAGMENT3", "in the loop for the "+i+"th time with name "+ name);
+                                    fire5.setID(id);
                                     fire5.setName(name);
                                     fire5.setprice(price);
                                     fire5.setThumbnail(image_url);
@@ -375,6 +378,7 @@ public class BlankFragment3 extends Fragment {
                                     else{
                                         album fire3= new album();
                                         //Log.e("BLANKFRAGMENT3", "in the loop for the "+i+"th time with name "+ name);
+                                        fire3.setID(id);
                                         fire3.setName(name);
                                         fire3.setprice(price);
                                         fire3.setThumbnail(image_url);
@@ -391,6 +395,7 @@ public class BlankFragment3 extends Fragment {
                                     } else {
                                         album fire3= new album();
                                         //Log.e("BLANKFRAGMENT3", "in the loop for the "+i+"th time with name "+ name);
+                                        fire3.setID(id);
                                         fire3.setName(name);
                                         fire3.setprice(price);
                                         fire3.setThumbnail(image_url);

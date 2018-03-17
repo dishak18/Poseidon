@@ -74,7 +74,7 @@ public class BlankFragment2 extends Fragment {
 
 
                                 JSONObject person = (JSONObject) response.get(i);
-
+                                //int id=person.getInt("id");
                                 String name = person.getString("username");
                                 String featured_author = person.getString("featured_author");
                                 int sales = person.getInt("sales");

@@ -81,6 +81,7 @@ public class BlankFragment1 extends Fragment {
                             int count_featured_items=0;
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject item = (JSONObject) response.get(i);
+                                int id=item.getInt("id");
 
                                 String name = item.getString("name");
                                 int price = item.getInt("price");
@@ -98,6 +99,7 @@ public class BlankFragment1 extends Fragment {
                                         //Log.e("BLANKFRAGMENT3", "in the loop for the "+i+"th time with name "+ name);
                                         fire3.setName(name);
                                         fire3.setprice(price);
+                                        fire3.setID(id);
                                         fire3.setThumbnail(image_url);
                                         featured_items.add(fire3);
                                         adapter_featured_items.notifyDataSetChanged();

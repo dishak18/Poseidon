@@ -79,6 +79,7 @@ public class ViewAllItems extends Fragment {
                                 JSONObject item = (JSONObject) response.get(i);
 
                                 String name = item.getString("name");
+                                int id=item.getInt("id");
                                 String free_request = item.getString("free_request");
                                 String free_file = item.getString("free_file");
                                 int price = item.getInt("price");
@@ -88,6 +89,7 @@ public class ViewAllItems extends Fragment {
                                     //Log.e("BLANKFRAGMENT3", "in the loop for the "+i+"th time with name "+ name);
                                     fire3.setName(name);
                                     fire3.setprice(price);
+                                    fire3.setID(id);
                                     fire3.setThumbnail(image_url);
                                     items_all.add(fire3);
                                     adapter_items_all.notifyDataSetChanged();

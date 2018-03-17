@@ -1,6 +1,7 @@
 package com.example.admin.litebulb.Adapters;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.admin.litebulb.ItemClickFragment;
@@ -31,6 +33,7 @@ public class AdapterItemsAll extends RecyclerView.Adapter<AdapterItemsAll.MyView
         public TextView title, count;
         public ImageView thumbnail;
         public CardView cardView;
+        public int itemId;
 
         public MyViewHolder(View view) {
             super(view);
@@ -41,15 +44,22 @@ public class AdapterItemsAll extends RecyclerView.Adapter<AdapterItemsAll.MyView
             cardView = (CardView) view.findViewById(R.id.card_view);
             thumbnail.setOnClickListener(this);
         }
+        public void openItem(int id){
+            itemId = id;
+        }
+
+
         public void onClick(View view) {
-            Log.e("ADAPTERFEATURED", "this has been clicked");
+            Log.e("ADAPTER ITEMS", "this has been clicked + the ID is : "+itemId);
+            Toast.makeText(mContext, "Item Name : "+itemId, Toast.LENGTH_SHORT).show();
             ItemClickFragment fragment1 = new ItemClickFragment();
+            Bundle args = new Bundle();
+            args.putInt("id", itemId);
+            fragment1.setArguments(args);
             FragmentManager fragmentManager =((AppCompatActivity)view.getContext()).getSupportFragmentManager();
             FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.contentContainer, fragment1);
             fragmentTransaction.commit();
-
-
         }
     }
 
@@ -63,6 +73,13 @@ public class AdapterItemsAll extends RecyclerView.Adapter<AdapterItemsAll.MyView
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.card_featured_items_view_all, parent, false);
+
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
         return new MyViewHolder(itemView);
     }
@@ -78,6 +95,7 @@ public class AdapterItemsAll extends RecyclerView.Adapter<AdapterItemsAll.MyView
                 .placeholder(R.drawable.loader)
                 .error(R.drawable.studio)
                 .into(holder.thumbnail);
+        holder.openItem(album.getID());
 
         /*holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override

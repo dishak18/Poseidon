@@ -1,6 +1,7 @@
 package com.example.admin.litebulb.Adapters;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +32,7 @@ public class AdapterFeatured extends RecyclerView.Adapter<AdapterFeatured.MyView
         public TextView title, count;
         public ImageView thumbnail;
         public CardView cardView;
+        public int itemId;
 
         public MyViewHolder(View view) {
             super(view);
@@ -40,35 +42,24 @@ public class AdapterFeatured extends RecyclerView.Adapter<AdapterFeatured.MyView
             thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
             cardView = (CardView) view.findViewById(R.id.card_view);
             thumbnail.setOnClickListener(this);
-
-            /*view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(mContext, "This is clicked", Toast.LENGTH_SHORT).show();
-                    Log.e("ADAPTER", "This is clicked");
-                }
-            });*/
         }
-        /*public void OnItemClick(View view)
-        {
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(mContext, "This is clicked", Toast.LENGTH_SHORT).show();
-                    Log.e("ADAPTER", "This is clicked");
-                }
-            });
-        }*/
-        @Override
+
+        public void openItem(int id){
+            itemId = id;
+        }
+
+
         public void onClick(View view) {
-            Log.e("ADAPTERFEATURED", "this has been clicked");
+            Log.e("ADAPTER ITEMS", "this has been clicked + the ID is : "+itemId );
+            //Toast.makeText(mContext, "Item Name : "+itemId, Toast.LENGTH_SHORT).show();
             ItemClickFragment fragment1 = new ItemClickFragment();
+            Bundle args = new Bundle();
+            args.putInt("id", itemId);
+            fragment1.setArguments(args);
             FragmentManager fragmentManager =((AppCompatActivity)view.getContext()).getSupportFragmentManager();
             FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.contentContainer, fragment1);
             fragmentTransaction.commit();
-
-
         }
    }
 
@@ -82,6 +73,12 @@ public class AdapterFeatured extends RecyclerView.Adapter<AdapterFeatured.MyView
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.card_featured, parent, false);
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
         return new MyViewHolder(itemView);
     }
@@ -97,7 +94,7 @@ public class AdapterFeatured extends RecyclerView.Adapter<AdapterFeatured.MyView
                 .placeholder(R.drawable.loader)
                 .error(R.drawable.studio)
                 .into(holder.thumbnail);
-
+        holder.openItem(album.getID());
 /*        holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

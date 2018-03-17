@@ -2,13 +2,14 @@ package com.example.admin.litebulb.Models;
 
 public class album{
     private String name;
-    private int price;
+    private int price, id;
     private String thumbnail;
     public album(){
 
     }
-    public album(String name, int price, String thumbnail) {
+    public album(int id, String name, int price, String thumbnail) {
         this.name = name;
+        this.id=id;
         this.price = price;
         this.thumbnail = thumbnail;
     }
@@ -19,6 +20,14 @@ public class album{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getID() {
+        return id;
+    }
+
+    public void setID(int id) {
+        this.id = id;
     }
 
     public int getprice() {

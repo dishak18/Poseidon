@@ -82,6 +82,7 @@ public class ViewAllWeeklyFragment extends Fragment {
                                 String name = item.getString("name");
                                 String free_request = item.getString("free_request");
                                 String free_file = item.getString("free_file");
+                                int id=item.getInt("id");
                                 int price = item.getInt("price");
                                 String thumbnail=item.getString("thumbnail");
                                 String image_url = AppConfig.URL_PHOTOS +thumbnail;
@@ -91,6 +92,7 @@ public class ViewAllWeeklyFragment extends Fragment {
                                     album fire3= new album();
                                     //Log.e("BLANKFRAGMENT3", "in the loop for the "+i+"th time with name "+ name);
                                     fire3.setName(name);
+                                    fire3.setID(id);
                                     fire3.setprice(price);
                                     fire3.setThumbnail(image_url);
                                     weekly_free.add(fire3);
