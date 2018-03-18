@@ -7,7 +7,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,11 +32,13 @@ public class ItemClickFragment extends Fragment {
 
     Activity referenceActivity;
     View parentHolder;
-    String name, thumbnail, image_url;
+    String name, thumbnail, image_url, key;
     int id_of_items_table, price;
     int itemId;
     ImageView top_image;
-    TextView name_of_item, description, item_price;
+    TextView name_of_item, description, item_price, text_under_select_license;
+    Spinner select_license;
+    String selectedItem, value, index, prepaid;
 
 
     @Override
@@ -54,12 +58,26 @@ public class ItemClickFragment extends Fragment {
         name_of_item=(TextView) parentHolder.findViewById(R.id.name_of_item);
         description=(TextView) parentHolder.findViewById(R.id.description);
         item_price=(TextView) parentHolder.findViewById(R.id.item_price);
+        select_license=(Spinner) parentHolder.findViewById(R.id.select_license);
+        getSystemDetails();
+        getSelectedItemDetails();
+        select_license.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedItem = parent.getItemAtPosition(position).toString();
+            }
 
-        makeJsonArrayRequestForFeaturedAuthors();
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                selectedItem=parent.getItemAtPosition(0).toString();
+
+            }
+        });
 
         return parentHolder;
     }
-    private void makeJsonArrayRequestForFeaturedAuthors() {
+
+    private void getSelectedItemDetails() {
 
         JsonArrayRequest req = new JsonArrayRequest(AppConfig.URL_ITEM,
                 new Response.Listener<JSONArray>() {
@@ -81,7 +99,6 @@ public class ItemClickFragment extends Fragment {
                                // Log.e("ITEMCLICKFRAGMENT", "this is the item id from other fragment "+itemId+" this is a\the id "+id_of_items_table);
                                  if(id_of_items_table==itemId)
                                  {
-
                                      Glide.with(getContext())
                                              .load(image_url)
                                              .placeholder(R.drawable.loader)
@@ -90,7 +107,15 @@ public class ItemClickFragment extends Fragment {
                                      name_of_item.setText(name);
                                      description.setText(descrip);
                                    //  item_price.setText(price);
-
+                                 }
+                                 if(selectedItem.equals("Personal Use License"))
+                                 {
+                                     item_price.setText(price);
+                                 }
+                                 else
+                                 {
+                                     int net_price=price*Integer.parseInt(index);
+                                     item_price.setText(net_price);
                                  }
                             }
                         } catch (JSONException e) {
@@ -115,6 +140,58 @@ public class ItemClickFragment extends Fragment {
         }catch(Exception e)
         {
             Log.e("BlankFragment3", e+ " This is the error");
+        }
+    }
+    private void getSystemDetails() {
+
+        JsonArrayRequest req = new JsonArrayRequest(AppConfig.URL_SYSTEM,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            //int count_featured_authors=0;
+                            for (int i = 0; i < response.length(); i++) {
+
+                                JSONObject person = (JSONObject) response.get(i);
+
+                                key=person.getString("key");
+                                value=person.getString("value");
+                                //image_url = AppConfig.URL_PHOTOS +thumbnail;
+                                //Toast.makeText(referenceActivity, itemId +"anddd "+ id_of_items_table, Toast.LENGTH_SHORT).show();
+                                // Log.e("ITEMCLICKFRAGMENT", "this is the item id from other fragment "+itemId+" this is a\the id "+id_of_items_table);
+                                if(key.equals("extended_price"))
+                                {
+
+                                    index=value;
+                                    //  item_price.setText(price);
+                                }
+                                else if(key.equals("prepaid_price_discount"))
+                                {
+                                    prepaid=value;
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(referenceActivity,
+                                    "Error: " + e.getMessage(),
+                                    Toast.LENGTH_LONG).show();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
+                Toast.makeText(referenceActivity,
+                        error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        try{
+            AppController.getInstance().addToRequestQueue(req);
+
+        }catch(Exception e)
+        {
+            Log.e("ItemCickFragment", e+ " This is the error");
         }
     }
 

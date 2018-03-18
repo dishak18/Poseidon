@@ -39,7 +39,7 @@ public class CategoryItemViewholder extends RecyclerView.ViewHolder {
         categoryInfotv.setText(categoryItem.getCategory());
         Glide.with(context)
                 .load(categoryItem.getThumbnail())
-                .placeholder(R.drawable.loader)
+                .placeholder(R.drawable.studio)
                 .error(R.drawable.studio)
                 .into(thumbnail);
     }

@@ -275,7 +275,7 @@ public class BlankFragment3 extends Fragment {
                                     count_featured_authors++;
                                     if(count_featured_authors>4)
                                     {
-                                        break;
+                                       break;
                                     }
                                     Users_get fire3= new Users_get();
                                     //Log.e("BLANKFRAGMENT3", "in the loop for the "+i+"th time with name "+ name);
@@ -336,8 +336,10 @@ public class BlankFragment3 extends Fragment {
                             int count_weekly=0;
                             int count_featured_items=0;
                             int count_items=0;
+                            Log.e("Fragment3", "This is the length "+response.length());
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject item = (JSONObject) response.get(i);
+
 
                                 int id=item.getInt("id");
 
@@ -370,10 +372,9 @@ public class BlankFragment3 extends Fragment {
 
                                 if(free_request.equals("true")&&free_file.equals("true"))
                                 {
-                                    count_weekly++;
+
                                     if(count_weekly>4)
                                     {
-                                        break;
                                     }
                                     else{
                                         album fire3= new album();
@@ -384,13 +385,13 @@ public class BlankFragment3 extends Fragment {
                                         fire3.setThumbnail(image_url);
                                         weekly_free.add(fire3);
                                         adapter_weekly_free.notifyDataSetChanged();
+                                        count_weekly++;
                                     }
 
                                 }
                                 if (!weekly_from.equals("0000-00-00") && !weekly_to.equals("0000-00-00")) {
-                                    count_featured_items++;
+
                                     if (count_featured_items > 4) {
-                                        break;
 
                                     } else {
                                         album fire3= new album();
@@ -401,6 +402,7 @@ public class BlankFragment3 extends Fragment {
                                         fire3.setThumbnail(image_url);
                                         featured_items.add(fire3);
                                         adapter_featured_items.notifyDataSetChanged();
+                                        count_featured_items++;
                                     }
                                 }
                             }

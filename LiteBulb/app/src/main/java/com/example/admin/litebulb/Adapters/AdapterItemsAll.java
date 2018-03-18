@@ -92,7 +92,7 @@ public class AdapterItemsAll extends RecyclerView.Adapter<AdapterItemsAll.MyView
         /*loading album cover using Glide library*/
         Glide.with(mContext)
                 .load(album.getThumbnail())
-                .placeholder(R.drawable.loader)
+                .placeholder(R.drawable.studio)
                 .error(R.drawable.studio)
                 .into(holder.thumbnail);
         holder.openItem(album.getID());

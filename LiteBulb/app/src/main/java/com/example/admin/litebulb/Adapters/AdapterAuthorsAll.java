@@ -75,7 +75,7 @@ public class AdapterAuthorsAll extends RecyclerView.Adapter<AdapterAuthorsAll.My
         /*loading Users_get cover using Glide library*/
         Glide.with(mContext)
                 .load(Users_get.getThumbnail())
-                .placeholder(R.drawable.loader)
+                .placeholder(R.drawable.studio)
                 .error(R.drawable.studio)
                 .into(holder.thumbnail);
 

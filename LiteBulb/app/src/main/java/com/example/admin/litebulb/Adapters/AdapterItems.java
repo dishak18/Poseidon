@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.admin.litebulb.ItemClickFragment;
@@ -91,7 +90,7 @@ public class AdapterItems extends RecyclerView.Adapter<AdapterItems.MyViewHolder
         /*loading album cover using Glide library*/
         Glide.with(mContext)
                 .load(album.getThumbnail())
-                .placeholder(R.drawable.loader)
+                .placeholder(R.drawable.studio)
                 .error(R.drawable.studio)
                 .into(holder.thumbnail);
         holder.openItem(album.getID());
