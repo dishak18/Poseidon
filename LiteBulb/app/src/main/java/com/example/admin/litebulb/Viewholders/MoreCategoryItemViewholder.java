@@ -10,10 +10,6 @@ import com.example.admin.litebulb.MoreCategoryItems;
 import com.example.admin.litebulb.R;
 import com.example.admin.litebulb.Models.MoreMainCategory;
 
-/**
- * Created by grandiose on 13/2/18.
- */
-
 public class MoreCategoryItemViewholder extends RecyclerView.ViewHolder{
     private TextView categoryName;
     public MoreCategoryItemViewholder(View itemView){

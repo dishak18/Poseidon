@@ -3,12 +3,17 @@ package com.example.admin.litebulb;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.admin.litebulb.SQL.AppConfig;
@@ -31,10 +36,12 @@ public class SignUpActivity extends Activity {
     private EditText inputPassword, inputPhone;
     private ProgressDialog pDialog;
     private SessionManager session;
+    private ImageView profile_picture;
     private SQLiteHandler db;
     private ImageButton back_btn;
     private Button backToLoginButton;
     int i=0;
+    private static int RESULT_LOAD_IMAGE = 1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,12 +55,25 @@ public class SignUpActivity extends Activity {
         inputPhone = (EditText) findViewById(R.id.phone);
         btnRegister = (Button) findViewById(R.id.register);
         back_btn=(ImageButton) findViewById(R.id.back);
+        profile_picture=(ImageView) findViewById(R.id.profile_image);
         backToLoginButton=(Button) findViewById(R.id.backToLogin);
         // btnLinkToLogin = (Button) findViewById(R.id.btnLinkToLoginScreen);
 
         // Progress dialog
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
+
+        profile_picture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(
+                        Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+                startActivityForResult(i, RESULT_LOAD_IMAGE);
+            }
+        });
 
         // Session manager
         session = new SessionManager(getApplicationContext());
@@ -128,93 +148,6 @@ public class SignUpActivity extends Activity {
 
 
     }
-
-    /**
-     * Function to store user in MySQL database will post params(tag, name,
-     * email, password) to register url
-     * */
-   /* private void registerUser(final String username, final String email,
-                              final String password) {
-        // Tag used to cancel the request
-        String tag_string_req = "req_register";
-
-        pDialog.setMessage("Registering ...");
-        showDialog();
-
-        StringRequest strReq = new StringRequest(Method.POST,
-                AppConfig.URL_REGISTER, new Response.Listener<String>() {
-
-            @Override
-            public void onResponse(String response) {
-                Log.e(TAG, "Register Response: " + response.toString());
-                hideDialog();
-
-                try {
-                    JSONObject jObj = new JSONObject(response);
-                    boolean error = jObj.getBoolean("error");
-                    if (!error) {
-                        Log.e("SIGNUPACTIVITY", "NO ERROR");
-                        // User successfully stored in MySQL
-                        // Now store the user in sqlite
-                        String uid = jObj.getString("user_id");
-////PHONE NUMBER FEILD TO BE ADDED IN DB AND HERE ALSO
-                        JSONObject user = jObj.getJSONObject("user");
-                        String username = user.getString("username");
-                        String email = user.getString("email");
-                        String created_at = user.getString("register_datetime");
-
-                        // Inserting row in users table
-                        db.addUser(username, email, uid, created_at);
-
-                        Toast.makeText(SignUpActivity.this, "User successfully registered. Try login now!", Toast.LENGTH_LONG).show();
-
-                        // Launch login activity
-                        Intent intent = new Intent(
-                                SignUpActivity.this,
-                                LoginActivity.class);
-                        startActivity(intent);
-                        finish();
-                    } else {
-
-                        // Error occurred in registration. Get the error
-                        // message
-                        String errorMsg = jObj.getString("error_msg");
-                        Toast.makeText(getApplicationContext(),
-                                errorMsg, Toast.LENGTH_LONG).show();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, "Registration Error: " + error.getMessage());
-                Toast.makeText(getApplicationContext(),
-                        error.getMessage(), Toast.LENGTH_LONG).show();
-                hideDialog();
-            }
-        }) {
-
-            @Override
-            protected Map<String, String> getParams() {
-                // Posting params to register url
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("username", username);
-                params.put("email", email);
-                params.put("password", password);
-
-                return params;
-            }
-
-        };
-
-        // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
-    }*/
-
     private void showDialog() {
         if (!pDialog.isShowing())
             pDialog.show();
@@ -223,6 +156,29 @@ public class SignUpActivity extends Activity {
     private void hideDialog() {
         if (pDialog.isShowing())
             pDialog.dismiss();
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+
+            Cursor cursor = getContentResolver().query(selectedImage,
+                    filePathColumn, null, null, null);
+            cursor.moveToFirst();
+
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+
+            //ImageView imageView = (ImageView) findViewById(R.id.imgView);
+            profile_picture.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+
+        }
+
+
     }
 
     private class AttemptLogin extends AsyncTask<String, String, JSONObject> {

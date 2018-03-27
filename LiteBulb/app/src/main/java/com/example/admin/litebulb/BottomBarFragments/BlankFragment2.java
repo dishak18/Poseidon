@@ -59,8 +59,20 @@ public class BlankFragment2 extends Fragment {
         adapter_featured_authors.notifyDataSetChanged();
         return parentHolder;
     }
+    private void showpDialog() {
+        if (!pDialog.isShowing())
+            pDialog.show();
+    }
+
+    private void hidepDialog() {
+        if (pDialog.isShowing())
+            pDialog.dismiss();
+    }
+
 
     private void makeJsonArrayRequest() {
+
+        //showpDialog();
 
         JsonArrayRequest req = new JsonArrayRequest(AppConfig.URL_USER_FEATURED,
                 new Response.Listener<JSONArray>() {
@@ -100,6 +112,7 @@ public class BlankFragment2 extends Fragment {
                                     "Error: " + e.getMessage(),
                                     Toast.LENGTH_LONG).show();
                         }
+                        //hidepDialog();
                     }
                 }, new Response.ErrorListener() {
             @Override

@@ -115,8 +115,10 @@ public class BlankFragment3 extends Fragment {
         rvItems.setItemAnimator(new DefaultItemAnimator());
         rvItems.setAdapter(adapter_items_all);
         //prepareCards();
+        showpDialog();
         makeJsonArrayRequestForFeaturedAuthors();
         makeJsonArrayRequestForWeeklyAndItems();
+        hidepDialog();
 
         adapter_weekly_free.notifyDataSetChanged();
         adapter_featured_items.notifyDataSetChanged();
@@ -179,66 +181,6 @@ public class BlankFragment3 extends Fragment {
 
         return parentHolder;
     }
-    
-    /*private void prepareCards() {
-
-        myRef.addValueEventListener(new ValueEventListener() {
-            int count_weekly=0;
-            int count_featured_items=0;
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    if (dataSnapshot1.child("free_request").getValue().equals("true") && dataSnapshot1.child("free_file").getValue().equals("true")) {
-                        count_weekly++;
-                        if(count_weekly>4)
-                        {
-
-                        }
-                        else
-                        {
-                            album fire2 = new album();
-                            fire2.setName((dataSnapshot1.child("name").getValue(String.class)).replace("&amp;", ""));
-                            fire2.setprice(dataSnapshot1.child("price").getValue(String.class));
-                            String image_url = AppConfig.URL_PHOTOS + dataSnapshot1.child("thumbnail").getValue(String.class);
-                            fire2.setThumbnail(image_url);
-                            weekly_free.add(fire2);
-                            adapter_weekly_free.notifyDataSetChanged();
-                        }
-                    }
-                    if (!dataSnapshot1.child("weekly_from").getValue().equals("0000-00-00") && !dataSnapshot1.child("weekly_to").getValue().equals("0000-00-00")) {
-                        if(count_featured_items>4)
-                        {
-
-                        }
-                        else
-                        {
-                            album fire = new album();
-                            fire.setName((dataSnapshot1.child("name").getValue(String.class)).replace("&amp;", ""));
-                            fire.setprice(dataSnapshot1.child("price").getValue(String.class));
-                            //Image url
-                            //String half_url = dataSnapshot1.child("thumbnail").getValue(String.class);
-                            //half_url.replaceAll("_", "");
-                            String image_url = AppConfig.URL_PHOTOS + dataSnapshot1.child("thumbnail").getValue(String.class);
-                            //Log.e("This is the URL", image_url);
-                            fire.setThumbnail(image_url);
-                            featured_items.add(fire);
-                            adapter_featured_items.notifyDataSetChanged();
-                        }
-
-
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-
-                Log.e("Hello", "Failed to read value.", error.toException());
-            }
-        });
-    }*/
 
     private void showpDialog() {
         if (!pDialog.isShowing())

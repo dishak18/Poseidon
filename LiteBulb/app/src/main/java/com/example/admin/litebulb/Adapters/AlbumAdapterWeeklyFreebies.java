@@ -13,12 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.admin.litebulb.ItemClickFragment;
-import com.example.admin.litebulb.R;
 import com.example.admin.litebulb.Models.album;
+import com.example.admin.litebulb.R;
 
 import java.util.List;
 
@@ -51,7 +50,7 @@ public class AlbumAdapterWeeklyFreebies extends RecyclerView.Adapter<AlbumAdapte
 
         public void onClick(View view) {
             Log.e("ADAPTER ITEMS", "this has been clicked + the ID is : "+itemId);
-            Toast.makeText(mContext, "Item Name : "+itemId, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(mContext, "Item Name : "+itemId, Toast.LENGTH_SHORT).show();
             ItemClickFragment fragment1 = new ItemClickFragment();
             Bundle args = new Bundle();
             args.putInt("id", itemId);

@@ -54,13 +54,14 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="10dp">
 
-                <ImageButton
+                <ImageView
                     android:id="@+id/profile_image"
                     android:layout_width="71dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@android:color/transparent"
                     android:padding="2dp"
+                    android:clickable="true"
                     android:src="@mipmap/ic_photo_camera_white_36dp"
 
                     />

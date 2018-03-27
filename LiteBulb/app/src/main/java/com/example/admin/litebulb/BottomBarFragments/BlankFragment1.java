@@ -70,8 +70,18 @@ public class BlankFragment1 extends Fragment {
         adapter_featured_items.notifyDataSetChanged();
         return parentHolder;
     }
+    private void showpDialog() {
+        if (!pDialog.isShowing())
+            pDialog.show();
+    }
+
+    private void hidepDialog() {
+        if (pDialog.isShowing())
+            pDialog.dismiss();
+    }
 
     private void makeJsonArrayRequestForFeaturedItems() {
+        //showpDialog();
 
         JsonArrayRequest req = new JsonArrayRequest(AppConfig.URL_ITEM,
                 new Response.Listener<JSONArray>() {
@@ -119,6 +129,7 @@ public class BlankFragment1 extends Fragment {
                                     "Error: " + e.getMessage(),
                                     Toast.LENGTH_LONG).show();
                         }
+          //              hidepDialog();
                     }
                 }, new Response.ErrorListener() {
             @Override
