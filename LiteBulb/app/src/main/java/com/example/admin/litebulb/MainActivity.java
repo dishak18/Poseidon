@@ -247,6 +247,7 @@ public class MainActivity extends AppCompatActivity {
 
                                 String meta_title = person.getString("meta_title");
                                 int sub_of = person.getInt("sub_of");
+                                int id=person.getInt("id");
 
                                 if (sub_of == 0) {
                                     Menu menu = navigationView.getMenu();

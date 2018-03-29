@@ -88,11 +88,18 @@ public class AdapterItems extends RecyclerView.Adapter<AdapterItems.MyViewHolder
         holder.title.setText(album.getName());
         holder.count.setText("$" + album.getprice());
         /*loading album cover using Glide library*/
-        Glide.with(mContext)
-                .load(album.getThumbnail())
-                .placeholder(R.drawable.studio)
-                .error(R.drawable.studio)
-                .into(holder.thumbnail);
+        try{
+            Glide.with(mContext)
+                    .load(album.getThumbnail())
+                    .placeholder(R.drawable.studio)
+                    .error(R.drawable.studio)
+                    .into(holder.thumbnail);
+        }catch(Exception e)
+        {
+            throw e;
+            //Log.e("This is the error "+e);
+        }
+
         holder.openItem(album.getID());
         /*        holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override

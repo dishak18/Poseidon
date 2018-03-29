@@ -48,6 +48,10 @@ public class BlankFragment2 extends Fragment {
         referenceActivity = getActivity();
         parentHolder = inflater.inflate(R.layout.fragment_blank_fragment2, container,
                 false);
+        pDialog = new ProgressDialog(referenceActivity);
+        pDialog.setMessage("Please wait...");
+
+        pDialog.setCancelable(false);
         rvFeaturedAuthors = (RecyclerView) parentHolder.findViewById(R.id.recycler_view);
         featured_authors= new ArrayList<>();
         adapter_featured_authors = new AdapterAuthorsAll(getActivity(), featured_authors );
@@ -72,7 +76,7 @@ public class BlankFragment2 extends Fragment {
 
     private void makeJsonArrayRequest() {
 
-        //showpDialog();
+        showpDialog();
 
         JsonArrayRequest req = new JsonArrayRequest(AppConfig.URL_USER_FEATURED,
                 new Response.Listener<JSONArray>() {
@@ -112,7 +116,7 @@ public class BlankFragment2 extends Fragment {
                                     "Error: " + e.getMessage(),
                                     Toast.LENGTH_LONG).show();
                         }
-                        //hidepDialog();
+                        hidepDialog();
                     }
                 }, new Response.ErrorListener() {
             @Override

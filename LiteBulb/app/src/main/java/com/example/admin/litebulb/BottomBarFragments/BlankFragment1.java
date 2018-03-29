@@ -57,6 +57,10 @@ public class BlankFragment1 extends Fragment {
         parentHolder = inflater.inflate(R.layout.fragment_blank_fragment1, container,
                 false);
         myRef = database.getReference().child("items");
+        pDialog = new ProgressDialog(referenceActivity);
+        pDialog.setMessage("Please wait...");
+
+        pDialog.setCancelable(false);
 
         rvFeaturedItems = (RecyclerView) parentHolder.findViewById(R.id.recycler_view_featured);
         featured_items = new ArrayList<>();
@@ -81,7 +85,7 @@ public class BlankFragment1 extends Fragment {
     }
 
     private void makeJsonArrayRequestForFeaturedItems() {
-        //showpDialog();
+        showpDialog();
 
         JsonArrayRequest req = new JsonArrayRequest(AppConfig.URL_ITEM,
                 new Response.Listener<JSONArray>() {
@@ -129,7 +133,7 @@ public class BlankFragment1 extends Fragment {
                                     "Error: " + e.getMessage(),
                                     Toast.LENGTH_LONG).show();
                         }
-          //              hidepDialog();
+          hidepDialog();
                     }
                 }, new Response.ErrorListener() {
             @Override

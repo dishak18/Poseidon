@@ -10,14 +10,15 @@
         android:padding="7dp"
         android:layout_height="match_parent">
 
-
         <ImageView
             android:id="@+id/top_image"
             android:layout_width="match_parent"
+            android:padding="@dimen/card_margin"
             android:layout_height="150dp" />
         <ScrollView
             android:layout_width="match_parent"
             android:scrollbars="vertical"
+
             android:layout_height="match_parent">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -29,8 +30,6 @@
             android:layout_width="match_parent"
             android:textColor="@drawable/gradient_background"
             android:textSize="30sp"
-            android:layout_gravity="center"
-            android:gravity="center"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:layout_height="wrap_content" />
@@ -40,16 +39,17 @@
             android:orientation="horizontal"
             android:layout_marginBottom="10dp"
             android:layout_gravity="center"
+            android:padding="@dimen/card_margin"
             android:gravity="center"
             android:weightSum="10">
 
             <Button
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:background="@android:color/transparent"
-            android:text="FAQ"
-            android:id="@+id/faq"/>
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:background="@android:color/transparent"
+                android:text="FAQ"
+                android:id="@+id/faq"/>
 
             <Button
                 android:layout_width="wrap_content"
@@ -65,8 +65,6 @@
                 android:text="Edit"
                 android:background="@android:color/transparent"
                 android:id="@+id/edit"/>
-
-
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -78,6 +76,11 @@
 
 
         </LinearLayout>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:background="#EAEAEA"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
@@ -94,6 +97,7 @@
             android:id="@+id/card_view1"
             android:layout_width="match_parent"
             android:layout_height="250dp"
+            android:padding="@dimen/card_margin"
             android:layout_gravity="center"
             android:layout_margin="@dimen/card_margin"
             android:elevation="3dp"
@@ -122,22 +126,24 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:textSize="20sp"
+                    android:textColor="@drawable/text_gradient"
+                    android:layout_marginTop="12dp"
                     android:layout_weight="3"
                     android:id="@+id/item_price"/>
             </LinearLayout>
-
-
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
+                android:padding="@dimen/card_margin"
                 android:id="@+id/text_under_select_license"
                 android:layout_marginBottom="12dp"
                 />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
+                android:padding="@dimen/card_margin"
                 android:layout_height="match_parent"
                 android:weightSum="10">
 
@@ -149,7 +155,7 @@
                     android:text="Buy Now"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
-                    android:background="@drawable/round_button_shape"/>
+                    android:background="@drawable/shapes"/>
                 <Button
                     android:id="@+id/view_demo"
                     android:layout_width="wrap_content"
@@ -158,7 +164,7 @@
                     android:text="View Demo"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
-                    android:background="@drawable/round_button_shape"/>
+                    android:background="@drawable/shapes"/>
 
                 <Button
                     android:id="@+id/collection"
@@ -168,7 +174,7 @@
                     android:text="Collection"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
-                    android:background="@drawable/round_button_shape"/>
+                    android:background="@drawable/shapes"/>
 
 
             </LinearLayout>
@@ -178,6 +184,7 @@
         </android.support.v7.widget.CardView>
             <android.support.v7.widget.CardView
                 android:id="@+id/card_view2"
+                android:padding="@dimen/card_margin"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:layout_gravity="center"
@@ -187,6 +194,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:orientation="vertical"
+                    android:padding="@dimen/card_margin"
                     android:layout_height="match_parent">
                 <TextView
                     android:layout_width="match_parent"
@@ -204,22 +212,29 @@
             </android.support.v7.widget.CardView>
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
+                card_view1:cardCornerRadius="@dimen/card_album_radius"
+                android:padding="@dimen/card_margin"
+                android:layout_margin="@dimen/card_margin"
                 android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
                     android:weightSum="10"
+                    android:padding="@dimen/card_margin"
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:layout_width="60dp"
+                        android:layout_width="80dp"
                         android:layout_weight="2"
+                        android:layout_marginRight="10dp"
                         android:id="@+id/image_author"
-                        android:layout_height="60dp" />
+                        android:background="@drawable/round_button_shape"
+                        android:layout_height="80dp" />
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_weight="8"
+                        android:padding="@dimen/card_margin"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
 
@@ -230,26 +245,29 @@
                             android:id="@+id/name"/>
                         <LinearLayout
                             android:layout_width="match_parent"
+                            android:weightSum="10"
                             android:orientation="horizontal"
+                            android:padding="@dimen/card_margin"
                             android:layout_height="wrap_content">
 
 
                             <Button
                                 android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
+                                android:layout_height="wrap_content"
                                 android:id="@+id/view_portfolio"
+                                android:layout_marginRight="@dimen/card_margin"
                                 android:text="View Portfolio"
-                                android:layout_marginLeft="20dp"
-                                android:background="@drawable/round_button_shape"/>
+                                android:background="@drawable/shapes"/>
 
 
                             <Button
                                 android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
+                                android:layout_height="wrap_content"
                                 android:id="@+id/follow"
+                                android:layout_marginLeft="@dimen/card_margin"
                                 android:text="Follow"
                                 android:layout_marginRight="20dp"
-                                android:background="@drawable/round_button_shape"/>
+                                android:background="@drawable/shapes"/>
                         </LinearLayout>
 
                     </LinearLayout>
@@ -258,23 +276,31 @@
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="200dp">
+                android:layout_margin="@dimen/card_margin"
+                android:padding="@dimen/card_margin"
+                card_view1:cardCornerRadius="@dimen/card_album_radius"
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:padding="@dimen/card_margin"
                     android:id="@+id/all_about_user"/>
             </android.support.v7.widget.CardView>
             
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="30dp">
+                android:layout_margin="@dimen/card_margin"
+                android:padding="@dimen/card_margin"
+                card_view1:cardCornerRadius="@dimen/card_album_radius"
+                android:layout_height="wrap_content">
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:weightSum="8"
+                    android:padding="10dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -306,10 +332,15 @@
             </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
+                    android:layout_margin="@dimen/card_margin"
+                    card_view1:cardCornerRadius="@dimen/card_album_radius"
+                    android:padding="@dimen/card_margin"
                     android:layout_height="wrap_content">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:padding="@dimen/card_margin"
+                        android:layout_margin="@dimen/card_margin"
                         android:orientation="vertical">
 
                     <TextView
@@ -394,14 +425,19 @@
 
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_margin="@dimen/card_margin"
+                    android:layout_height="wrap_content"
+                    card_view1:cardCornerRadius="@dimen/card_album_radius"
+                    android:padding="@dimen/card_margin">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:id="@+id/tags"
+                        android:padding="@dimen/card_margin"
                         android:layout_height="wrap_content" />
 
                 </android.support.v7.widget.CardView>
+            </LinearLayout>
             </LinearLayout>
         </ScrollView>
 

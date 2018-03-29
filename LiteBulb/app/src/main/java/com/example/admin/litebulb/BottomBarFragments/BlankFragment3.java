@@ -199,6 +199,7 @@ public class BlankFragment3 extends Fragment {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
+                        showpDialog();
                         try {
                             int count_featured_authors=0;
                             for (int i = 0; i < response.length(); i++) {
@@ -274,6 +275,7 @@ public class BlankFragment3 extends Fragment {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
+                        showpDialog();
                         try {
                             int count_weekly=0;
                             int count_featured_items=0;

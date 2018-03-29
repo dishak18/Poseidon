@@ -15,7 +15,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.bumptech.glide.Glide;
 import com.example.admin.litebulb.SQL.AppConfig;
 
@@ -30,34 +29,33 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 
 public class ItemClickFragment extends Fragment {
 
     Activity referenceActivity;
     View parentHolder;
+    String []tag_ids_array;
     String name, thumbnail, image_url, key;
     int id_of_items_table, price, id_of_badges;
     int itemId;
-    JsonArrayRequest req1, req2, req3, req4;
     ImageView top_image, image_author;
     public static final int CONNECTION_TIMEOUT = 10000;
     public static final int READ_TIMEOUT = 15000;
     TextView name_of_item, description, item_price, text_under_select_license, price_of_prepaid, all_about_user, name_of_user, tv_votes, tv_sales, tv_comments, tv_rating;
     Spinner select_license;
+    TextView files_included, compatible_browsers, added_on, documentation, tags;
+
     String selectedItem, value, index, prepaid, badges_from_users, votes, rating, comments, sales;
-    JSONArray response;
-    JSONParser jsonParser=new JSONParser();
-
-
-    String user_id, user_id_from_item_table, name_of_badges;
+    String user_id, user_id_from_item_table, name_of_badges, id_of_tags_table, name_of_tags, item_id_of_itemstotags_table, tag_id_of_itemstotags_table;
     String exclusive_author;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         referenceActivity = getActivity();
         itemId = getArguments().getInt("id");
         try{
@@ -77,31 +75,33 @@ public class ItemClickFragment extends Fragment {
         name_of_user=(TextView) parentHolder.findViewById(R.id.name);
         all_about_user=(TextView) parentHolder.findViewById(R.id.all_about_user);
         price_of_prepaid=(TextView) parentHolder.findViewById(R.id.price_of_prepaid);
-        tv_comments=(TextView) parentHolder.findViewById(R.id.comments);
+        tv_comments=(TextView) parentHolder.findViewById(R.id.no_of_comments);
         tv_rating=(TextView) parentHolder.findViewById(R.id.ratings);
         tv_sales=(TextView) parentHolder.findViewById(R.id.sales);
         tv_votes=(TextView) parentHolder.findViewById(R.id.votes);
+        files_included=(TextView) parentHolder.findViewById(R.id.files_included);
+        documentation=(TextView) parentHolder.findViewById(R.id.documentation);
+        added_on=(TextView) parentHolder.findViewById(R.id.added_on);
+        compatible_browsers=(TextView) parentHolder.findViewById(R.id.compatible);
+        tags=(TextView) parentHolder.findViewById(R.id.tags);
 
         select_license.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedItem = parent.getItemAtPosition(position).toString();
-                //getSelectedItemDetails();
+                new SystemDetails().execute();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 selectedItem=parent.getItemAtPosition(0).toString();
-                //getSelectedItemDetails();
+                new SystemDetails().execute();
 
             }
         });
-        new SystemDetails().execute();
-       /* getSystemDetails();
-        getSelectedItemDetails();
 
-        getUserDetails();
-        getBadgesDetails();*/
+        new SystemDetails().execute();
+        new ItemsTagsDetails().execute();
 
         return parentHolder;
     }
@@ -110,6 +110,7 @@ public class ItemClickFragment extends Fragment {
         super.onStart();
         select_license.setSelection(0);
         //getSelectedItemDetails();
+        new SystemDetails().execute();
     }
     private class SystemDetails extends AsyncTask<String, String, String> {
         ProgressDialog pdLoading = new ProgressDialog(referenceActivity);
@@ -120,7 +121,6 @@ public class ItemClickFragment extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
 
-            //this method will be running on UI thread
             pdLoading.setMessage("\tLoading...");
             pdLoading.setCancelable(false);
             pdLoading.show();
@@ -215,6 +215,7 @@ public class ItemClickFragment extends Fragment {
 
                     }
                     else if(key.equals("prepaid_price_discount")) {
+
                         prepaid = value;
 
                     }
@@ -352,16 +353,11 @@ public class ItemClickFragment extends Fragment {
                         tv_votes.setText(getResources().getString(R.string.votes)+votes);
 
                         String new_prepaid = prepaid.substring(0, prepaid.length() - 1);
-                        //int prepaid_price=price-((Integer.parseInt(prepaid))*price);
-                        //price_of_prepaid.setText(prepaid_price);
-                        //description.setText(descrip);
-                        //item_price.setText(price);
+
                         if (selectedItem.equals("Personal Use License")) {
                             item_price.setText(price + "");
                             price_of_prepaid.setText((price - (price * Integer.parseInt(new_prepaid) / 100)) + "");
                             text_under_select_license.setText(getResources().getString(R.string.personal_use_license) + "");
-                            //   text_under_select_license.setText(R.string.personal_use_license+"");
-                            //text_under_select_license.setText("lalalalala");
 
                         } else {
                             Log.e("lalalalala", "This is the index for extended " + index);
@@ -445,7 +441,6 @@ public class ItemClickFragment extends Fragment {
                         result.append(line);
                     }
 
-                    // Pass data to onPostExecute method
                     return (result.toString());
 
                 } else {
@@ -473,11 +468,8 @@ public class ItemClickFragment extends Fragment {
 
                 JSONArray jArray = new JSONArray(result);
 
-                // Extract data from json and store into ArrayList as class objects
                 for(int i=0;i<jArray.length();i++) {
                     JSONObject json_data = jArray.getJSONObject(i);
-                    //DataFish fishData = new DataFish();
-
 
                     user_id = json_data.getString("user_id");
                     Log.e("lalal", "this " + user_id + " and " + user_id_from_item_table);
@@ -515,7 +507,7 @@ public class ItemClickFragment extends Fragment {
 
 
     private class BadgesDetails extends AsyncTask<String, String, String> {
-        //ProgressDialog pdLoading = new ProgressDialog(referenceActivity);
+
         HttpURLConnection conn;
         URL url = null;
 
@@ -523,6 +515,124 @@ public class ItemClickFragment extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
 
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+
+                url = new URL(AppConfig.URL_BADGES);
+
+            } catch (MalformedURLException e) {
+
+                e.printStackTrace();
+                return e.toString();
+            }
+            try {
+
+                // Setup HttpURLConnection class to send and receive data from php and mysql
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setReadTimeout(READ_TIMEOUT);
+                conn.setConnectTimeout(CONNECTION_TIMEOUT);
+                conn.setRequestMethod("GET");
+                conn.setDoOutput(true);
+
+            } catch (IOException e1) {
+
+                e1.printStackTrace();
+                return e1.toString();
+
+            }
+
+            try {
+
+                int response_code = conn.getResponseCode();
+
+                if (response_code == HttpURLConnection.HTTP_OK) {
+
+                    InputStream input = conn.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+                    StringBuilder result = new StringBuilder();
+                    String line;
+
+                    while ((line = reader.readLine()) != null) {
+                        result.append(line);
+                    }
+
+                    return (result.toString());
+
+                } else {
+
+                    return ("unsuccessful");
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                return e.toString();
+            } finally {
+                conn.disconnect();
+            }
+
+
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            //this method will be running on UI thread
+
+           // pdLoading.dismiss();
+            try {
+
+                JSONArray jArray = new JSONArray(result);
+
+                for(int i=0;i<jArray.length();i++) {
+                    JSONObject json_data = jArray.getJSONObject(i);
+
+                    id_of_badges=json_data.getInt("id");
+                    name_of_badges=json_data.getString("name");
+                    if(badges_from_users.equals(" "))
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Log.e("lalala",  "This is the badges of the users table "+badges_from_users);
+                        String [] badge = badges_from_users.split(",");
+                        int[] badge_no = new int[badge.length];
+                        for(int k = 0; k < badge.length; k++) {
+                            badge_no[k] = Integer.parseInt(badge[i]);
+
+                        }
+                        for(int k = 0; k < badge.length; k++) {
+                            if(id_of_badges==badge_no[k])
+                            {
+                                all_about_user.append(name_of_badges+"\n");
+                            }
+                        }
+                    }
+                }
+
+            } catch (JSONException e) {
+                Toast.makeText(referenceActivity, e.toString(), Toast.LENGTH_LONG).show();
+            }
+
+        }
+
+    }
+
+    private class TagsDetails extends AsyncTask<String, String, String> {
+        ProgressDialog pdLoading = new ProgressDialog(referenceActivity);
+        HttpURLConnection conn;
+        URL url = null;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            pdLoading.setMessage("\tLoading...");
+            pdLoading.setCancelable(false);
+            pdLoading.show();
 
         }
 
@@ -532,7 +642,7 @@ public class ItemClickFragment extends Fragment {
 
                 // Enter URL address where your json file resides
                 // Even you can make call to php file which returns json data
-                url = new URL(AppConfig.URL_BADGES);
+                url = new URL(AppConfig.URL_TAGS);
 
             } catch (MalformedURLException e) {
                 // TODO Auto-generated catch block
@@ -596,40 +706,23 @@ public class ItemClickFragment extends Fragment {
 
             //this method will be running on UI thread
 
-           // pdLoading.dismiss();
+            pdLoading.dismiss();
             try {
 
                 JSONArray jArray = new JSONArray(result);
 
                 // Extract data from json and store into ArrayList as class objects
-                for(int i=0;i<jArray.length();i++) {
+                for(int i=0;i<jArray.length();i++){
                     JSONObject json_data = jArray.getJSONObject(i);
                     //DataFish fishData = new DataFish();
-
-
-                    id_of_badges=json_data.getInt("id");
-                    name_of_badges=json_data.getString("name");
-                    if(badges_from_users.equals(" "))
+                    id_of_tags_table= json_data.getString("id");
+                    name_of_tags= json_data.getString("name");
+                    for(int j=0; j<tag_ids_array.length; j++)
                     {
-                        break;
-                    }
-                    else
-                    {
-                        Log.e("lalala",  "This is the badges of the users table "+badges_from_users);
-                        String [] badge = badges_from_users.split(",");
-                        int[] badge_no = new int[badge.length];
-                        for(int k = 0; k < badge.length; k++) {
-                            badge_no[k] = Integer.parseInt(badge[i]);
-
+                        if(id_of_tags_table.equals(tag_ids_array[j]))
+                        {
+                            tags.append(name_of_tags+"  ");
                         }
-                        for(int k = 0; k < badge.length; k++) {
-                            if(id_of_badges==badge_no[k])
-                            {
-                                all_about_user.append(name_of_badges+"\n");
-                            }
-
-                        }
-
                     }
                 }
 
@@ -640,6 +733,128 @@ public class ItemClickFragment extends Fragment {
         }
 
     }
+
+
+    private class ItemsTagsDetails extends AsyncTask<String, String, String> {
+        ProgressDialog pdLoading = new ProgressDialog(referenceActivity);
+        HttpURLConnection conn;
+        URL url = null;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            pdLoading.setMessage("\tLoading...");
+            pdLoading.setCancelable(false);
+            pdLoading.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+
+                // Enter URL address where your json file resides
+                // Even you can make call to php file which returns json data
+                url = new URL(AppConfig.URL_ITEMS_TAGS);
+
+            } catch (MalformedURLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+                return e.toString();
+            }
+            try {
+
+                // Setup HttpURLConnection class to send and receive data from php and mysql
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setReadTimeout(READ_TIMEOUT);
+                conn.setConnectTimeout(CONNECTION_TIMEOUT);
+                conn.setRequestMethod("GET");
+
+                // setDoOutput to true as we recieve data from json file
+                conn.setDoOutput(true);
+
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+                return e1.toString();
+            }
+
+            try {
+
+                int response_code = conn.getResponseCode();
+
+                // Check if successful connection made
+                if (response_code == HttpURLConnection.HTTP_OK) {
+
+                    // Read data sent from server
+                    InputStream input = conn.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+                    StringBuilder result = new StringBuilder();
+                    String line;
+
+                    while ((line = reader.readLine()) != null) {
+                        result.append(line);
+                    }
+
+                    // Pass data to onPostExecute method
+                    return (result.toString());
+
+                } else {
+
+                    return ("unsuccessful");
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                return e.toString();
+            } finally {
+                conn.disconnect();
+            }
+
+
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            //this method will be running on UI thread
+
+            pdLoading.dismiss();
+            try {
+
+                JSONArray jArray = new JSONArray(result);
+                ArrayList<String> tag_ids = new ArrayList<String>();
+
+                // Extract data from json and store into ArrayList as class objects
+                for(int i=0;i<jArray.length();i++) {
+                    JSONObject json_data = jArray.getJSONObject(i);
+                    //DataFish fishData = new DataFish();
+                    item_id_of_itemstotags_table = json_data.getString("item_id");
+
+
+                    if (item_id_of_itemstotags_table.equals(itemId+"")) {
+                        tag_id_of_itemstotags_table = json_data.getString("tag_id");
+                        tag_ids.add(tag_id_of_itemstotags_table);
+                        Log.e("lala", "This is the tag id of item_tags table "+tag_id_of_itemstotags_table);
+                    }
+                    else {
+                        Log.e("lala", "This is when it goes in else");
+                    }
+                }
+
+                tag_ids_array = tag_ids.toArray(new String[tag_ids.size()]);
+
+            } catch (JSONException e) {
+                Toast.makeText(referenceActivity, e.toString(), Toast.LENGTH_LONG).show();
+            }
+            new TagsDetails().execute();
+
+        }
+
+    }
+
+
 
 }
 

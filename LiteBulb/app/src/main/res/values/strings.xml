@@ -36,15 +36,16 @@
         <item>Personal Use License</item>
         <item>Extended Use License</item>
     </string-array>
-    <string name="comments"><b>Comments: </b></string>
-    <string name="ratings"><b>Ratings: </b></string>
-    <string name="sales"><b>Sales: </b></string>
+    <string name="comments"><b>Comments:</b></string>
+    <string name="ratings"><b>Ratings:</b></string>
+    <string name="sales"><b>Sales:</b></string>
     <string name="added_on">ADDED ON: </string>
     <string name="compatible">COMPATIBLE BROWSERS: </string>
     <string name="files_included">FILES INCLUDED: </string>
     <string name="documentation">DOCUMENTATION: </string>
-    <string name="votes"><b>Votes: </b></string>
+    <string name="votes"><b>Votes:</b></string>
     <string name="file_statistics"><b>File Statistics</b></string>
+    <string name="oops">Oops, no items to show!</string>
 
 
 
