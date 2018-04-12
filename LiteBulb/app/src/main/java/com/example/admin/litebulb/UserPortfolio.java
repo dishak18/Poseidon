@@ -49,8 +49,7 @@ public class UserPortfolio extends Fragment {
 
     TextView user_name_tv;
 
-    String item_name, sales_items, categories, user_name, sales;
-    int price, item_id;
+    String user_name;
     int count;
 
     Activity referenceActivity;
