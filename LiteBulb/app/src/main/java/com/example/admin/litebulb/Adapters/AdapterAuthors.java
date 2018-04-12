@@ -86,11 +86,13 @@ public class AdapterAuthors extends RecyclerView.Adapter<AdapterAuthors.MyViewHo
         holder.title.setText(Users_get.getUsername());
         holder.sales_items.setText("Author has "+Users_get.getItems()+" items for sale and has racked up "+Users_get.getSales()+" sales!");
         /*loading Users_get cover using Glide library*/
-        Glide.with(mContext)
-                .load(Users_get.getThumbnail())
-                .placeholder(R.drawable.studio)
-                .error(R.drawable.studio)
-                .into(holder.thumbnail);
+        if(Users_get.getThumbnail()!=null) {
+            Glide.with(mContext)
+                    .load(Users_get.getThumbnail())
+                    .placeholder(R.drawable.studio)
+                    .error(R.drawable.studio)
+                    .into(holder.thumbnail);
+        }
 
         //holder.openItem(Users_get.getUsername());
        /* holder.cardView.setOnClickListener(new View.OnClickListener() {

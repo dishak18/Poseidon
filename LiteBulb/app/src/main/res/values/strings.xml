@@ -37,8 +37,12 @@
         <item>Extended Use License</item>
     </string-array>
     <string name="comments"><b>Comments:</b></string>
+    <string name="public_collections"><b>PUBLIC COLLECTIONS:</b></string>
     <string name="ratings"><b>Ratings:</b></string>
+    <string name="facebook_app_id">867287170109084</string>
+    <string name="fb_login_protocol_scheme">fb867287170109084</string>
     <string name="sales"><b>Sales:</b></string>
+    <string name="view_items"><b>View Items</b></string>
     <string name="added_on">ADDED ON: </string>
     <string name="compatible">COMPATIBLE BROWSERS: </string>
     <string name="files_included">FILES INCLUDED: </string>
@@ -46,7 +50,7 @@
     <string name="votes"><b>Votes:</b></string>
     <string name="file_statistics"><b>File Statistics</b></string>
     <string name="oops">Oops, no items to show!</string>
-
+    <string name="account_balance">Pay from your Account Balance: </string>
 
 
     <string name="extended_use_license">A template for a web service such as WPMU, or as a part of a software package for sale</string>

@@ -1,0 +1,74 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/gradient_background"
+    android:backgroundTint="@android:color/transparent"
+    android:layout_height="match_parent">
+    <android.support.v7.widget.CardView
+        android:layout_width="250dp"
+        app:cardCornerRadius="@dimen/card_album_radius"
+        android:layout_gravity="center"
+        android:foregroundGravity="center"
+        android:padding="@dimen/card_margin"
+        android:layout_height="350dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="10"
+                android:layout_margin="20dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="8"
+                    android:textSize="15sp"
+                    android:text="@string/account_balance"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:textSize="15sp"
+                    android:textColor="@drawable/gradient_background"
+                    android:id="@+id/account_balance"/>
+
+            </LinearLayout>
+
+            <Button
+                android:layout_width="match_parent"
+                android:background="@drawable/gradient_background"
+                android:id="@+id/prepaid_deposits"
+                android:layout_margin="20dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:id="@+id/payment_text"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_margin="20dp"
+                android:layout_height="wrap_content"
+                android:text="Buy Now"
+                android:background="@drawable/gradient_background"
+                android:id="@+id/buy_now"/>
+
+
+
+
+
+        </LinearLayout>
+
+
+
+    </android.support.v7.widget.CardView>
+
+
+</FrameLayout>

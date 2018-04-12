@@ -1,6 +1,7 @@
 package com.example.admin.litebulb;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
@@ -29,7 +30,6 @@ import com.example.admin.litebulb.BottomBarFragments.BlankFragment1;
 import com.example.admin.litebulb.BottomBarFragments.BlankFragment2;
 import com.example.admin.litebulb.BottomBarFragments.BlankFragment3;
 import com.example.admin.litebulb.BottomBarFragments.BlankFragment4;
-import com.example.admin.litebulb.BottomBarFragments.BlankFragment5;
 import com.example.admin.litebulb.SQL.AppConfig;
 import com.example.admin.litebulb.SQL.AppController;
 import com.google.firebase.database.DatabaseReference;
@@ -43,6 +43,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
 
@@ -57,18 +58,12 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mCategoriesRef;
     ArrayList<String> mLocation=new ArrayList<>();
     ArrayAdapter<String> list_adapter;
-    //HashMap<ExpandedMenuModel, List<String>> listDataChild;
     private ActionBarDrawerToggle actionBarDrawerToggle;
+    private SharedPreferences preferences;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        try{
-            setContentView(R.layout.activity_main);
-        }catch(Exception e)
-        {
-            Log.e("MAINACTIVITY","The error is "+e);
-            throw e;
-        }
+        setContentView(R.layout.activity_main);
 
         drawerLayout=(DrawerLayout)findViewById(R.id.d1);
         actionBarDrawerToggle= new ActionBarDrawerToggle(this,drawerLayout, R.string.Open, R.string.Close);
@@ -76,89 +71,9 @@ public class MainActivity extends AppCompatActivity {
         //expandableList= (ExpandableListView) findViewById(R.id.navigationmenu);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        BlankFragment3 fragment3=new BlankFragment3();
 
-        FragmentTransaction transaction2 = getSupportFragmentManager().beginTransaction();
-        transaction2.replace(R.id.contentContainer, fragment3);
-        transaction2.addToBackStack(null);
-        transaction2.commit();
-        actionBarDrawerToggle.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-       //final NavigationView nav_view=(NavigationView)findViewById(R.id.nav_view);
-        mCategoriesRef = FirebaseDatabase.getInstance().getReference().child("categories");
-        rightNavigationView = (NavigationView) findViewById(R.id.users_nav_view);
+        preferences = getApplicationContext().getSharedPreferences("preferences", MODE_PRIVATE);
 
-
-        list_adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, mLocation);
-
-
-
-        rightNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                // Handle Right navigation view item clicks here.
-                int id = item.getItemId();
-
-                if (id == R.id.portfolio) {
-                    Toast.makeText(MainActivity.this, "Right Drawer - Settings", Toast.LENGTH_SHORT).show();
-                } else if (id == R.id.download) {
-                    Toast.makeText(MainActivity.this, "Right Drawer - Logout", Toast.LENGTH_SHORT).show();
-                } else if (id == R.id.collection) {
-                    Toast.makeText(MainActivity.this, "Right Drawer - Help", Toast.LENGTH_SHORT).show();
-                } else if (id == R.id.deposit) {
-                    Toast.makeText(MainActivity.this, "Right Drawer - About", Toast.LENGTH_SHORT).show();
-                }
-
-                drawerLayout.closeDrawer(GravityCompat.END); /*Important Line*/
-                return true;
-            }
-        });
-       // prepareListData();
-        makeJsonArrayRequest();
-
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                String title=item.getTitle().toString();
-                Log.e("MAINACTIVITY", title+" This is it");
-
-                Intent intent= new Intent(MainActivity.this, CategoriesTabs.class);
-                intent.putExtra("title", title);
-                startActivity(intent);
-                drawerLayout.closeDrawer(GravityCompat.END);
-                drawerLayout.closeDrawer(GravityCompat.END);
-                return true;
-            }
-        });
-        rightNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                Intent intent= new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
-                drawerLayout.closeDrawer(GravityCompat.END);
-                return true;
-            }
-        });
-        /*mMenuAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild, expandableList);
-
-        // setting list adapter
-        expandableList.setAdapter(mMenuAdapter);
-
-        expandableList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
-                //Log.d("DEBUG", "submenu item clicked");
-                return false;
-            }
-        });
-        expandableList.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-            @Override
-            public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
-                //Log.d("DEBUG", "heading clicked");
-                return false;
-            }
-        });*/
         bottomBar= (BottomBar) findViewById(R.id.bottomBar);
         bottomBar.setDefaultTabPosition(2);
         bottomBar.setOnTabReselectListener(new OnTabReselectListener() {
@@ -177,12 +92,10 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else if(tabId==R.id.tab_popular)
                 {
-
                     switchToFragment4();
                 }
                 else if(tabId==R.id.tab_collections)
                 {
-
                     switchToFragment5();
                 }
 
@@ -204,7 +117,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else if(tabId==R.id.tab_popular)
                 {
-
                     switchToFragment4();
                 }
                 else if(tabId==R.id.tab_collections)
@@ -212,6 +124,134 @@ public class MainActivity extends AppCompatActivity {
 
                     switchToFragment5();
                 }
+            }
+        });
+
+        FragmentTransaction transaction2 = getSupportFragmentManager().beginTransaction();
+        final String itemId = preferences.getString("itemId","");
+        Log.e("MainActivity","Item ID : "+itemId+"a");
+        if(itemId==null || itemId.equalsIgnoreCase("") || itemId.isEmpty()){
+            Log.e("MainActivity","In else of shared preference");
+            BlankFragment3 fragment3=new BlankFragment3();
+            transaction2.replace(R.id.contentContainer, fragment3);
+            transaction2.addToBackStack(null);
+            transaction2.commit();
+        }else{
+            Log.e("MainActivity","Item details got");
+            ItemClickFragment itemClickFragment = new ItemClickFragment();
+            Bundle args = new Bundle();
+            int itemIdInt=Integer.parseInt(itemId);
+            args.putInt("id", itemIdInt);
+            itemClickFragment.setArguments(args);
+            transaction2.replace(R.id.contentContainer, itemClickFragment);
+            transaction2.addToBackStack(null);
+            SharedPreferences.Editor editor = getSharedPreferences("preferences", MODE_PRIVATE).edit();
+            editor.remove("itemId");
+            editor.apply();
+            Log.e("MainActivity","After deletion of shared pref -- ItemId : "+preferences.getString("itemId",""));
+            transaction2.commit();
+        }
+        actionBarDrawerToggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //final NavigationView nav_view=(NavigationView)findViewById(R.id.nav_view);
+        mCategoriesRef = FirebaseDatabase.getInstance().getReference().child("categories");
+        rightNavigationView = (NavigationView) findViewById(R.id.users_nav_view);
+
+
+        list_adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, mLocation);
+
+
+
+        rightNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                // Handle Right navigation view item clicks here.
+                int id = item.getItemId();
+
+                if (id == R.id.portfolio) {
+                    switchToUserPortfolio();
+                    Toast.makeText(MainActivity.this, "Right Drawer - Settings", Toast.LENGTH_SHORT).show();
+                } else if (id == R.id.download) {
+                    Toast.makeText(MainActivity.this, "Right Drawer - Logout", Toast.LENGTH_SHORT).show();
+                } else if (id == R.id.collection) {
+                    Toast.makeText(MainActivity.this, "Right Drawer - Help", Toast.LENGTH_SHORT).show();
+                } else if (id == R.id.deposit) {
+                    Toast.makeText(MainActivity.this, "Right Drawer - About", Toast.LENGTH_SHORT).show();
+                }
+
+                drawerLayout.closeDrawer(GravityCompat.END); /*Important Line*/
+                return true;
+            }
+        });
+        // prepareListData();
+        makeJsonArrayRequest();
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                String title=item.getTitle().toString();
+                Log.e("MAINACTIVITY", title+" This is it" + item.getItemId());
+//                mMenu.removeItem(item.getItemId());
+                if (parentChildren.containsKey(item.getItemId())) {
+                    int i=0;
+                    try {
+                        while(true) {
+                            MenuItem mi = mMenu.getItem(i);
+                            if (parentChildren.get(item.getItemId()).contains(mi.getItemId())) {
+                                mi.setVisible(true);
+                            } else if (children.contains(mi.getItemId())) {
+                                mi.setVisible(false);
+                            }
+                            i++;
+
+                        }
+                    } catch (IndexOutOfBoundsException e) {}
+                }else{
+                    int parentId = -1;
+                    for (HashMap.Entry<Integer, ArrayList<Integer> > e:
+                            parentChildren.entrySet()) {
+                        if (e.getValue().contains(item.getItemId())) {
+                            parentId = e.getKey();
+                            break;
+                        }
+                    }
+
+                    int i =0;
+                    try {
+                        int j=0;
+                        while (true) {
+                            MenuItem mi = mMenu.getItem(i++);
+                            if (mi.getItemId() == parentId) {
+                                String parentName = mi.getTitle().toString();
+                                Log.e("MainActivity","Category Name : "+parentName+"Sub Title"+title);
+                                SharedPreferences.Editor editor = preferences.edit();
+                                editor.putString("category", parentName);
+                                editor.putString("subCategory", title);
+                                editor.apply();
+                            }
+                        }
+                    } catch (IndexOutOfBoundsException e) {};
+                    Intent intent = new Intent(MainActivity.this, CategoriesTabs.class);
+                    startActivity(intent);
+                }
+//                navigationView.invalidate();
+
+                /*Intent intent= new Intent(MainActivity.this, CategoriesTabs.class);
+                intent.putExtra("title", title);
+                startActivity(intent);
+                drawerLayout.closeDrawer(GravityCompat.END);
+                drawerLayout.closeDrawer(GravityCompat.END);
+                */return true;
+            }
+        });
+        rightNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                Intent intent= new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                drawerLayout.closeDrawer(GravityCompat.END);
+                return true;
             }
         });
     }
@@ -234,6 +274,11 @@ public class MainActivity extends AppCompatActivity {
 
         return true;
     }
+    private Menu mMenu;
+    private int id = 1;
+    private HashMap<Integer, ArrayList<Integer> > parentChildren = new HashMap<>();
+    private ArrayList<Integer> children = new ArrayList<>();
+
     private void makeJsonArrayRequest() {
 
         JsonArrayRequest req = new JsonArrayRequest(AppConfig.URL_CATEGORIES,
@@ -247,21 +292,65 @@ public class MainActivity extends AppCompatActivity {
 
                                 String meta_title = person.getString("meta_title");
                                 int sub_of = person.getInt("sub_of");
-                                int id=person.getInt("id");
+                                int idJSON = person.getInt("id");
 
                                 if (sub_of == 0) {
                                     Menu menu = navigationView.getMenu();
-                                    //Menu submenu = menu.addSubMenu("New Super SubMenu");
+                                    mMenu = menu;
+                                    menu.add(Menu.NONE, id, id, meta_title);
+                                    int gid = id;
+                                    id++;
+                                    parentChildren.put(gid, new ArrayList<Integer>());
+                                    for(int j=0; j < response.length(); j++){
+                                        JSONObject child = (JSONObject) response.get(j);
+                                        int sub_of_child = child.getInt("sub_of");
 
-                                    menu.add(meta_title);
+                                        if(sub_of_child==idJSON){
+                                            String meta_title_child = child.getString("meta_title");
+                                            menu.add(Menu.NONE, id, id, "\t\t\t"+meta_title_child);
+                                            parentChildren.get(gid).add(id);
+//                                    menu.getItem(id).setVisible(false);
+                                            children.add(id);
+                                            id++;
+                                        }
+                                    }
+/*
+                                    id++;
+                                    menu.add(Menu.NONE, id, id, "\t\tchild:" + gid+"-"+id);
+                                    parentChildren.get(gid).add(id);
+//                                    menu.getItem(id).setVisible(false);
+                                    children.add(id);
 
+                                    id++;
+                                    menu.add(Menu.NONE, id, id, "\t\tchild:"+gid+"-"+id);
+                                    parentChildren.get(gid).add(id);
+//                                    menu.getItem(id).setVisible(false);
+                                    children.add(id);*/
+                                    id++;
+
+//                                    menu.setGroupVisible(gid, false);
+                    /*                mMenu.add(Menu.NONE, id++, Menu.NONE, "test-submenu-child" + id);
+                                    mMenu.add(Menu.NONE, id++, Menu.NONE, "test-submenu-child" + id);
+*/
                                     navigationView.invalidate();
                                     mLocation.add(meta_title);
-                                    // list_adapter.notifyDataSetChanged();
                                 }
                             }
+                            int i=0;
+                            try {
+                                while(true) {
+                                    MenuItem mi = mMenu.getItem(i);
+                                    if (children.contains(mi.getItemId())) {
+                                        mi.setVisible(false);
+                                    }
+                                    i++;
+
+                                }
+                            } catch (IndexOutOfBoundsException e) {}
+                        }
+
                             /*txtResponse.setText(jsonResponse);*/
-                        } catch (JSONException e) {
+                        catch (JSONException e) {
                             e.printStackTrace();
                             Toast.makeText(MainActivity.this,
                                     "Error: " + e.getMessage(),
@@ -283,6 +372,7 @@ public class MainActivity extends AppCompatActivity {
         {
             Log.e("MainActivity", e+ " This is the error");
         }
+
     }
     public void switchToFragment1() {
         FragmentManager manager = getSupportFragmentManager();
@@ -302,7 +392,11 @@ public class MainActivity extends AppCompatActivity {
     }
     public void switchToFragment5() {
         FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction().replace(R.id.contentContainer, new BlankFragment5()).addToBackStack(null).commit();
+        manager.beginTransaction().replace(R.id.contentContainer, new CollectionsFolderFragment()).addToBackStack(null).commit();
+    }
+    public void switchToUserPortfolio() {
+        FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction().replace(R.id.contentContainer, new UserPortfolio()).addToBackStack(null).commit();
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -316,5 +410,4 @@ public class MainActivity extends AppCompatActivity {
                 super.onOptionsItemSelected(item);
 
     }
-
 }

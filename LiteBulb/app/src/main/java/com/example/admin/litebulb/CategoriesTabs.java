@@ -1,7 +1,7 @@
 package com.example.admin.litebulb;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -14,7 +14,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -60,8 +59,9 @@ public class CategoriesTabs extends AppCompatActivity {
     private DatabaseReference mCategoriesRef;
     int id_of_item_table, id_of_categories_table, price;
     String name, thumbnail, meta_title, sub_of, categories;
-    FloatingActionButton home;
     private ArrayList<TabsModel> categoriesTabs = new ArrayList<>();
+    private SharedPreferences preferences;
+    private FloatingActionButton floatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,10 +71,10 @@ public class CategoriesTabs extends AppCompatActivity {
         mProgress.setMessage("Loading...");
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        home=(FloatingActionButton) findViewById(R.id.fab);
         setSupportActionBar(toolbar);
         mProgress.show();
         mCategoriesRef = FirebaseDatabase.getInstance().getReference().child("categories");
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
 
         mCategoriesRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -106,17 +106,8 @@ public class CategoriesTabs extends AppCompatActivity {
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
-        home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent=new Intent(CategoriesTabs.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
 
     }
-
 
     private void setupViewPager(){
         final ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
@@ -133,6 +124,14 @@ public class CategoriesTabs extends AppCompatActivity {
         }
         mViewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(mViewPager);
+        preferences = getSharedPreferences("preferences", MODE_PRIVATE);
+        int position=0;
+        for(int i=0; i<categoriesTabs.size(); i++){
+            if(categoriesTabs.get(i).getMetaTitle().equals(preferences.getString("category","")))
+                position = i;
+        }
+        Toast.makeText(this, "Position : "+position, Toast.LENGTH_SHORT).show();
+        mViewPager.setCurrentItem(position);
     }
 
 
@@ -311,6 +310,12 @@ public class CategoriesTabs extends AppCompatActivity {
         {
             Log.e("BlankFragment3", e+ " This is the error");
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mProgress.dismiss();
     }
 }
 

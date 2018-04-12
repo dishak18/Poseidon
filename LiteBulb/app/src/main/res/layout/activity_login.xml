@@ -174,13 +174,14 @@
                     android:textColor="#fff"
                     android:textSize="20dp"></TextView>
 
-                <ImageButton
-                    android:layout_width="45dp"
-                    android:layout_height="match_parent"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/ic_google_final"
+                <com.google.android.gms.common.SignInButton
+                    android:id="@+id/google_sign_in"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:paddingRight="20dp"/>
+                    android:paddingRight="20dp">
+
+                </com.google.android.gms.common.SignInButton>
             </LinearLayout>
 
 

@@ -1,5 +1,8 @@
 package com.example.admin.litebulb;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,6 +38,7 @@ import java.util.ArrayList;
 
 import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
 
+
 public class TabFragment extends android.support.v4.app.Fragment {
     private TabsModel tabInfo = new TabsModel();
     private RecyclerView itemrv;
@@ -50,10 +54,15 @@ public class TabFragment extends android.support.v4.app.Fragment {
     final ArrayList<String> subCategoriesSpinner = new ArrayList<>();
     final ArrayList<String> subCategoriesIds = new ArrayList<>();
     final ArrayList<CategoryItem> categoryIdToName = new ArrayList<>();
+    private int positionSpinner = 0;
+    private ProgressDialog progressDialog;
+    private AdapterView.OnItemSelectedListener countrySelectedListener;
     /*final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(getContext(),
             R.layout.sub_categories_spinner_item, subCategoriesSpinner);*/
 
     final ArrayList<CategoryItem> itemsToCategory= new ArrayList<>();
+
+    private SharedPreferences preferences;
 
     public TabFragment() {
     }
@@ -67,6 +76,9 @@ public class TabFragment extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //FOR THE FIRST SIX TABS (NOT INCLUDING THE MORE TAB)
+        preferences = getContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setTitle("Loading...");
         if(!tabInfo.getMetaTitle().equalsIgnoreCase("more")) {
             View rootView = inflater.inflate(R.layout.fragment_categories_tabs, container, false);
             noItemText = (TextView) rootView.findViewById(R.id.no_item_text);
@@ -79,12 +91,68 @@ public class TabFragment extends android.support.v4.app.Fragment {
             mCategoriesRef = FirebaseDatabase.getInstance().getReference().child("categories");
             databaseReference = FirebaseDatabase.getInstance().getReference();
 
-
+            progressDialog.show();
             makeJsonArrayRequest();
+            countrySelectedListener = new AdapterView.OnItemSelectedListener() {
+
+                @Override
+                public void onItemSelected(AdapterView<?> spinner, View container,
+                                           final int position, long id) {
+                    Log.e("TabFragment","on item selected");
+                    categoryItemsFinal.clear();
+                    Log.e("TabFragment","Size of itemsToCategory : "+itemsToCategory.size());
+                    Log.e("TabFragment","Size of categoryItems : "+categoryItems.size());
+                    Log.e("TabFragment","Size of subCategories : "+subCategoriesIds.size());
+                    for(int i=0; i<itemsToCategory.size(); i++){
+                        Log.e("TabFragment","for entered");
+                        if(itemsToCategory.get(i).getCategory().contains(subCategoriesIds.get(position)) &&
+                                itemsToCategory.get(i).getCategory().contains(tabInfo.getCategoryId())){
+                            Log.e("TabFragment","if entered; value of i : "+i);
+                            for(int j=0; j<categoryItems.size(); j++){
+                                if(itemsToCategory.get(i).getItemId().equalsIgnoreCase(categoryItems.get(j).getItemId())){
+                                    Log.e("TabFragment","if entered");
+                                    CategoryItem categoryItem = new CategoryItem();
+                                    categoryItem.setName(categoryItems.get(j).getName());
+                                    categoryItem.setPrice(categoryItems.get(j).getPrice());
+                                    categoryItem.setItemId(categoryItems.get(j).getItemId());
+                                    categoryItem.setThumbnail(categoryItems.get(j).getThumbnail());
+                                    categoryItem.setCategory("");
+                                    int counter=0;
+                                    for(int k=0; k<categoryIdToName.size(); k++){
+                                        Log.e("TabFragment","Value of k : " + k);
+                                        if(itemsToCategory.get(i).getCategory().contains(categoryIdToName.get(k).getItemId())){
+                                            if(counter==0){
+                                                categoryItem.setCategory(categoryItem.getCategory()+categoryIdToName.get(k).getCategory());
+                                            }else
+                                                categoryItem.setCategory(categoryItem.getCategory()+", "+categoryIdToName.get(k).getCategory());
+                                            counter++;
+                                        }
+                                    }
+                                    //categoryItem.setCategory(itemsToCategory.get(i).getCategory());
+                                    categoryItemsFinal.add(categoryItem);
+                                }
+                            }
+                        }
+                    }
+                    if(categoryItemsFinal.size()>0){
+                        noItemText.setVisibility(View.GONE);
+                    }
+                    categoryItemAdapter.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> arg0) {
+                    // TODO Auto-generated method stub
+                }
+            };
+
             Log.e("TabFragment","makeJsonArray exited");
             populate();
             Log.e("TabFragment","populate exited");
-            subCategories.performClick();
+            Log.e("TabFragment","Spinner Position : " + positionSpinner);
+            progressDialog.dismiss();
+
+            //subCategories.performClick();
 
             return rootView;
         }
@@ -97,6 +165,30 @@ public class TabFragment extends android.support.v4.app.Fragment {
             moreCategoryItemAdapter = new MoreCategoryItemAdapter(moreMainCategories);
             itemrv.setAdapter(moreCategoryItemAdapter);
             makeJsonArrayRequestForMainCategory();
+            /*databaseReference = FirebaseDatabase.getInstance().getReference().child("categories");
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    int counter = 0;
+                    for(DataSnapshot categories : dataSnapshot.getChildren()){
+                        if(categories.child("sub_of").getValue(String.class).equalsIgnoreCase("0")){
+                            counter = counter+1;
+                            if(counter>6){
+                                MoreMainCategory moreMainCategory = new MoreMainCategory();
+                                moreMainCategory.setMainCategoryId(categories.child("id").getValue(String.class));
+                                moreMainCategory.setMainCategory(categories.child("meta_title").getValue(String.class));
+                                moreMainCategories.add(moreMainCategory);
+                            }
+                        }
+                    }
+                    moreCategoryItemAdapter.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });*/
             return rootView;
         }
     }
@@ -114,7 +206,9 @@ public class TabFragment extends android.support.v4.app.Fragment {
                                 JSONObject person = (JSONObject) response.get(i);
                                 String sub_of = person.getString("sub_of");
                                 if(sub_of.equalsIgnoreCase("0")) {
-                                    if(counter>6) {
+                                    Log.e("TabFragment","Outside counter if ---- Title : "+ person.getString("meta_title"));
+                                    if(counter>5) {
+                                        Log.e("TabFragment","Inside counter if ---- Title : "+ person.getString("meta_title"));
                                         int id_of_categories_table = person.getInt("id");
                                         String meta_title = person.getString("meta_title");
                                         MoreMainCategory moreMainCategory = new MoreMainCategory();
@@ -124,11 +218,8 @@ public class TabFragment extends android.support.v4.app.Fragment {
                                     }
                                     counter++;
                                 }
-                                moreCategoryItemAdapter.notifyDataSetChanged();
-                                //add your if code here
-
-
                             }
+                            moreCategoryItemAdapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Toast.makeText(getContext(),
@@ -157,59 +248,6 @@ public class TabFragment extends android.support.v4.app.Fragment {
 
     private void populate() {
 
-        AdapterView.OnItemSelectedListener countrySelectedListener = new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> spinner, View container,
-                                       final int position, long id) {
-                Log.e("TabFragment","on item selected");
-                categoryItemsFinal.clear();
-                Log.e("TabFragment","Size of itemsToCategory : "+itemsToCategory.size());
-                Log.e("TabFragment","Size of categoryItems : "+categoryItems.size());
-                Log.e("TabFragment","Size of subCategories : "+subCategoriesIds.size());
-                for(int i=0; i<itemsToCategory.size(); i++){
-                    Log.e("TabFragment","for entered");
-                    if(itemsToCategory.get(i).getCategory().contains(subCategoriesIds.get(position)) &&
-                            itemsToCategory.get(i).getCategory().contains(tabInfo.getCategoryId())){
-                        Log.e("TabFragment","if entered; value of i : "+i);
-                        for(int j=0; j<categoryItems.size(); j++){
-                            if(itemsToCategory.get(i).getItemId().equalsIgnoreCase(categoryItems.get(j).getItemId())){
-                                Log.e("TabFragment","if entered");
-                                CategoryItem categoryItem = new CategoryItem();
-                                categoryItem.setName(categoryItems.get(j).getName());
-                                categoryItem.setPrice(categoryItems.get(j).getPrice());
-                                categoryItem.setItemId(categoryItems.get(j).getItemId());
-                                categoryItem.setThumbnail(categoryItems.get(j).getThumbnail());
-                                categoryItem.setCategory("");
-                                int counter=0;
-                                for(int k=0; k<categoryIdToName.size(); k++){
-                                    Log.e("TabFragment","Value of k : " + k);
-                                    if(itemsToCategory.get(i).getCategory().contains(categoryIdToName.get(k).getItemId())){
-                                        if(counter==0){
-                                            categoryItem.setCategory(categoryItem.getCategory()+categoryIdToName.get(k).getCategory());
-                                        }else
-                                            categoryItem.setCategory(categoryItem.getCategory()+", "+categoryIdToName.get(k).getCategory());
-                                        counter++;
-                                    }
-                                }
-                                //categoryItem.setCategory(itemsToCategory.get(i).getCategory());
-                                categoryItemsFinal.add(categoryItem);
-                            }
-                        }
-                    }
-                }
-                if(categoryItemsFinal.size()>0){
-                    noItemText.setVisibility(View.GONE);
-                }
-                categoryItemAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-                // TODO Auto-generated method stub
-            }
-        };
-
         subCategories.setOnItemSelectedListener(countrySelectedListener);
 
     }
@@ -228,6 +266,7 @@ public class TabFragment extends android.support.v4.app.Fragment {
                             subCategoriesSpinner.clear();
                             subCategoriesIds.clear();
                             categoryIdToName.clear();
+                            int k=0;
                             for (int i = 0; i < response.length(); i++) {
 
                                 JSONObject person = (JSONObject) response.get(i);
@@ -245,11 +284,17 @@ public class TabFragment extends android.support.v4.app.Fragment {
                                     subCategoriesSpinner.add(meta_title);
                                     subCategoriesIds.add(id_of_categories_table+"");
                                     spinnerArrayAdapter.notifyDataSetChanged();
+                                    if(preferences.getString("category","").contains(tabInfo.getMetaTitle()) && preferences.getString("subCategory","").contains(meta_title)){
+                                        Log.e("TabFragment","Value of k : "+k);
+                                        positionSpinner = k;
+                                        subCategories.setOnItemSelectedListener(countrySelectedListener);
+                                        subCategories.setSelection(positionSpinner);
+                                    }
+                                    k++;
                                 }
                                 //add your if code here
-
-
                             }
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Toast.makeText(getContext(),
@@ -288,12 +333,12 @@ public class TabFragment extends android.support.v4.app.Fragment {
                                 String name = person.getString("name");
                                 int price = person.getInt("price");
                                 String thumbnail = person.getString("thumbnail");
-                                String image_url=AppConfig.URL_PHOTOS+thumbnail;
+
                                 CategoryItem categoryItem = new CategoryItem();
                                 categoryItem.setItemId(id_of_item_table+"");
                                 categoryItem.setName(name);
                                 categoryItem.setPrice(price+"");
-                                categoryItem.setThumbnail(image_url);
+                                categoryItem.setThumbnail(thumbnail);
 
                                 categoryItems.add(categoryItem);
                                 //add your if code here
@@ -371,6 +416,7 @@ public class TabFragment extends android.support.v4.app.Fragment {
             Log.e("BlankFragment3", e+ " This is the error");
         }
         Log.e("TabFragment","req2 exited");
+
     }
 
     @Override

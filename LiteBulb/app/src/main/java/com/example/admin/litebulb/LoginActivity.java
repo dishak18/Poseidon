@@ -25,7 +25,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-//import com.example.admin.litebulb.SystemBarTintManager;
 
 public class LoginActivity extends Activity {
     private Button btnLogin;

@@ -3,7 +3,7 @@ package com.example.admin.litebulb.SQL;
 public class AppConfig {
     //studio.litebulb.in
     public static String IP_ADDRESS="http://litebulb.in/studio/";
-    public static String IP_ADDRESS_TEMP="http://192.168.1.5/";
+    public static String IP_ADDRESS_TEMP="http://192.168.1.6/";
 
     public static String URL_LOGIN = IP_ADDRESS+"android_login_api/login.php";
     public static String URL_REGISTER = IP_ADDRESS+"android_login_api/register.php";
@@ -17,5 +17,10 @@ public class AppConfig {
     public static String URL_BADGES = IP_ADDRESS_TEMP+"android_login_api/badges.php";
     public static String URL_TAGS = IP_ADDRESS_TEMP+"android_login_api/tags.php";
     public static String URL_ITEMS_TAGS = IP_ADDRESS_TEMP+"android_login_api/items_tags.php";
+    public static String URL_ITEM_ATTRIBUTES = IP_ADDRESS_TEMP+"android_login_api/items_attributes.php";
+    public static String URL_ATTRIBUTES = IP_ADDRESS_TEMP+"android_login_api/attributes.php";
+    public static String URL_ATTRIBUTES_CATEGORIES = IP_ADDRESS_TEMP+"android_login_api/attributes_categories.php";
+    public static String URL_COLLECTIONS = IP_ADDRESS_TEMP+"android_login_api/collections.php";
+    public static String URL_ITEMS_COLLECTIONS = IP_ADDRESS_TEMP+"android_login_api/items_collections.php";
 }
 

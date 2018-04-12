@@ -37,6 +37,7 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemViewho
     @Override
     public void onBindViewHolder(CategoryItemViewholder holder, final int position) {
         holder.populate(categoryItems.get(position), mContext);
+        holder.onClick();
     }
 
     @Override
