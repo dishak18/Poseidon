@@ -1,0 +1,150 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.admin.litebulb.ProfileEdit">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:background="#EAEAEA"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="10"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="8"
+                    android:text="Social Media Name"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="Trash"
+                    android:layout_weight="2"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:id="@+id/trash1"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:hint="Social Media Name"
+                android:id="@+id/mediaName"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Profile Link"/>
+
+            <EditText
+                android:id="@+id/profileLink"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:hint="Profile Link"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="10"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="8"
+                    android:text="Social Media Name"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="Trash"
+                    android:layout_weight="2"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:id="@+id/trash2"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:hint="Social Media Name"
+                android:id="@+id/mediaName2"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Profile Link"/>
+            <EditText
+                android:id="@+id/profileLink2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Profile Link"/>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:text="Add More Profiles"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="10"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="8"
+                    android:text="Social Media Name"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="Trash"
+                    android:layout_weight="2"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:id="@+id/trash3"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:hint="Social Media Name"
+                android:id="@+id/mediaName3"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Profile Link"/>
+
+
+            <EditText
+                android:id="@+id/profileLink3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Profile Link"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Save Changes"
+                android:textAllCaps="true"
+                android:id="@+id/save"/>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</FrameLayout>

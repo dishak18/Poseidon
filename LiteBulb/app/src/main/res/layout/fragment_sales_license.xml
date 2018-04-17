@@ -1,0 +1,43 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.admin.litebulb.SalesLicense">
+
+   <ScrollView
+       android:layout_width="match_parent"
+       android:layout_margin="5dp"
+       android:padding="5dp"
+       android:layout_height="match_parent">
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:orientation="vertical"
+           android:layout_height="match_parent">
+           <TextView
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginBottom="20dp"
+               android:layout_marginTop="10dp"
+               android:text="@string/sales_license" />
+           <Switch
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="Full License"
+               android:layout_marginBottom="10dp"
+               android:id="@+id/full_license"/>
+           <Switch
+               android:layout_width="match_parent"
+               android:text="Personal Use License"
+               android:id="@+id/personal_use_license"
+               android:layout_marginBottom="10dp"
+               android:layout_height="wrap_content" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SAVE CHANGES"
+                android:id="@+id/save"
+                android:background="#fff"/>
+       </LinearLayout>
+   </ScrollView>
+</FrameLayout>

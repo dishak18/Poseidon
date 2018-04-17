@@ -130,7 +130,7 @@ public class CategoriesTabs extends AppCompatActivity {
             if(categoriesTabs.get(i).getMetaTitle().equals(preferences.getString("category","")))
                 position = i;
         }
-        Toast.makeText(this, "Position : "+position, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Position : "+position, Toast.LENGTH_SHORT).show();
         mViewPager.setCurrentItem(position);
     }
 

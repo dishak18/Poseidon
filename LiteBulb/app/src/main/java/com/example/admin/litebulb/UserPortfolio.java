@@ -2,6 +2,7 @@ package com.example.admin.litebulb;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -35,26 +36,25 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.Context.MODE_PRIVATE;
 import static com.example.admin.litebulb.ItemClickFragment.CONNECTION_TIMEOUT;
 import static com.example.admin.litebulb.ItemClickFragment.READ_TIMEOUT;
 
 
 public class UserPortfolio extends Fragment {
-    private RecyclerView rvUserPortfolio;
     private AdapterUserPortfolio adapter_user_portfolio;
 
     private List<ModelUserPortfolio> userPortfolioList;
     private ProgressDialog pDialog;
-    int user_id;
 
     TextView user_name_tv;
-
+    int user_id;
     String user_name;
     int count;
 
     Activity referenceActivity;
     DatabaseReference myRef;
-
+    SharedPreferences loginPreferences;
     TextView oops;
 
     FirebaseDatabase database;
@@ -68,29 +68,28 @@ public class UserPortfolio extends Fragment {
         /*collectionId = getArguments().getInt("id");
         user_name=getArguments().getString("user_name");
         collection_name=getArguments().getString("collection_name");*/
+        loginPreferences = getActivity().getSharedPreferences("loginPrefs", MODE_PRIVATE);
 
+        Log.e("MainActivity", "this is username: "+loginPreferences.getString("username", ""));
+        user_name=loginPreferences.getString("username", "");
 
-        user_name=getArguments().getString("user_name");
-        user_id=getArguments().getInt("user_id");
-
+        userPortfolioList = new ArrayList<>();
         database = FirebaseDatabase.getInstance();
-        parentHolder = inflater.inflate(R.layout.fragment_collections_item_click, container,
+        parentHolder = inflater.inflate(R.layout.fragment_user_portfolio, container,
                 false);
         myRef = database.getReference().child("items");
         count=0;
-        user_name_tv=(TextView) parentHolder.findViewById(R.id.collection_name);
+        user_name_tv=(TextView) parentHolder.findViewById(R.id.user_name);
         oops=(TextView) parentHolder.findViewById(R.id.oops);
         user_name_tv.setText(user_name);
 
-        rvUserPortfolio = (RecyclerView) parentHolder.findViewById(R.id.rv_user_portfolio);
-        userPortfolioList = new ArrayList<>();
+        RecyclerView rvUserPortfolio = (RecyclerView) parentHolder.findViewById(R.id.rv_user_portfolio);
         adapter_user_portfolio = new AdapterUserPortfolio(getActivity(), userPortfolioList);
         rvUserPortfolio.setLayoutManager(new LinearLayoutManager(getContext()));
         rvUserPortfolio.setItemAnimator(new DefaultItemAnimator());
         rvUserPortfolio.setAdapter(adapter_user_portfolio);
-        //prepareCards();
-        //makeJsonArrayRequestForWeekly();
-        new ItemsDetails().execute();
+
+        new UserDetails().execute();
         if(count==0)
         {
             oops.setText(getResources().getString(R.string.oops));
@@ -230,6 +229,120 @@ public class UserPortfolio extends Fragment {
                 Toast.makeText(referenceActivity, e.toString(), Toast.LENGTH_LONG).show();
             }
             //new CollectionsDetails().execute();
+        }
+    }
+
+    private class UserDetails extends AsyncTask<String, String, String> {
+        ProgressDialog pdLoading = new ProgressDialog(referenceActivity);
+        HttpURLConnection conn;
+        URL url = null;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            pdLoading.setMessage("\tLoading...");
+            pdLoading.setCancelable(false);
+            pdLoading.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+
+                // Enter URL address where your json file resides
+                // Even you can make call to php file which returns json data
+                url = new URL(AppConfig.URL_USER_FEATURED);
+
+            } catch (MalformedURLException e) {
+
+                e.printStackTrace();
+                return e.toString();
+            }
+            try {
+
+                // Setup HttpURLConnection class to send and receive data from php and mysql
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setReadTimeout(READ_TIMEOUT);
+                conn.setConnectTimeout(CONNECTION_TIMEOUT);
+                conn.setRequestMethod("GET");
+
+                // setDoOutput to true as we recieve data from json file
+                conn.setDoOutput(true);
+
+            } catch (IOException e1) {
+
+                e1.printStackTrace();
+                return e1.toString();
+            }
+
+            try {
+
+                int response_code = conn.getResponseCode();
+
+                // Check if successful connection made
+                if (response_code == HttpURLConnection.HTTP_OK) {
+
+                    // Read data sent from server
+                    InputStream input = conn.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+                    StringBuilder result = new StringBuilder();
+                    String line;
+
+                    while ((line = reader.readLine()) != null) {
+                        result.append(line);
+                    }
+
+                    // Pass data to onPostExecute method
+                    return (result.toString());
+
+                } else {
+
+                    return ("unsuccessful");
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                return e.toString();
+            } finally {
+                conn.disconnect();
+            }
+
+
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            //this method will be running on UI thread
+
+            pdLoading.dismiss();
+            try {
+
+                JSONArray jArray = new JSONArray(result);
+                ArrayList<String> item_ids = new ArrayList<String>();
+
+
+                // Extract data from json and store into ArrayList as class objects
+                for(int i=0;i<jArray.length();i++){
+                    Log.e("ColletionsItemClick", "this is in itemsdetails");
+                    JSONObject json_data = jArray.getJSONObject(i);
+
+                    //DataFish fishData = new DataFish();
+                    String user_name_ran=json_data.getString("username");
+                    if(user_name_ran.equals(user_name)) {
+                        user_id=json_data.getInt("user_id");
+                    }
+
+                }
+
+                //user_name_user_array = user_ids_of_user_table.toArray(new String[user_ids_of_user_table.size()]);
+
+            } catch (JSONException e) {
+                Toast.makeText(referenceActivity, e.toString(), Toast.LENGTH_LONG).show();
+            }
+            new ItemsDetails().execute();
         }
     }
 }

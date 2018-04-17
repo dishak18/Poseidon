@@ -51,9 +51,11 @@
     <string name="file_statistics"><b>File Statistics</b></string>
     <string name="oops">Oops, no items to show!</string>
     <string name="account_balance">Pay from your Account Balance: </string>
-
+    <string name="sales_license"> Choose the licenses that your items are sold under. Note that not all licenses will be used for all types of items. The standard single-use license is mandatory.</string>
 
     <string name="extended_use_license">A template for a web service such as WPMU, or as a part of a software package for sale</string>
     <string name="personal_use_license"><b>You can use this item in a Website (commercial, personal, client) or Intranet Site Project</b> </string>
     <string name="prepaid_benefit">With our deposit system, not only will purchasing be much faster, but we\'ll also take off the price!</string>
+    <string name="title_activity_my_account">MyAccount</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>

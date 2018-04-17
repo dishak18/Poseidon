@@ -20,10 +20,21 @@ import com.example.admin.litebulb.SQL.SQLiteHandler;
 import com.example.admin.litebulb.SQL.SessionManager;
 
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
+
+import static com.example.admin.litebulb.ItemClickFragment.CONNECTION_TIMEOUT;
+import static com.example.admin.litebulb.ItemClickFragment.READ_TIMEOUT;
 
 
 public class LoginActivity extends Activity {
@@ -36,6 +47,7 @@ public class LoginActivity extends Activity {
     private String username,password;
     private SharedPreferences.Editor loginPrefsEditor;
     private SessionManager session;
+    String status;
     private SQLiteHandler db;
     JSONParser jsonParser=new JSONParser();
     CheckBox remember_me;
@@ -78,9 +90,10 @@ public class LoginActivity extends Activity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AttemptLogin attemptLogin= new AttemptLogin();
+                new UserDetails().execute();
+                /*AttemptLogin attemptLogin= new AttemptLogin();
                 attemptLogin.execute(inputName.getText().toString(),inputPassword.getText().toString(),"");
-            }
+       */     }
         });
 
        /* btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -159,94 +172,6 @@ public class LoginActivity extends Activity {
         /*startActivity(new Intent(LoginActivity.this, MainActivity.class));
         LoginActivity.this.finish();*/
     }
-
-
-    /**
-     * function to verify login details in mysql db
-     * */
-   /* private void checkLogin(final String username, final String password) {
-        // Tag used to cancel the request
-        String tag_string_req = "req_login";
-
-        pDialog.setMessage("Logging in ...");
-        showDialog();
-
-        StringRequest strReq = new StringRequest(Method.POST, AppConfig.URL_LOGIN, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.e("Login", "Login Response: " + response.toString());
-                Log.e("LOGIN ACTIVITY", username+"");
-                hideDialog();
-
-                try {
-                    JSONObject jObj = new JSONObject(response);
-                    boolean error = jObj.getBoolean("error");
-
-                    // Check for error node in json
-                    if (!error) {
-                        // user successfully logged in
-                        // Create login session
-                        session.setLogin(true);
-
-                        // Now store the user in SQLite
-                        String uid = jObj.getString("user_id");
-
-                        JSONObject user = jObj.getJSONObject("user");
-                        String username = user.getString("username");
-                        String email = user.getString("email");
-                        String created_at = user
-                                .getString("register_datetime");
-
-                        // Inserting row in users table
-                        db.addUser(username, email, uid, created_at);
-
-                        // Launch main activity
-                        Intent intent = new Intent(LoginActivity.this,
-                                MainActivity.class);
-                        startActivity(intent);
-                        finish();
-                    } else {
-                        // Error in login. Get the error message
-                        String errorMsg = jObj.getString("error_msg");
-                        Toast.makeText(getApplicationContext(),
-                                errorMsg, Toast.LENGTH_LONG).show();
-                    }
-                } catch (JSONException e) {
-                    // JSON error
-                    e.printStackTrace();
-                    Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                }
-
-            }
-        }
-        , new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("LOGINACTIVITY","Login Error: " + error.getMessage());
-                Toast.makeText(getApplicationContext(),
-                        error.getMessage(), Toast.LENGTH_LONG).show();
-                hideDialog();
-            }
-        })
-        {
-
-            @Override
-            protected Map<String, String> getParams() {
-                // Posting parameters to login url
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("username", username);
-                params.put("password", password);
-
-                return params;
-            }
-
-        };
-*/
-/*        // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
-    }*/
-
     private void showDialog() {
         if (!pDialog.isShowing())
             pDialog.show();
@@ -283,8 +208,6 @@ public class LoginActivity extends Activity {
                 params.add(new BasicNameValuePair("email",email));
 
             JSONObject json = jsonParser.makeHttpRequest(AppConfig.URL, "POST", params);
-
-
             return json;
 
         }
@@ -293,20 +216,46 @@ public class LoginActivity extends Activity {
             try {
                 if (result != null) {
                     Log.e("LOGINACTIVITY", "Successfully done!"+result.getString("message"));
-                    Toast.makeText(getApplicationContext(), result.getString("message"), Toast.LENGTH_LONG).show();
+
+                    username=inputName.getText().toString();
+                    password=inputPassword.getText().toString();
+                    Log.e("LoginActivity", "this is the username in the login activity "+username);
+
+                    loginPrefsEditor.putString("username", username);
+                    loginPrefsEditor.apply();
                     if (remember_me.isChecked()) {
                         loginPrefsEditor.putBoolean("saveLogin", true);
-                        loginPrefsEditor.putString("username", username);
                         loginPrefsEditor.putString("password", password);
-                        loginPrefsEditor.commit();
+                        loginPrefsEditor.apply();
                     } else {
                         loginPrefsEditor.clear();
-                        loginPrefsEditor.commit();
+                        loginPrefsEditor.putString("username", username);
+                        loginPrefsEditor.apply();
                     }
                     if (result.getString("message").equals("Successfully logged in")) {
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        doSomethingElse();
+                        if(status.equals("activate"))
+                        {
+                            Toast.makeText(getApplicationContext(), result.getString("message"), Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
+                        }
+                        else if(status.equals("waiting"))
+                        {
+                            Toast.makeText(getApplicationContext(),
+                                    "Your account has not yet been activated", Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                        else if(status.equals("suspended"))
+                        {
+                            Toast.makeText(getApplicationContext(),
+                                    "Your account has been suspended!", Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                        else {
+
+                        }
+
+                       // doSomethingElse();
 
                     }
 
@@ -327,6 +276,111 @@ public class LoginActivity extends Activity {
 
         }
     }
+    private class UserDetails extends AsyncTask<String, String, String> {
+        ProgressDialog pdLoading = new ProgressDialog(LoginActivity.this);
+        HttpURLConnection conn;
+        URL url = null;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            pdLoading.setMessage("\tLoading...");
+            pdLoading.setCancelable(false);
+            pdLoading.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+
+                // Enter URL address where your json file resides
+                // Even you can make call to php file which returns json data
+                url = new URL(AppConfig.URL_USER_FEATURED);
+
+            } catch (MalformedURLException e) {
+
+                e.printStackTrace();
+                return e.toString();
+            }
+            try {
+
+                // Setup HttpURLConnection class to send and receive data from php and mysql
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setReadTimeout(READ_TIMEOUT);
+                conn.setConnectTimeout(CONNECTION_TIMEOUT);
+                conn.setRequestMethod("GET");
+
+                // setDoOutput to true as we recieve data from json file
+                conn.setDoOutput(true);
+
+            } catch (IOException e1) {
+
+                e1.printStackTrace();
+                return e1.toString();
+            }
+
+            try {
+
+                int response_code = conn.getResponseCode();
+
+                // Check if successful connection made
+                if (response_code == HttpURLConnection.HTTP_OK) {
+
+                    // Read data sent from server
+                    InputStream input = conn.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+                    StringBuilder result = new StringBuilder();
+                    String line;
+
+                    while ((line = reader.readLine()) != null) {
+                        result.append(line);
+                    }
+
+                    // Pass data to onPostExecute method
+                    return (result.toString());
+
+                } else {
+
+                    return ("unsuccessful");
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                return e.toString();
+            } finally {
+                conn.disconnect();
+            }
+
+
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            pdLoading.dismiss();
+            try {
+
+                JSONArray jArray = new JSONArray(result);
+
+                // Extract data from json and store into ArrayList as class objects
+                for(int i=0;i<jArray.length();i++){
+                    JSONObject json_data = jArray.getJSONObject(i);
+                    //DataFish fishData = new DataFish();
+                    status=json_data.getString("status");
+                    Log.e("LoginActivity", "This is the status "+status);
+                }
+
+            } catch (JSONException e) {
+                Toast.makeText(LoginActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+            }
+            AttemptLogin attemptLogin= new AttemptLogin();
+            attemptLogin.execute(inputName.getText().toString(),inputPassword.getText().toString(),"");
+        }
+
+    }
+
 
 }
 

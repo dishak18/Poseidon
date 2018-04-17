@@ -1,7 +1,10 @@
 package com.example.admin.litebulb;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
@@ -14,17 +17,23 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.bumptech.glide.Glide;
 import com.example.admin.litebulb.Adapters.ExpandableListAdapter;
 import com.example.admin.litebulb.BottomBarFragments.BlankFragment1;
 import com.example.admin.litebulb.BottomBarFragments.BlankFragment2;
@@ -42,10 +51,19 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
+import static com.example.admin.litebulb.ItemClickFragment.CONNECTION_TIMEOUT;
+import static com.example.admin.litebulb.ItemClickFragment.READ_TIMEOUT;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -55,15 +73,24 @@ public class MainActivity extends AppCompatActivity {
     ExpandableListAdapter mMenuAdapter;
     NavigationView navigationView;
     BottomBar bottomBar;
+    String username="";
+    ImageView image_on_top;
     private DatabaseReference mCategoriesRef;
     ArrayList<String> mLocation=new ArrayList<>();
     ArrayAdapter<String> list_adapter;
     private ActionBarDrawerToggle actionBarDrawerToggle;
-    private SharedPreferences preferences;
+    private SharedPreferences preferences, loginPreferences;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        LinearLayout rel=(LinearLayout) findViewById(R.id.rel);
+        LayoutInflater inflater=(LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View vi=inflater.inflate(R.layout.navigation_header, null);
+        TextView name_of_user_on_top=(TextView) vi.findViewById(R.id.name_of_user_on_top);
+        image_on_top=(ImageView) vi.findViewById(R.id.image_on_top);
+
+        new UserDetails().execute();
 
         drawerLayout=(DrawerLayout)findViewById(R.id.d1);
         actionBarDrawerToggle= new ActionBarDrawerToggle(this,drawerLayout, R.string.Open, R.string.Close);
@@ -73,6 +100,14 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
 
         preferences = getApplicationContext().getSharedPreferences("preferences", MODE_PRIVATE);
+        loginPreferences = getApplicationContext().getSharedPreferences("loginPrefs", MODE_PRIVATE);
+
+        Log.e("MainActivity", "this is username: "+loginPreferences.getString("username", ""));
+        username=loginPreferences.getString("username", "");
+        name_of_user_on_top.setText(username);
+
+        //check this 17th march 2018
+//        rel.addView(vi);
 
         bottomBar= (BottomBar) findViewById(R.id.bottomBar);
         bottomBar.setDefaultTabPosition(2);
@@ -167,19 +202,26 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(MenuItem item) {
                 // Handle Right navigation view item clicks here.
                 int id = item.getItemId();
+                if(username.equals(""))
+                {
+                    Toast.makeText(MainActivity.this, "Please login to view these options", Toast.LENGTH_SHORT).show();
+                    Intent intent=new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }else {
 
-                if (id == R.id.portfolio) {
-                    switchToUserPortfolio();
-                    Toast.makeText(MainActivity.this, "Right Drawer - Settings", Toast.LENGTH_SHORT).show();
-                } else if (id == R.id.download) {
-                    Toast.makeText(MainActivity.this, "Right Drawer - Logout", Toast.LENGTH_SHORT).show();
-                } else if (id == R.id.collection) {
-                    Toast.makeText(MainActivity.this, "Right Drawer - Help", Toast.LENGTH_SHORT).show();
-                } else if (id == R.id.deposit) {
-                    Toast.makeText(MainActivity.this, "Right Drawer - About", Toast.LENGTH_SHORT).show();
+
+                    if (id == R.id.portfolio) {
+                        switchToUserPortfolio();
+                        //Toast.makeText(MainActivity.this, "Right Drawer - Settings", Toast.LENGTH_SHORT).show();
+                    } else if (id == R.id.download) {
+                        //Toast.makeText(MainActivity.this, "Right Drawer - Logout", Toast.LENGTH_SHORT).show();
+                    } else if (id == R.id.collection) {
+                        //Toast.makeText(MainActivity.this, "Right Drawer - Help", Toast.LENGTH_SHORT).show();
+                    } else if (id == R.id.deposit) {
+                        //Toast.makeText(MainActivity.this, "Right Drawer - About", Toast.LENGTH_SHORT).show();
+                    }
+                    drawerLayout.closeDrawer(GravityCompat.END); /*Important Line*/
                 }
-
-                drawerLayout.closeDrawer(GravityCompat.END); /*Important Line*/
                 return true;
             }
         });
@@ -247,10 +289,27 @@ public class MainActivity extends AppCompatActivity {
         rightNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                if(username.equals(""))
+                {
+                    Toast.makeText(MainActivity.this, "Please login to view these options", Toast.LENGTH_SHORT).show();
+                    Intent intent=new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }else {
 
-                Intent intent= new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
-                drawerLayout.closeDrawer(GravityCompat.END);
+
+                    if (id == R.id.portfolio) {
+                        switchToUserPortfolio();
+                        //Toast.makeText(MainActivity.this, "Right Drawer - Settings", Toast.LENGTH_SHORT).show();
+                    } else if (id == R.id.download) {
+                        //Toast.makeText(MainActivity.this, "Right Drawer - Logout", Toast.LENGTH_SHORT).show();
+                    } else if (id == R.id.collection) {
+                        //Toast.makeText(MainActivity.this, "Right Drawer - Help", Toast.LENGTH_SHORT).show();
+                    } else if (id == R.id.deposit) {
+                        //Toast.makeText(MainActivity.this, "Right Drawer - About", Toast.LENGTH_SHORT).show();
+                    }
+                    drawerLayout.closeDrawer(GravityCompat.END); /*Important Line*/
+                }
                 return true;
             }
         });
@@ -398,6 +457,9 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction().replace(R.id.contentContainer, new UserPortfolio()).addToBackStack(null).commit();
     }
+    public void switchToDashBoard(){
+
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -410,4 +472,117 @@ public class MainActivity extends AppCompatActivity {
                 super.onOptionsItemSelected(item);
 
     }
+    private class UserDetails extends AsyncTask<String, String, String> {
+        ProgressDialog pdLoading = new ProgressDialog(MainActivity.this);
+        HttpURLConnection conn;
+        URL url = null;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            pdLoading.setMessage("\tLoading...");
+            pdLoading.setCancelable(false);
+            pdLoading.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+
+                // Enter URL address where your json file resides
+                // Even you can make call to php file which returns json data
+                url = new URL(AppConfig.URL_USER_FEATURED);
+
+            } catch (MalformedURLException e) {
+
+                e.printStackTrace();
+                return e.toString();
+            }
+            try {
+
+                // Setup HttpURLConnection class to send and receive data from php and mysql
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setReadTimeout(READ_TIMEOUT);
+                conn.setConnectTimeout(CONNECTION_TIMEOUT);
+                conn.setRequestMethod("GET");
+
+                // setDoOutput to true as we recieve data from json file
+                conn.setDoOutput(true);
+
+            } catch (IOException e1) {
+
+                e1.printStackTrace();
+                return e1.toString();
+            }
+
+            try {
+
+                int response_code = conn.getResponseCode();
+
+                // Check if successful connection made
+                if (response_code == HttpURLConnection.HTTP_OK) {
+
+                    // Read data sent from server
+                    InputStream input = conn.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+                    StringBuilder result = new StringBuilder();
+                    String line;
+
+                    while ((line = reader.readLine()) != null) {
+                        result.append(line);
+                    }
+
+                    // Pass data to onPostExecute method
+                    return (result.toString());
+
+                } else {
+
+                    return ("unsuccessful");
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                return e.toString();
+            } finally {
+                conn.disconnect();
+            }
+
+
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            pdLoading.dismiss();
+            try {
+
+                JSONArray jArray = new JSONArray(result);
+
+                // Extract data from json and store into ArrayList as class objects
+                for(int i=0;i<jArray.length();i++){
+                    JSONObject json_data = jArray.getJSONObject(i);
+                    //DataFish fishData = new DataFish();
+                    if(username.equals(json_data.getString("username")))
+                    {
+                        String thumbnail = json_data.getString("avatar");
+                        String image_url = AppConfig.URL_PHOTOS + thumbnail;
+                        Glide.with(MainActivity.this)
+                                .load(image_url)
+                                .placeholder(R.drawable.loader)
+                                .error(R.drawable.studio)
+                                .into(image_on_top);
+
+                    }
+
+                }
+
+            } catch (JSONException e) {
+                Toast.makeText(MainActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+            }
+        }
+
+    }
+
 }
