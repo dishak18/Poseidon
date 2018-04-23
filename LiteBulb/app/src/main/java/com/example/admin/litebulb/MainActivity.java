@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
         actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         //expandableList= (ExpandableListView) findViewById(R.id.navigationmenu);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
+
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
 
         preferences = getApplicationContext().getSharedPreferences("preferences", MODE_PRIVATE);
