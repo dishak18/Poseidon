@@ -18,6 +18,8 @@ public class PaymentFragment extends Fragment {
         referenceActivity = getActivity();
         parentHolder = inflater.inflate(R.layout.fragment_payment, container,
                 false);
+
         return parentHolder;
     }
+
 }

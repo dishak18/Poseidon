@@ -122,7 +122,7 @@
                 android:padding="10dp"
                 android:text="Remember Me"
                 android:textColor="#fff"
-                 />
+                />
 
             <Button
                 android:id="@+id/log"
@@ -155,7 +155,7 @@
                     android:layout_marginBottom="10dp"
                     android:textColor="#fff"
                     android:textSize="20dp"></TextView>
-                <ImageButton
+                <!--<ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent"
@@ -163,6 +163,36 @@
                     android:layout_marginTop="12dp"
                     android:paddingRight="20dp"
                     />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="20"
+                    android:background="@android:color/transparent"
+                    android:text="Or"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="#fff"
+                    android:textSize="20dp"></TextView>
+
+                <ImageButton
+                    android:layout_width="45dp"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_google_final"
+                    android:layout_marginTop="12dp"
+                    android:paddingRight="20dp"/>-->
+                <com.facebook.login.widget.LoginButton
+                    android:id="@+id/facebook_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <!--<ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/fb_logo"
+                    android:layout_marginTop="12dp"
+                    android:paddingRight="20dp"-->
+                />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -182,6 +212,14 @@
                     android:paddingRight="20dp">
 
                 </com.google.android.gms.common.SignInButton>
+
+                <Button
+                    android:layout_width="45dp"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_google_final"
+                    android:layout_marginTop="12dp"
+                    android:paddingRight="20dp"/>
             </LinearLayout>
 
 
