@@ -49,8 +49,8 @@ public class UserPortfolio extends Fragment {
 
     TextView user_name_tv;
     int user_id;
-    String user_name;
-    int count;
+    String user_name, user_name_from_view_portfolio;
+    int count=0;
 
     Activity referenceActivity;
     DatabaseReference myRef;
@@ -72,13 +72,29 @@ public class UserPortfolio extends Fragment {
 
         Log.e("MainActivity", "this is username: "+loginPreferences.getString("username", ""));
         user_name=loginPreferences.getString("username", "");
+        try
+        {
+            user_name_from_view_portfolio=getArguments().getString("username")+"";
+
+
+        if(!(user_name_from_view_portfolio.equals("")||user_name_from_view_portfolio==null))
+        {
+            user_name=user_name_from_view_portfolio;
+        }
+        else
+        {
+            user_name=loginPreferences.getString("username", "");
+        }
+        }catch(NullPointerException e)
+        {
+
+        }
 
         userPortfolioList = new ArrayList<>();
         database = FirebaseDatabase.getInstance();
         parentHolder = inflater.inflate(R.layout.fragment_user_portfolio, container,
                 false);
         myRef = database.getReference().child("items");
-        count=0;
         user_name_tv=(TextView) parentHolder.findViewById(R.id.user_name);
         oops=(TextView) parentHolder.findViewById(R.id.oops);
         user_name_tv.setText(user_name);
@@ -90,14 +106,6 @@ public class UserPortfolio extends Fragment {
         rvUserPortfolio.setAdapter(adapter_user_portfolio);
 
         new UserDetails().execute();
-        if(count==0)
-        {
-            oops.setText(getResources().getString(R.string.oops));
-        }
-        else
-        {
-            oops.setText("");
-        }
         adapter_user_portfolio.notifyDataSetChanged();
         return parentHolder;
     }

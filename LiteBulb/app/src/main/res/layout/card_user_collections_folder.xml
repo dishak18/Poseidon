@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:fresco="http://schemas.android.com/tools">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="@dimen/card_margin"
+        android:layout_margin="@dimen/card_margin"
+        android:elevation="3dp"
+        card_view:cardCornerRadius="@dimen/card_album_radius">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/card_margin"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/thumbnail"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:scaleType="fitXY" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="10"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:layout_marginBottom="@dimen/card_margin"
+                    android:textColor="@drawable/gradient_background"
+                    android:textSize="20sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:id="@+id/public_collection"
+                    android:layout_weight="2"
+                    android:text="Public"
+                    android:textColor="@drawable/gradient_background"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_marginEnd="3dp"
+                    android:layout_marginRight="3dp"
+                    android:layout_weight="2"
+                    android:id="@+id/private_collection"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:text="Private"
+                    android:textColor="@drawable/gradient_background"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="12"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="12dp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:textSize="@dimen/songs_count" />
+
+                <TextView
+                    android:id="@+id/votes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:textSize="@dimen/songs_count" />
+                <TextView
+                    android:id="@+id/items"
+                    android:layout_weight="2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="@dimen/songs_count" />
+                <TextView
+                    android:id="@+id/view_items"
+                    android:layout_width="wrap_content"
+                    android:clickable="true"
+                    android:layout_weight="2"
+                    android:focusable="true"
+                    android:text="View Items"
+                    android:textColor="@drawable/gradient_background"
+                    android:layout_height="match_parent"
+                    android:textSize="@dimen/songs_count" />
+                <TextView
+                    android:id="@+id/delete"
+                    android:layout_width="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_weight="2"
+                    android:text="Delete"
+                    android:textColor="@drawable/gradient_background"
+                    android:layout_height="match_parent"
+                    android:textSize="@dimen/songs_count" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

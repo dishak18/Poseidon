@@ -10,6 +10,7 @@
     <color name="input_login">#222222</color>
     <color name="input_login_hint">#999999</color>
     <color name="input_register">#888888</color>
+    <color name="grey">#CCCCCC</color>
     <color name="input_register_bg">#3b4148</color>
     <color name="input_register_hint">#5e6266</color>
     <color name="btn_login">#26ae90</color>

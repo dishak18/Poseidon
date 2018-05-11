@@ -142,7 +142,6 @@ public class TabFragment extends android.support.v4.app.Fragment {
 
                 @Override
                 public void onNothingSelected(AdapterView<?> arg0) {
-                    // TODO Auto-generated method stub
                 }
             };
 

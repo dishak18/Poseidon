@@ -51,6 +51,13 @@
                 android:layout_height="wrap_content"
                 android:hint="Re-enter New Password"/>
 
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Save Changes"
+                android:id="@+id/save"
+                />
+
 
         </LinearLayout>
 

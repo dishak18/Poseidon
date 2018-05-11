@@ -96,7 +96,7 @@ public class LoginActivity extends Activity {
         back_btn=(ImageButton) findViewById(R.id.back);
 
         googleButton = (SignInButton) findViewById(R.id.google_sign_in);
-
+        username=inputName.getText().toString().trim();
         loginButton = (LoginButton) findViewById(R.id.facebook_login);
 
         mCallbackManager = CallbackManager.Factory.create();
@@ -120,13 +120,13 @@ public class LoginActivity extends Activity {
             }
         });
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+        /*btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AttemptLogin attemptLogin= new AttemptLogin();
                 attemptLogin.execute(inputName.getText().toString(),inputPassword.getText().toString(),"");
             }
-        });
+        });*/
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -162,12 +162,12 @@ public class LoginActivity extends Activity {
         session = new SessionManager(getApplicationContext());
 
         // Check if user is already logged in or not
-        if (session.isLoggedIn()) {
+        /*if (session.isLoggedIn()) {
             // User is already logged in. Take him to main activity
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
-        }
+        }*/
 
         // Login button Click Event
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -237,13 +237,15 @@ public class LoginActivity extends Activity {
         });
         loginPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
         loginPrefsEditor = loginPreferences.edit();
+        loginPrefsEditor.clear();
+        loginPrefsEditor.commit();
 
         saveLogin = loginPreferences.getBoolean("saveLogin", false);
-        if (saveLogin == true) {
+       /* if (saveLogin == true) {
             inputName.setText(loginPreferences.getString("username", ""));
             inputPassword.setText(loginPreferences.getString("password", ""));
             remember_me.setChecked(true);
-        }
+        }*/
 
 
     }
@@ -490,19 +492,22 @@ public class LoginActivity extends Activity {
                 if (result != null) {
                     Log.e("LOGINACTIVITY", "Successfully done!"+result.getString("message"));
                     Toast.makeText(getApplicationContext(), result.getString("message"), Toast.LENGTH_LONG).show();
-                    if (remember_me.isChecked()) {
-                        loginPrefsEditor.putBoolean("saveLogin", true);
-                        loginPrefsEditor.putString("username", username);
-                        loginPrefsEditor.putString("password", password);
-                        loginPrefsEditor.commit();
-                    } else {
+                    Log.e("LoginActivity", " this is the username ");
+
+
+
+                    if (result.getString("message").equals("Successfully logged in")) {
                         loginPrefsEditor.clear();
                         loginPrefsEditor.commit();
-                    }
-                    if (result.getString("message").equals("Successfully logged in")) {
+                        loginPrefsEditor.putBoolean("saveLogin", true);
+                        loginPrefsEditor.putString("username", inputName.getText().toString().trim());
+                        Log.e("LoginActivity", "this hahahahhahhaha "+loginPreferences.getString("username", ""));
+
+                        loginPrefsEditor.putString("password", password);
+                        loginPrefsEditor.commit();
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
-                        doSomethingElse();
+                        //doSomethingElse();
 
                     }
 

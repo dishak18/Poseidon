@@ -79,13 +79,13 @@
                     android:hint="Lives In"/>
             </android.support.design.widget.TextInputLayout>
 
-            <Spinner
+            <!--<Spinner
                 android:layout_width="match_parent"
                 android:id="@+id/country"
                 android:layout_marginBottom="10dp"
                 android:layout_height="wrap_content">
 
-            </Spinner>
+            </Spinner>-->
             <Switch
                 android:layout_width="match_parent"
                 android:id="@+id/login_with_fb"
@@ -116,6 +116,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="SAVE CHANGES"
+                android:id="@+id/save"
                 android:background="#fff"
                 android:layout_marginBottom="10dp"
                 android:textAlignment="center"/>

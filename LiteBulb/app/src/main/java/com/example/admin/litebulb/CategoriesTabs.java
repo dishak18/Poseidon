@@ -1,9 +1,9 @@
 package com.example.admin.litebulb;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,6 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -40,19 +42,6 @@ import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
 
 public class CategoriesTabs extends AppCompatActivity {
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
-    //private SectionsPagerAdapter mSectionsPagerAdapter;
-
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
     private ViewPager mViewPager;
     TabLayout tabLayout;
     private ProgressDialog mProgress;
@@ -61,7 +50,7 @@ public class CategoriesTabs extends AppCompatActivity {
     String name, thumbnail, meta_title, sub_of, categories;
     private ArrayList<TabsModel> categoriesTabs = new ArrayList<>();
     private SharedPreferences preferences;
-    private FloatingActionButton floatingActionButton;
+    //private FloatingActionButton floatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +63,17 @@ public class CategoriesTabs extends AppCompatActivity {
         setSupportActionBar(toolbar);
         mProgress.show();
         mCategoriesRef = FirebaseDatabase.getInstance().getReference().child("categories");
-        floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
+        //floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
+        ImageButton home=(ImageButton) findViewById(R.id.home);
+
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(CategoriesTabs.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
         mCategoriesRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -122,6 +121,7 @@ public class CategoriesTabs extends AppCompatActivity {
                 adapter.addFrag(tabs[i], categoriesTabs.get(i).getMetaTitle());
             }
         }
+
         mViewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(mViewPager);
         preferences = getSharedPreferences("preferences", MODE_PRIVATE);
@@ -144,14 +144,10 @@ public class CategoriesTabs extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.home) {
+            Intent intent=new Intent(CategoriesTabs.this, LoginActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

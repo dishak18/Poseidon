@@ -58,4 +58,6 @@
     <string name="prepaid_benefit">With our deposit system, not only will purchasing be much faster, but we\'ll also take off the price!</string>
     <string name="title_activity_my_account">MyAccount</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="exclusive_author1">Agreeing to keep your portfolio of items fot sale exclusive to the marketplace entitles you to a higher percentage of each sale- From 40% to 70%. You can sell other items elsewhere(on other marketplace, your own website) however any item you place on a marketplace must be exclusively sold there.</string>
+    <string name="exclusive_author2">You can opt out of the exclusivity program by clicking the button below. You will be gven 30 days grace period wherein the agreement is still observed after which your payemnts will return to normal and you may commence selling your items elsewhere.</string>
 </resources>

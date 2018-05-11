@@ -105,7 +105,12 @@ public class MainActivity extends AppCompatActivity {
 
         Log.e("MainActivity", "this is username: "+loginPreferences.getString("username", ""));
         username=loginPreferences.getString("username", "");
-        name_of_user_on_top.setText(username);
+       // name_of_user_on_top.setText(username);
+
+
+        rightNavigationView = (NavigationView) findViewById(R.id.users_nav_view);
+
+       // rightNavigationView.addHeaderView(name_of_user_on_top);
 
         //check this 17th march 2018
 //        rel.addView(vi);
@@ -191,12 +196,16 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //final NavigationView nav_view=(NavigationView)findViewById(R.id.nav_view);
         mCategoriesRef = FirebaseDatabase.getInstance().getReference().child("categories");
-        rightNavigationView = (NavigationView) findViewById(R.id.users_nav_view);
+
 
 
         list_adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, mLocation);
 
+        if(drawerLayout.isDrawerOpen(GravityCompat.END))
+        {
 
+            drawerLayout.closeDrawer(rightNavigationView);
+        }
 
         rightNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -215,11 +224,19 @@ public class MainActivity extends AppCompatActivity {
                         switchToUserPortfolio();
                         //Toast.makeText(MainActivity.this, "Right Drawer - Settings", Toast.LENGTH_SHORT).show();
                     } else if (id == R.id.download) {
+                        switchToDownloads();
+                    } else if(id==R.id.my_account){
+                        switchToMyAccount();
                         //Toast.makeText(MainActivity.this, "Right Drawer - Logout", Toast.LENGTH_SHORT).show();
                     } else if (id == R.id.collection) {
+                        switchToCollectionsFolder();
                         //Toast.makeText(MainActivity.this, "Right Drawer - Help", Toast.LENGTH_SHORT).show();
                     } else if (id == R.id.deposit) {
+                        switchToDeposit();
                         //Toast.makeText(MainActivity.this, "Right Drawer - About", Toast.LENGTH_SHORT).show();
+                    } else if(id==R.id.dashboard)
+                    {
+                        switchToLogin();
                     }
                     drawerLayout.closeDrawer(GravityCompat.END); /*Important Line*/
                 }
@@ -291,6 +308,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
+
                 if(username.equals(""))
                 {
                     Toast.makeText(MainActivity.this, "Please login to view these options", Toast.LENGTH_SHORT).show();
@@ -303,11 +321,20 @@ public class MainActivity extends AppCompatActivity {
                         switchToUserPortfolio();
                         //Toast.makeText(MainActivity.this, "Right Drawer - Settings", Toast.LENGTH_SHORT).show();
                     } else if (id == R.id.download) {
+                        switchToDownloads();
+                    } else if(id==R.id.my_account){
+                        switchToMyAccount();
+
                         //Toast.makeText(MainActivity.this, "Right Drawer - Logout", Toast.LENGTH_SHORT).show();
                     } else if (id == R.id.collection) {
+                        switchToCollectionsFolder();
                         //Toast.makeText(MainActivity.this, "Right Drawer - Help", Toast.LENGTH_SHORT).show();
                     } else if (id == R.id.deposit) {
+                        switchToDeposit();
                         //Toast.makeText(MainActivity.this, "Right Drawer - About", Toast.LENGTH_SHORT).show();
+                    } else if(id==R.id.dashboard)
+                    {
+                        switchToLogin();
                     }
                     drawerLayout.closeDrawer(GravityCompat.END); /*Important Line*/
                 }
@@ -458,9 +485,36 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction().replace(R.id.contentContainer, new UserPortfolio()).addToBackStack(null).commit();
     }
-    public void switchToDashBoard(){
-
+    public void switchToMyAccount(){
+        Intent intent=new Intent(MainActivity.this, MyAccount.class);
+        startActivity(intent);
     }
+    public void switchToCollectionsFolder() {
+        FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction().replace(R.id.contentContainer, new UserCollectionFolderFragment()).addToBackStack(null).commit();
+    }
+    public void switchToDownloads() {
+        FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction().replace(R.id.contentContainer, new DownloadFragment()).addToBackStack(null).commit();
+    }
+    public void switchToEarnings() {
+        FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction().replace(R.id.contentContainer, new UserCollectionFolderFragment()).addToBackStack(null).commit();
+    }
+    public void switchToStatements() {
+        FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction().replace(R.id.contentContainer, new UserCollectionFolderFragment()).addToBackStack(null).commit();
+    }
+    public void switchToDeposit() {
+        FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction().replace(R.id.contentContainer, new DepositFragment()).addToBackStack(null).commit();
+    }
+    public void switchToLogin()
+    {
+        Intent intent=new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();

@@ -3,7 +3,9 @@ package com.example.admin.litebulb.Adapters;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.util.Log;
 
+import com.example.admin.litebulb.ExclusiveFragment;
 import com.example.admin.litebulb.PasscodeFragment;
 import com.example.admin.litebulb.ProfileEdit;
 import com.example.admin.litebulb.SalesLicense;
@@ -40,8 +42,14 @@ public class MyAccountAdapter extends FragmentStatePagerAdapter {
             case 3:
                 SocialProfileFragment socialProfileFragment=new SocialProfileFragment();
                 return socialProfileFragment;
+            case 4:
+                ExclusiveFragment exclusiveFragment=new ExclusiveFragment();
+                Log.e("MyAccountAdapter", "This is the default case in switch ");
+                return exclusiveFragment;
             default:
-                return null;
+                ProfileEdit profileEdit1=new ProfileEdit();
+                Log.e("MyAccountAdapter", "This is the default case in switch ");
+                return profileEdit1;
         }
     }
 

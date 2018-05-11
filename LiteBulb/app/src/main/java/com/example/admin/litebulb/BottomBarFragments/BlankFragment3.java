@@ -247,8 +247,11 @@ public class BlankFragment3 extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
+                /*Toast.makeText(referenceActivity,
+                        error.getMessage(), Toast.LENGTH_SHORT).show();*/
                 Toast.makeText(referenceActivity,
-                        error.getMessage(), Toast.LENGTH_SHORT).show();
+                        "Please check your network connection.",
+                        Toast.LENGTH_LONG).show();
                 hidepDialog();
             }
         });
@@ -353,7 +356,7 @@ public class BlankFragment3 extends Fragment {
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Toast.makeText(referenceActivity,
-                                    "Error: " + e.getMessage(),
+                                    "Please check your network connection.",
                                     Toast.LENGTH_LONG).show();
                         }
 
@@ -364,7 +367,8 @@ public class BlankFragment3 extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
                 Toast.makeText(referenceActivity,
-                        error.getMessage(), Toast.LENGTH_SHORT).show();
+                        "Please check your network connection.",
+                        Toast.LENGTH_LONG).show();
                 hidepDialog();
             }
         });

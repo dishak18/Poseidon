@@ -143,54 +143,6 @@
                 android:layout_marginBottom="3dp"
                 android:background="#FFFFFF">
             </View>
-
-            <EditText
-                android:id="@+id/phone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textColor="#fff"
-                android:background="@android:color/transparent"
-                android:drawableLeft="@drawable/ic_iphone_outline"
-                android:drawablePadding="12dp"
-                android:ems="10"
-                android:hint="@string/edittext_hint_phone"
-                android:inputType="textPhonetic"
-                android:textSize="20sp"
-                android:maxLines="1"
-                android:padding="8dp"
-                android:textColorHint="#fff" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="3dp"
-                android:background="#FFFFFF">
-            </View>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="36dp"
-                    android:text="Send me password by SMS"
-                    android:textColor="#FFFFFF"
-                    android:textSize="18dp"
-                    android:gravity="center"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="10dp"
-                    />
-
-                <Switch
-                    android:layout_width="62dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="36dp"
-                    android:thumbTint="#FFFFFF"
-                    android:shadowColor="@color/bg_login"
-                    android:trackTint="#919191" />
-            </LinearLayout>
             <Button
                 android:id="@+id/register"
                 style="@style/Base.TextAppearance.AppCompat.Body1"

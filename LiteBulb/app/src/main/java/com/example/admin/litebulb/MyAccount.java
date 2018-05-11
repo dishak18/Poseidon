@@ -1,9 +1,13 @@
 package com.example.admin.litebulb;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 
 import com.example.admin.litebulb.Adapters.MyAccountAdapter;
 
@@ -20,6 +24,18 @@ public class MyAccount extends AppCompatActivity implements PasscodeFragment.OnF
         tabLayout.addTab(tabLayout.newTab().setText("Social Profile"));
         tabLayout.addTab(tabLayout.newTab().setText("Exclusive Author"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+
+        ImageButton home=(ImageButton) findViewById(R.id.home);
+
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(MyAccount.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
         final ViewPager viewPager=(ViewPager) findViewById(R.id.pager);
 
@@ -32,6 +48,7 @@ public class MyAccount extends AppCompatActivity implements PasscodeFragment.OnF
             public void onTabSelected(TabLayout.Tab tab) {
 
                 viewPager.setCurrentItem(tab.getPosition());
+                Log.e("MyAccount", "This is the tab.getposition "+tab.getPosition()+"");
             }
 
             @Override
@@ -44,5 +61,14 @@ public class MyAccount extends AppCompatActivity implements PasscodeFragment.OnF
 
             }
         });
+        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.home);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Click action
+                Intent intent = new Intent(MyAccount.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });*/
     }
 }

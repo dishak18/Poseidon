@@ -5,6 +5,8 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -49,23 +52,24 @@ public class ItemClickFragment extends Fragment {
     String []tag_ids_array;
     String []names_of_attributes_categories;
     String []name_attributes_array;
-    String name, thumbnail, image_url, key;
+    String name, thumbnail, image_url, key, username_from_users_table;
     int id_of_items_table, price, id_of_badges;
     int itemId;
+   // SharedPreferences loginPreferences;
     ImageView top_image, image_author;
     public static final int CONNECTION_TIMEOUT = 10000;
     int item_id_of_items_attrbutes_table;
 
     private List<album> moreItems;
+    private AdapterItems adapter_more_items_by_user;
     String category_id, attribute_id;
     String id_of_attributes_categories_table, name_of_attributes_categories_table;
     String category_id_of_attributes_table, name_of_attributes_table, id_of_attributes_table;
     public static final int READ_TIMEOUT = 15000;
     TextView name_of_item, description, item_price, text_under_select_license, price_of_prepaid, all_about_user, name_of_user, tv_votes, tv_sales, tv_comments, tv_rating;
     Spinner select_license;
-    private AdapterItems adapter_more_items_by_user;
     TextView added_on, file_statistics, tags;
-
+    Button view_portfolio;
     RecyclerView rv_moreItems;
     String selectedItem, value, index, prepaid, badges_from_users, votes, rating, comments, sales;
     String user_id, user_id_from_item_table, name_of_badges, id_of_tags_table, name_of_tags, item_id_of_itemstotags_table, tag_id_of_itemstotags_table;
@@ -88,7 +92,7 @@ public class ItemClickFragment extends Fragment {
 
         moreItems = new ArrayList<>();
         adapter_more_items_by_user = new AdapterItems(referenceActivity, moreItems );
-
+        view_portfolio=(Button)parentHolder.findViewById(R.id.view_portfolio);
         RecyclerView.LayoutManager mLayoutManager= new LinearLayoutManager(getActivity(), GridLayoutManager.HORIZONTAL, false);
         rv_moreItems=(RecyclerView) parentHolder.findViewById(R.id.recycler_view_more_items);
 
@@ -140,7 +144,21 @@ public class ItemClickFragment extends Fragment {
 
         //new SystemDetails().execute();
 
+        view_portfolio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UserPortfolio fragment1 = new UserPortfolio();
+                Bundle args = new Bundle();
+                args.putString("username", username_from_users_table);
+                fragment1.setArguments(args);
+                FragmentManager fragmentManager =getFragmentManager();
+                FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.contentContainer, fragment1);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
 
+            }
+        });
         return parentHolder;
     }
 /*    @Override
@@ -519,6 +537,7 @@ public class ItemClickFragment extends Fragment {
                         all_about_user.setText("");
                         thumbnail = json_data.getString("avatar");
                         image_url = AppConfig.URL_PHOTOS + thumbnail;
+                        username_from_users_table=json_data.getString("username");
                         badges_from_users = json_data.getString("badges");
                         Log.e("lalala", "this user json " + badges_from_users+" haha");
 

@@ -1,24 +1,17 @@
 package com.example.admin.litebulb.Adapters;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.admin.litebulb.ItemClickFragment;
-import com.example.admin.litebulb.R;
 import com.example.admin.litebulb.Models.album;
+import com.example.admin.litebulb.R;
 
 import java.util.List;
 
@@ -50,16 +43,6 @@ public class AdapterFeaturedAll extends RecyclerView.Adapter<AdapterFeaturedAll.
 
 
         public void onClick(View view) {
-            Log.e("ADAPTER ITEMS", "this has been clicked + the ID is : "+itemId);
-            Toast.makeText(mContext, "Item Id : "+itemId, Toast.LENGTH_SHORT).show();
-            ItemClickFragment fragment1 = new ItemClickFragment();
-            Bundle args = new Bundle();
-            args.putInt("id", itemId);
-            fragment1.setArguments(args);
-            FragmentManager fragmentManager =((AppCompatActivity)view.getContext()).getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.contentContainer, fragment1);
-            fragmentTransaction.commit();
         }
     }
 

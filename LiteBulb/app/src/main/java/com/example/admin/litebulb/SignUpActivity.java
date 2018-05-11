@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -24,6 +25,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 public class SignUpActivity extends Activity {
@@ -52,7 +54,7 @@ public class SignUpActivity extends Activity {
         inputFullName = (EditText) findViewById(R.id.name);
         inputEmail = (EditText) findViewById(R.id.mail);
         inputPassword = (EditText) findViewById(R.id.pass);
-        inputPhone = (EditText) findViewById(R.id.phone);
+        //inputPhone = (EditText) findViewById(R.id.phone);
         btnRegister = (Button) findViewById(R.id.register);
         back_btn=(ImageButton) findViewById(R.id.back);
         profile_picture=(ImageView) findViewById(R.id.profile_image);
@@ -175,7 +177,11 @@ public class SignUpActivity extends Activity {
 
             //ImageView imageView = (ImageView) findViewById(R.id.imgView);
             profile_picture.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+            Bitmap image=BitmapFactory.decodeFile(picturePath);
 
+            ByteArrayOutputStream stream=new ByteArrayOutputStream();
+            image.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            byte imageInByte[]=stream.toByteArray();
         }
 
 

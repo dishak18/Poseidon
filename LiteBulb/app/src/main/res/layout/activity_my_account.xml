@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_content"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -18,27 +19,54 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         android:minHeight="?attr/actionBarSize"
         app:title="@string/app_name">
-        <Button
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Upload Avatar"
-            android:background="@android:color/transparent" />
+            android:layout_gravity="end"
+            android:layout_marginRight="5dp"
+            android:src="@mipmap/ic_home"
+            android:id="@+id/home"
+            android:background="@android:color/transparent"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp"/>
+
 
     </android.support.v7.widget.Toolbar>
-    <android.support.design.widget.TabLayout
+    <ScrollView
         android:layout_width="match_parent"
+        android:scrollbars="horizontal"
+        android:layout_height="wrap_content">
+    <android.support.design.widget.TabLayout
+        android:layout_width="wrap_content"
         android:id="@+id/tabLayout"
+        android:scrollbars="horizontal"
         android:background="@drawable/gradient_background"
         android:theme="@style/ThemeOverlay.AppCompat.Light"
         android:layout_height="wrap_content">
 
-
     </android.support.design.widget.TabLayout>
+    </ScrollView>
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" >
+    </android.support.v4.view.ViewPager>
+    <!--<android.support.design.widget.FloatingActionButton
+        android:id="@+id/home"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_gravity="bottom|end"
+        android:backgroundTint="#f54444"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@mipmap/ic_home"/>-->
 
-</RelativeLayout>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+
+</LinearLayout>

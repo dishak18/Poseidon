@@ -256,6 +256,7 @@
                                 android:layout_height="wrap_content"
                                 android:id="@+id/view_portfolio"
                                 android:layout_marginRight="@dimen/card_margin"
+                                android:padding="@dimen/card_margin"
                                 android:text="View Portfolio"
                                 android:background="@drawable/shapes"/>
 

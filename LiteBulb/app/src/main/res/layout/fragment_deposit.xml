@@ -1,0 +1,56 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/input_register"
+    tools:context="com.example.admin.litebulb.DepositFragment">
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_margin="18dp"
+        android:layout_height="350dp">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:scrollbars="vertical"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:textColor="@drawable/gradient_background"
+                android:text="Deposit Prepaid Cash" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:text="Select amount (Deposits are in US Dollars($). are non-refundable and will expire one year from your last deposit."/>
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:id="@+id/radioGroup"
+                android:layout_height="wrap_content">
+
+
+            </RadioGroup>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Pay Via Paypal"
+                android:id="@+id/pay"
+                android:textAllCaps="true"
+                android:background="@drawable/gradient_background"
+                android:textColor="#fff"/>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+    </android.support.v7.widget.CardView>
+
+</FrameLayout>
