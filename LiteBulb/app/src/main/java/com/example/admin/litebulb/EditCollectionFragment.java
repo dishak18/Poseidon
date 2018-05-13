@@ -362,8 +362,8 @@ public class EditCollectionFragment extends Fragment {
 
 
             } catch (JSONException e) {
-                Log.e("lala", "this haha in catch");
-                Toast.makeText(referenceActivity, e.toString(), Toast.LENGTH_LONG).show();
+                //Log.e("lala", "this haha in catch");
+                Toast.makeText(referenceActivity, "No internet connection", Toast.LENGTH_LONG).show();
             }
         }
 

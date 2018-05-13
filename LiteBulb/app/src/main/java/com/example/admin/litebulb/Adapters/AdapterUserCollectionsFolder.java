@@ -86,7 +86,9 @@ public class AdapterUserCollectionsFolder extends RecyclerView.Adapter<AdapterUs
                     FragmentManager fragmentManager =((AppCompatActivity)view.getContext()).getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.contentContainer, fragment1);
+                    fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
+
                 }
             });
             tv_delete.setOnClickListener(new View.OnClickListener() {

@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,10 +27,12 @@ public class AdpaterFollow extends RecyclerView.Adapter<AdpaterFollow.MyViewHold
     private List<Users_get> albumList;
     private AlbumsAdapterListener listener;
     public ImageView thumbnail;
+    String username;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title, sales_items, view_portfolio, unfollow;
         public ImageView thumbnail;
+
         public CardView cardView;
 
         public MyViewHolder(View view) {
@@ -49,16 +52,15 @@ public class AdpaterFollow extends RecyclerView.Adapter<AdpaterFollow.MyViewHold
                 public void onClick(View view) {
                     UserPortfolio fragment1 = new UserPortfolio();
                     Bundle args = new Bundle();
-
-                    //PUT HERE
-
-                    // args.putString("username", username_from_users_table);
+                    args.putString("username", username);
+                    Log.e("AdapterFollow", "This is the username taht wll go in the user portfolio thing "+username);
                     fragment1.setArguments(args);
                     FragmentManager fragmentManager =((AppCompatActivity)view.getContext()).getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.contentContainer, fragment1);
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
+
                 }
             });
             unfollow.setOnClickListener(new View.OnClickListener() {
@@ -89,6 +91,7 @@ public class AdpaterFollow extends RecyclerView.Adapter<AdpaterFollow.MyViewHold
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         Users_get Users_get = albumList.get(position);
+        username=Users_get.getUsername();
         holder.title.setText(Users_get.getUsername());
         holder.sales_items.setText("Author has "+Users_get.getItems()+" items for sale and has racked up "+Users_get.getSales()+" sales!");
         /*loading Users_get cover using Glide library*/

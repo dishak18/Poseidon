@@ -63,8 +63,9 @@ public class AdapterCollectionsFolder extends RecyclerView.Adapter<AdapterCollec
             fragment1.setArguments(args);
             FragmentManager fragmentManager =((AppCompatActivity)view.getContext()).getSupportFragmentManager();
             FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.contentContainer, fragment1);
+            fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
+
         }
     }
 

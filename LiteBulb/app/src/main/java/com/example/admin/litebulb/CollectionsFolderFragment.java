@@ -208,7 +208,7 @@ public class CollectionsFolderFragment extends Fragment {
 
             } catch (JSONException e) {
                 Log.e("lala", "this haha in catch");
-                Toast.makeText(referenceActivity, e.toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(referenceActivity, "Please check your internet connection", Toast.LENGTH_LONG).show();
             }
             //new ItemClickFragment.ItemDetails().execute();
 
@@ -325,7 +325,7 @@ public class CollectionsFolderFragment extends Fragment {
 
 
             } catch (JSONException e) {
-                Toast.makeText(referenceActivity, e.toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(referenceActivity,"Please check your internet connection", Toast.LENGTH_LONG).show();
                 Log.e("lala", " this haha is user catch");
             }
             new CollectionsDetails().execute();

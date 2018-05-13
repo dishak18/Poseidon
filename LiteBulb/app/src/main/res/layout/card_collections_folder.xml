@@ -39,23 +39,26 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
-                android:weightSum="10"
+                android:weightSum="8"
                 android:layout_marginBottom="12dp"
                 android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/user_name"
+                android:layout_weight="2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textSize="@dimen/songs_count" />
 
                 <TextView
                     android:id="@+id/votes"
+                    android:layout_weight="2"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:textSize="@dimen/songs_count" />
                 <TextView
                     android:id="@+id/items"
+                    android:layout_weight="2"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:textSize="@dimen/songs_count" />
@@ -64,6 +67,8 @@
                     android:layout_width="wrap_content"
                     android:clickable="true"
                     android:focusable="true"
+                    android:textColorLink="@color/bb_darkBackgroundColor"
+                    android:layout_weight="2"
                     android:text="View Items"
                     android:textColor="@drawable/gradient_background"
                     android:layout_height="match_parent"

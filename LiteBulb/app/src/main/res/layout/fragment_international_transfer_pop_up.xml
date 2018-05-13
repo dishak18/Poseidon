@@ -1,0 +1,109 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/transparent"
+    tools:context="com.example.admin.litebulb.PaypalPopUp">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:cardCornerRadius="@dimen/card_album_radius"
+        android:layout_margin="10dp"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="10dp"
+            android:padding="5dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="InternationalTransfer"
+                android:textColor="#a4c639"
+                android:textStyle="bold"
+                android:textSize="25sp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"/>
+
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Your full Address (Including Country):"
+                android:id="@+id/address"
+                android:background="#ffebcd"
+                android:layout_marginBottom="10dp"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Bank Account Name:"
+                android:id="@+id/acc_name"
+                android:background="#ffebcd"
+                android:layout_marginBottom="10dp"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Bank Account Number:"
+                android:id="@+id/acc_number"
+                android:background="#ffebcd"
+                android:layout_marginBottom="10dp"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="SWIFT Code:"
+                android:id="@+id/swift_code"
+                android:background="#ffebcd"
+                android:layout_marginBottom="10dp"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Bank Name in Full:"
+                android:id="@+id/bank_name"
+                android:background="#ffebcd"
+                android:layout_marginBottom="10dp"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Bank Branch Address:"
+                android:id="@+id/branch_address"
+                android:background="#ffebcd"
+                android:layout_marginBottom="10dp"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Destination Country:"
+                android:id="@+id/dest_country"
+                android:background="#ffebcd"
+                android:layout_marginBottom="10dp"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="IBAN (if any):"
+                android:id="@+id/iban"
+                android:background="#ffebcd"
+                android:layout_marginBottom="20dp"/>
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/gradient_background"
+                android:text="Submit Request"
+                android:textColor="#fff"
+                android:padding="7dp"
+                android:id="@+id/submit"
+                android:layout_marginBottom="25dp"/>
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+</FrameLayout>

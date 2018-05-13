@@ -178,7 +178,7 @@ public class DepositFragment extends Fragment {
 
             } catch (JSONException e) {
                 Log.e("lala", "this haha in catch");
-                Toast.makeText(referenceActivity, e.toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(referenceActivity, "Check your internet connection and try again later.", Toast.LENGTH_LONG).show();
             }
         }
 

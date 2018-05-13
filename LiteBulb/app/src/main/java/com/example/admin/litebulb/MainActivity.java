@@ -33,7 +33,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.bumptech.glide.Glide;
 import com.example.admin.litebulb.Adapters.ExpandableListAdapter;
 import com.example.admin.litebulb.BottomBarFragments.BlankFragment1;
 import com.example.admin.litebulb.BottomBarFragments.BlankFragment2;
@@ -88,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
         LayoutInflater inflater=(LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View vi=inflater.inflate(R.layout.navigation_header, null);
         TextView name_of_user_on_top=(TextView) vi.findViewById(R.id.name_of_user_on_top);
-        image_on_top=(ImageView) vi.findViewById(R.id.image_on_top);
 
         new UserDetails().execute();
 
@@ -237,6 +235,9 @@ public class MainActivity extends AppCompatActivity {
                     } else if(id==R.id.dashboard)
                     {
                         switchToLogin();
+                    } else if(id==R.id.withdrawel)
+                    {
+                        switchToWithdrawal();
                     }
                     drawerLayout.closeDrawer(GravityCompat.END); /*Important Line*/
                 }
@@ -335,6 +336,9 @@ public class MainActivity extends AppCompatActivity {
                     } else if(id==R.id.dashboard)
                     {
                         switchToLogin();
+                    }else if(id==R.id.withdrawel)
+                    {
+                        switchToWithdrawal();
                     }
                     drawerLayout.closeDrawer(GravityCompat.END); /*Important Line*/
                 }
@@ -514,6 +518,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intent=new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);
     }
+    public void switchToWithdrawal() {
+        FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction().replace(R.id.contentContainer, new WithdrawalFragment()).addToBackStack(null).commit();
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -623,11 +631,11 @@ public class MainActivity extends AppCompatActivity {
                     {
                         String thumbnail = json_data.getString("avatar");
                         String image_url = AppConfig.URL_PHOTOS + thumbnail;
-                        Glide.with(MainActivity.this)
+                       /* Glide.with(MainActivity.this)
                                 .load(image_url)
                                 .placeholder(R.drawable.loader)
                                 .error(R.drawable.studio)
-                                .into(image_on_top);
+                                .into(image_on_top);*/
 
                     }
 

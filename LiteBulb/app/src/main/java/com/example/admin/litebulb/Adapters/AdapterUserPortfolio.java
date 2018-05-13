@@ -37,7 +37,6 @@ public class AdapterUserPortfolio extends RecyclerView.Adapter<AdapterUserPortfo
             super(view);
             view.setOnClickListener(this);
             tv_item_name = (TextView) view.findViewById(R.id.item_name);
-            tv_categories = (TextView) view.findViewById(R.id.categories);
             tv_user_name = (TextView) view.findViewById(R.id.username);
             tv_sales = (TextView) view.findViewById(R.id.sales);
             tv_price=(TextView) view.findViewById(R.id.price);
@@ -60,7 +59,9 @@ public class AdapterUserPortfolio extends RecyclerView.Adapter<AdapterUserPortfo
             FragmentManager fragmentManager =((AppCompatActivity)view.getContext()).getSupportFragmentManager();
             FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.contentContainer, fragment1);
+            fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
+
         }
     }
 
@@ -87,9 +88,8 @@ public class AdapterUserPortfolio extends RecyclerView.Adapter<AdapterUserPortfo
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         ModelUserPortfolio ModelUserPortfolio = collectionsItemsList.get(position);
         holder.tv_item_name.setText(ModelUserPortfolio.getItemName());
-        holder.tv_user_name.setText(ModelUserPortfolio.getUser_name());
-        holder.tv_categories.setText(ModelUserPortfolio.getCategories());
-        holder.tv_sales.setText(ModelUserPortfolio.getSales());
+        holder.tv_user_name.setText(ModelUserPortfolio.getUser_name()+"- ");
+        holder.tv_sales.setText(ModelUserPortfolio.getSales()+" sales");
         holder.tv_price.setText(ModelUserPortfolio.getPrice()+"");
 
         /*loading ModelUserPortfolio cover using Glide library*/

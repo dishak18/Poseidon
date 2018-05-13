@@ -1,12 +1,8 @@
 package com.example.admin.litebulb.Adapters;
 
 import android.content.Context;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.admin.litebulb.ItemClickFragment;
-import com.example.admin.litebulb.R;
 import com.example.admin.litebulb.Models.Users_get;
+import com.example.admin.litebulb.R;
 
 import java.util.List;
 
@@ -42,13 +37,14 @@ public class AdapterAuthorsAll extends RecyclerView.Adapter<AdapterAuthorsAll.My
             thumbnail.setOnClickListener(this);
         }
         public void onClick(View view) {
-            Log.e("ADAPTERFEATURED", "this has been clicked");
+           /* Log.e("ADAPTERFEATURED", "this has been clicked");
             ItemClickFragment fragment1 = new ItemClickFragment();
             FragmentManager fragmentManager =((AppCompatActivity)view.getContext()).getSupportFragmentManager();
             FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.contentContainer, fragment1);
             fragmentTransaction.commit();
-
+            fragmentTransaction.addToBackStack(null);
+*/
 
         }
     }

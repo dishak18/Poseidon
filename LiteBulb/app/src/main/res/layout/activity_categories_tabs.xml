@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginRight="5dp"
-                android:src="@mipmap/ic_home"
+                android:src="@mipmap/ic_home2"
                 android:id="@+id/home"
                 android:background="@android:color/transparent"
                 android:layout_marginBottom="5dp"

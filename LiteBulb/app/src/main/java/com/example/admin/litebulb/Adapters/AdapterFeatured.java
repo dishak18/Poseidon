@@ -59,7 +59,9 @@ public class AdapterFeatured extends RecyclerView.Adapter<AdapterFeatured.MyView
             FragmentManager fragmentManager =((AppCompatActivity)view.getContext()).getSupportFragmentManager();
             FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.contentContainer, fragment1);
+            fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
+
         }
    }
 

@@ -2,12 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/input_register"
     tools:context="com.example.admin.litebulb.DepositFragment">
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_margin="18dp"
-        android:layout_height="350dp">
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/card_album_radius">
     <ScrollView
         android:layout_width="match_parent"
         android:scrollbars="vertical"
@@ -22,7 +24,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
-                android:textColor="@drawable/gradient_background"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
                 android:text="Deposit Prepaid Cash" />
             <TextView
                 android:layout_width="match_parent"

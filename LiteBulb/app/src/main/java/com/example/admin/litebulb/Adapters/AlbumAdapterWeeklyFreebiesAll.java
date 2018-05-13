@@ -59,7 +59,9 @@ public class AlbumAdapterWeeklyFreebiesAll extends RecyclerView.Adapter<AlbumAda
             FragmentManager fragmentManager =((AppCompatActivity)view.getContext()).getSupportFragmentManager();
             FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.contentContainer, fragment1);
+            fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
+
         }
 
     }

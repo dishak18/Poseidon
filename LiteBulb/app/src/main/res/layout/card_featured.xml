@@ -10,6 +10,7 @@
         android:layout_width="130dp"
         android:layout_height="195dp"
         android:layout_gravity="center"
+        android:padding="5dp"
         android:layout_margin="@dimen/card_margin"
         android:elevation="3dp"
         card_view:cardCornerRadius="@dimen/card_album_radius">

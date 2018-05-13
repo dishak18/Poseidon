@@ -10,7 +10,7 @@
         android:orientation="vertical"
         android:layout_margin="@dimen/card_margin"
         android:padding="@dimen/card_margin"
-        android:background="#EAEAEA"
+        android:background="@color/grey"
         android:layout_width="match_parent">
 
         <TextView
@@ -18,17 +18,12 @@
             android:layout_height="wrap_content"
             android:id="@+id/user_name"
             android:textAllCaps="true"
-            android:textSize="20sp"
-            android:textAppearance="@drawable/gradient_background"
-            android:textColor="@drawable/gradient_background"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
             android:layout_gravity="center"
             android:gravity="center"
-            android:id="@+id/oops"
-            />
+            android:textStyle="bold"
+            android:textSize="25sp"
+            android:textAppearance="@drawable/gradient_background"
+            android:textColor="@color/colorPrimary"/>
         <ScrollView
             android:layout_width="match_parent"
             android:layout_marginLeft="10dp"

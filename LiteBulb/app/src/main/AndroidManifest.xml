@@ -55,7 +55,6 @@
         <activity android:name=".CategoriesTabs" />
         <activity android:name=".MoreCategoryItems" />
         <activity android:name=".MyAccount" />
-        <activity android:name=".DownloadActivity" />
         <activity android:name=".PaypalTest"></activity>
     </application>
 

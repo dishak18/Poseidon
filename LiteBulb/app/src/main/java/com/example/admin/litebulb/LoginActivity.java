@@ -120,13 +120,15 @@ public class LoginActivity extends Activity {
             }
         });
 
-        /*btnLogin.setOnClickListener(new View.OnClickListener() {
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Log.e("LoginActivity", "This is the name "+inputName.getText().toString()+"     This is the password "+inputPassword.getText().toString().trim());
                 AttemptLogin attemptLogin= new AttemptLogin();
                 attemptLogin.execute(inputName.getText().toString(),inputPassword.getText().toString(),"");
             }
-        });*/
+        });
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -173,8 +175,10 @@ public class LoginActivity extends Activity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.e("LoginActivity", "This is the name "+inputName.getText().toString()+"     This is the password "+inputPassword.getText().toString().trim());
+
                 AttemptLogin attemptLogin= new AttemptLogin();
-                attemptLogin.execute(inputName.getText().toString(),inputPassword.getText().toString(),"");
+                attemptLogin.execute(inputName.getText().toString().trim(),inputPassword.getText().toString().trim(),"");
             }
         });
 

@@ -7,9 +7,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,8 +57,8 @@ public class DownloadFragment extends Fragment {
         parentHolder = inflater.inflate(R.layout.fragment_download, container,
                 false);
         downloadedItems = new ArrayList<>();
-        adapter_downloads = new AdapterDownloads(referenceActivity, downloadedItems );
-        RecyclerView.LayoutManager mLayoutManager= new LinearLayoutManager(getActivity(), GridLayoutManager.HORIZONTAL, false);
+        adapter_downloads = new AdapterDownloads(getActivity(), downloadedItems );
+        RecyclerView.LayoutManager mLayoutManager= new LinearLayoutManager(getContext());
         rv_downloads=(RecyclerView) parentHolder.findViewById(R.id.recycler_view_download);
 
         rv_downloads.setLayoutManager(mLayoutManager);
@@ -66,9 +66,9 @@ public class DownloadFragment extends Fragment {
         rv_downloads.setAdapter(adapter_downloads);
         loginPreferences = referenceActivity.getSharedPreferences("loginPrefs", MODE_PRIVATE);
         username=loginPreferences.getString("username", "");
-
+        Log.e("DownloadFragment", "this is the useranme "+username);
         new UsersDetails().execute();
-
+        adapter_downloads.notifyDataSetChanged();
         return parentHolder;
     }
 
@@ -168,6 +168,7 @@ public class DownloadFragment extends Fragment {
                     if (name_of_user.equals(username)) {
 
                         user_id=json_data.getInt("user_id");
+                        Log.e("DownloadFragment", "this is the user id "+user_id);
                         break;
                     }
                 }
@@ -269,6 +270,7 @@ public class DownloadFragment extends Fragment {
                         if(paid.equals("true"))
                         {
                             item_ids.add(item_id);
+                            Log.e("LoginActivity", "rthis is the item id "+item_id);
                         }
                     }
                 }
@@ -369,10 +371,12 @@ public class DownloadFragment extends Fragment {
 
                         if (item_id_of_items.equals(item_ids_array[j])) {
                             Downloads fire =new Downloads();
-                            //Log.e("BLANKFRAGMENT3", "this in the loop for the "+i+"th time with name "+ name);
+
                             String link=AppConfig.IP_ADDRESS_TEMP+""+json_data.getString("main_file");
+                            Log.e("DownloadFragment", "this in the loop for the "+i+"th time with name "+ link);
                             fire.setDownload_link(link);
                             fire.setVotes(json_data.getInt("votes"));
+
                             fire.setItemName(json_data.getString("name"));
                            // fire.setLicense_name(json_data.getString(""));
                             String image_url=AppConfig.URL_PHOTOS+json_data.getString("thumbnail");

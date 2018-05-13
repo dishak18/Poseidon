@@ -215,8 +215,8 @@ public class CategoriesTabs extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
-                Toast.makeText(CategoriesTabs.this,
-                        error.getMessage(), Toast.LENGTH_SHORT).show();
+               /* Toast.makeText(CategoriesTabs.this,
+                        error.getMessage(), Toast.LENGTH_SHORT).show();*/
             }
         });
         try{
@@ -256,8 +256,7 @@ public class CategoriesTabs extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
-                Toast.makeText(CategoriesTabs.this,
-                        error.getMessage(), Toast.LENGTH_SHORT).show();
+
             }
         });
         try{
@@ -285,9 +284,7 @@ public class CategoriesTabs extends AppCompatActivity {
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(CategoriesTabs.this,
-                                    "Error: " + e.getMessage(),
-                                    Toast.LENGTH_LONG).show();
+
                         }
 
                     }
@@ -295,8 +292,6 @@ public class CategoriesTabs extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
-                Toast.makeText(CategoriesTabs.this,
-                        error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
         try{

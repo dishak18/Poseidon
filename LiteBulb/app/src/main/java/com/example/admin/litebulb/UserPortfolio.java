@@ -224,6 +224,7 @@ public class UserPortfolio extends Fragment {
                             fire.setPrice(price);
                             fire.setThumbnail(image_url);
                             fire.setSales(sales);
+                            fire.setUser_name(user_name);
                             //fire.setUser_name(user_name);
                             userPortfolioList.add(fire);
                             adapter_user_portfolio.notifyDataSetChanged();

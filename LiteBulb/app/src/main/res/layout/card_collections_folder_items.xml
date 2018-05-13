@@ -97,7 +97,7 @@
                     android:layout_weight="1"
                     android:clickable="true"
                     android:focusable="true"
-                    android:text="@string/view_items"
+                    android:text="View Demo"
                     android:layout_marginLeft="5dp"
                     android:layout_gravity="center"
                     android:textColor="@drawable/gradient_background"
