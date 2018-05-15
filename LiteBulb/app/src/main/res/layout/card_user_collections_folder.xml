@@ -40,14 +40,14 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="6"
                     android:layout_marginBottom="@dimen/card_margin"
-                    android:textColor="@drawable/gradient_background"
+                    android:textColor="#ef3e46"
                     android:textSize="20sp" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:id="@+id/public_collection"
                     android:layout_weight="2"
                     android:text="Public"
-                    android:textColor="@drawable/gradient_background"
+                    android:textColor="#ef3e46"
                     android:clickable="true"
                     android:focusable="true"
                     android:layout_height="wrap_content" />
@@ -60,7 +60,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:text="Private"
-                    android:textColor="@drawable/gradient_background"
+                    android:textColor="#ef3e46"
                     android:layout_height="wrap_content" />
 
             </LinearLayout>
@@ -97,7 +97,7 @@
                     android:layout_weight="2"
                     android:focusable="true"
                     android:text="View Items"
-                    android:textColor="@drawable/gradient_background"
+                    android:textColor="#ef3e46"
                     android:layout_height="match_parent"
                     android:textSize="@dimen/songs_count" />
                 <TextView
@@ -107,7 +107,7 @@
                     android:focusable="true"
                     android:layout_weight="2"
                     android:text="Delete"
-                    android:textColor="@drawable/gradient_background"
+                    android:textColor="#ef3e46"
                     android:layout_height="match_parent"
                     android:textSize="@dimen/songs_count" />
 

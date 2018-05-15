@@ -63,7 +63,7 @@
                     android:layout_height="wrap_content"
                     android:text="Unfollow"
                     android:clickable="true"
-                    android:textColor="@drawable/gradient_background"
+                    android:textColor="#ef3e46"
                     android:focusable="true"
                     android:id="@+id/unfollow"/>
                 <TextView
@@ -71,7 +71,7 @@
                     android:layout_height="wrap_content"
                     android:text="View Portfolio"
                     android:clickable="true"
-                    android:textColor="@drawable/gradient_background"
+                    android:textColor="#ef3e46"
                     android:focusable="true"
                     android:id="@+id/view_portfolio"/>
 

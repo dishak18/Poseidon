@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/grey"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.admin.litebulb.WithdrawalFragment">
 
@@ -9,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="12dp"
-        android:layout_margin="8dp"
+        android:layout_margin="10dp"
         android:elevation="3dp"
         app:cardCornerRadius="@dimen/card_album_radius">
 
@@ -123,19 +124,16 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
                 android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_marginLeft="6dp"
-                    android:layout_marginRight="6dp"
-                    android:background="@color/grey"
-                    android:text="Amount to be withdrawen- "
-                    android:layout_marginBottom="20dp"
-                    android:layout_height="wrap_content" />
                 <EditText
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:id="@+id/amount"
+                    android:background="@drawable/shapes_grey"
                     android:hint="Amount"
+                    android:textSize="15dp"
+                    android:padding="10dp"
                     android:inputType="number"
                     android:layout_height="wrap_content" />
             </LinearLayout>

@@ -81,66 +81,75 @@ public class WithdrawalFragment extends Fragment {
             public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
                 if(checkedId==R.id.rb_international_transfer)
                 {
-                    if(Integer.parseInt(et_amount.getText().toString().trim())<=earning)
+                    if(et_amount.getText().toString().equals(null))
                     {
-                        InternationalTransferPopUp fragment1 = new InternationalTransferPopUp();
-                        Bundle args = new Bundle();
-                        args.putInt("user_id", user_id);
-                        args.putString("amount", et_amount.getText().toString());
-                        fragment1.setArguments(args);
-                        FragmentManager fragmentManager =getFragmentManager();
-                        FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.contentContainer, fragment1);
-                        fragmentTransaction.addToBackStack(null);
-                        fragmentTransaction.commit();
-
+                        Toast.makeText(getContext(), "Please enter amount", Toast.LENGTH_SHORT).show();
                     }
-                    else
-                    {
-                        Toast.makeText(getContext(), "Please enter amount which is equal to or less than youw withrawable limit.", Toast.LENGTH_LONG).show();
+                    else {
+                        if (Integer.parseInt(et_amount.getText().toString().trim()) <= earning) {
+                            InternationalTransferPopUp fragment1 = new InternationalTransferPopUp();
+                            Bundle args = new Bundle();
+                            args.putInt("user_id", user_id);
+                            args.putString("amount", et_amount.getText().toString());
+                            fragment1.setArguments(args);
+                            FragmentManager fragmentManager = getFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.contentContainer, fragment1);
+                            fragmentTransaction.addToBackStack(null);
+                            fragmentTransaction.commit();
+
+                        } else {
+                            Toast.makeText(getContext(), "Please enter amount which is equal to or less than youw withrawable limit.", Toast.LENGTH_LONG).show();
+                        }
                     }
 
                 }
                 else if(checkedId==R.id.rb_moneybookers)
                 {
-                    if(Integer.parseInt(et_amount.getText().toString().trim())<=earning)
+                    if(et_amount.getText().toString().equals(null))
                     {
-                        MoneyBookersPopUp fragment1 = new MoneyBookersPopUp();
-                        Bundle args = new Bundle();
-                        args.putInt("user_id", user_id);
-                        args.putString("amount", et_amount.getText().toString());
-                        fragment1.setArguments(args);
-                        FragmentManager fragmentManager =getFragmentManager();
-                        FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.contentContainer, fragment1);
-                        fragmentTransaction.addToBackStack(null);
-                        fragmentTransaction.commit();
-
+                        Toast.makeText(getContext(), "Please enter amount", Toast.LENGTH_SHORT).show();
                     }
-                    else
-                    {
-                        Toast.makeText(getContext(), "Please enter amount which is equal to or less than youw withrawable limit.", Toast.LENGTH_LONG).show();
+                    else {
+                        if (Integer.parseInt(et_amount.getText().toString().trim()) <= earning) {
+                            MoneyBookersPopUp fragment1 = new MoneyBookersPopUp();
+                            Bundle args = new Bundle();
+                            args.putInt("user_id", user_id);
+                            args.putString("amount", et_amount.getText().toString());
+                            fragment1.setArguments(args);
+                            FragmentManager fragmentManager = getFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.contentContainer, fragment1);
+                            fragmentTransaction.addToBackStack(null);
+                            fragmentTransaction.commit();
+
+                        } else {
+                            Toast.makeText(getContext(), "Please enter amount which is equal to or less than youw withrawable limit.", Toast.LENGTH_LONG).show();
+                        }
                     }
 
                 }else if(checkedId==R.id.rb_paypal)
                 {
-                    if(Integer.parseInt(et_amount.getText().toString().trim())<=earning)
+                    if(et_amount.getText().toString().equals(null))
                     {
-                        PaypalPopUp fragment1 = new PaypalPopUp();
-                        Bundle args = new Bundle();
-                        args.putInt("user_id", user_id);
-                        args.putString("amount", et_amount.getText().toString());
-                        fragment1.setArguments(args);
-                        FragmentManager fragmentManager =getFragmentManager();
-                        FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.contentContainer, fragment1);
-                        fragmentTransaction.addToBackStack(null);
-                        fragmentTransaction.commit();
-
+                        Toast.makeText(getContext(), "Please enter amount", Toast.LENGTH_SHORT).show();
                     }
-                    else
-                    {
-                        Toast.makeText(getContext(), "Please enter amount which is equal to or less than youw withrawable limit.", Toast.LENGTH_LONG).show();
+                    else {
+                        if (Integer.parseInt(et_amount.getText().toString().trim()) <= earning) {
+                            PaypalPopUp fragment1 = new PaypalPopUp();
+                            Bundle args = new Bundle();
+                            args.putInt("user_id", user_id);
+                            args.putString("amount", et_amount.getText().toString());
+                            fragment1.setArguments(args);
+                            FragmentManager fragmentManager = getFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.contentContainer, fragment1);
+                            fragmentTransaction.addToBackStack(null);
+                            fragmentTransaction.commit();
+
+                        } else {
+                            Toast.makeText(getContext(), "Please enter amount which is equal to or less than youw withrawable limit.", Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
             }

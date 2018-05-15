@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/grey"
     tools:context="com.example.admin.litebulb.BottomBarFragments.BlankFragment3">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -20,9 +21,8 @@
             android:textStyle="bold"
             android:textAllCaps="true"
             android:textSize="20sp"
-            android:textAppearance="@drawable/gradient_background"
-            android:textColor="@drawable/gradient_background"/>
-            />
+            android:textColor="#ef3e46"/>
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_marginLeft="10dp"

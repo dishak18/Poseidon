@@ -12,8 +12,7 @@
         <tab
             id="@+id/tab_center"
             icon="@drawable/ic_center"
-            activeColor="#FF0000"
-            title="" />
+            title="Home" />
         <tab
             id="@+id/tab_popular"
             icon="@drawable/ic_popular"

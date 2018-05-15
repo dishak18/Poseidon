@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Following"
-            android:textColor="@drawable/gradient_background"
+            android:textColor="#ef3e46"
             android:textSize="15sp"
             android:textAllCaps="true"
             android:layout_marginTop="10dp"

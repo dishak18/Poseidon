@@ -34,7 +34,7 @@
                     android:layout_height="match_parent"
                     android:layout_below="@id/thumbnail"
                     android:layout_marginBottom="@dimen/card_margin"
-                    android:textColor="@drawable/gradient_background"
+                    android:textColor="#ef3e46"
                     android:textSize="20sp" />
             <LinearLayout
                 android:layout_width="match_parent"
@@ -70,7 +70,7 @@
                     android:textColorLink="@color/bb_darkBackgroundColor"
                     android:layout_weight="2"
                     android:text="View Items"
-                    android:textColor="@drawable/gradient_background"
+                    android:textColor="#ef3e46"
                     android:layout_height="match_parent"
                     android:textSize="@dimen/songs_count" />
 

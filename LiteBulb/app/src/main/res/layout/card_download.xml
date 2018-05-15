@@ -10,7 +10,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="@dimen/card_margin"
         android:layout_marginBottom="15dp"
         android:elevation="3dp"
         card_view:cardCornerRadius="@dimen/card_album_radius">
@@ -44,8 +43,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="6"
                     android:textStyle="bold"
-                    android:textColor="@drawable/gradient_background"
-                    android:textSize="@dimen/album_title" />
+                    android:textColor="#ef3e46"
+                    android:textSize="13dp" />
 
                 <TextView
                     android:id="@+id/votes"
@@ -54,7 +53,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:textColor="#fff"
-                    android:background="@drawable/shapes"
+                    android:background="#fff"
                     android:layout_height="match_parent"
                     android:textSize="@dimen/songs_count" />
             </LinearLayout>

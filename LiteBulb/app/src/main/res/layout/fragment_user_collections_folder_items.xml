@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/grey"
     android:layout_height="match_parent"
     tools:context="com.example.admin.litebulb.BottomBarFragments.BlankFragment3">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -10,7 +11,7 @@
         android:orientation="vertical"
         android:layout_margin="@dimen/card_margin"
         android:padding="@dimen/card_margin"
-        android:background="#EAEAEA"
+        android:background="@color/grey"
         android:layout_width="match_parent">
 
         <LinearLayout
@@ -26,15 +27,14 @@
             android:textAllCaps="true"
             android:layout_weight="8"
             android:textSize="20sp"
-            android:textAppearance="@drawable/gradient_background"
-            android:textColor="@drawable/gradient_background"/>
+            android:textColor="#ef3e46"/>
         <ImageButton
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:layout_marginEnd="@dimen/card_margin"
             android:layout_marginRight="@dimen/card_margin"
-            android:src="@drawable/ic_edit"
+            android:src="@mipmap/ic_edit"
             android:background="@android:color/transparent"
             android:id="@+id/edit_collection"/>
         </LinearLayout>

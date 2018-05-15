@@ -10,6 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:padding="5dp"
         android:layout_margin="@dimen/card_margin"
         android:elevation="3dp"
         card_view:cardCornerRadius="@dimen/card_album_radius">
@@ -28,7 +29,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="20dp"
+                android:padding="10dp"
                 android:id="@+id/lin"
                 android:layout_below="@+id/thumbnail"
                 android:orientation="horizontal">
@@ -36,11 +37,12 @@
 
                 <TextView
                     android:id="@+id/title"
+                    android:textStyle="bold"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@id/thumbnail"
-                    android:textColor="@drawable/gradient_background"
-                    android:textSize="13dp" />
+                    android:textColor="#ef3e46"
+                    android:textSize="18dp" />
 
             </LinearLayout>
 
@@ -48,6 +50,7 @@
                 android:id="@+id/sales_items"
                 android:layout_width="match_parent"
                 android:layout_gravity="center"
+                android:padding="5dp"
                 android:layout_height="match_parent"
                 android:layout_below="@id/lin"
                 android:textSize="@dimen/songs_count" />

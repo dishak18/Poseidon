@@ -56,7 +56,8 @@ public class AdapterDownloads extends RecyclerView.Adapter<AdapterDownloads.MyVi
     private ProgressDialog mProgressDialog;
     public int itemId;
     private final int RC_PERM_REQ_EXT_STORAGE = 7;
-
+    private String downloadLink;
+    private String itemName;
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView item_name, votes, license_name;
@@ -88,8 +89,9 @@ public class AdapterDownloads extends RecyclerView.Adapter<AdapterDownloads.MyVi
         public void onClick(View view) {
             Log.e("ADAPTER DOWNLOADS", "this has been clicked + the ID is : "+itemId);
             //Toast.makeText(mContext, "Item Id : "+itemId, Toast.LENGTH_SHORT).show();
+            new ItemDetails().execute();
             final AdapterDownloads.DownloadTask downloadTask = new AdapterDownloads.DownloadTask(mContext);
-            downloadTask.execute("http://studio.litebulb.in/uploads//items/2012/11/150/c323ac6c04c28cb19927d9d300b2f7ec.zip");
+            downloadTask.execute(AppConfig.URL_PHOTOS+downloadLink);
             mProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                 @Override
                 public void onCancel(DialogInterface dialog) {
@@ -109,13 +111,6 @@ public class AdapterDownloads extends RecyclerView.Adapter<AdapterDownloads.MyVi
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.card_download, parent, false);
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
         return new MyViewHolder(itemView);
     }
 
@@ -123,7 +118,7 @@ public class AdapterDownloads extends RecyclerView.Adapter<AdapterDownloads.MyVi
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         Downloads Downloads = downloadsList.get(position);
         holder.item_name.setText(Downloads.getItemName());
-       // holder.votes.setText(Downloads.getVotes());
+        // holder.votes.setText(Downloads.getVotes());
         holder.license_name.setText(Downloads.getDownload_link());
         mProgressDialog = new ProgressDialog(mContext);
         /*loading Downloads cover using Glide library*/
@@ -183,7 +178,7 @@ public class AdapterDownloads extends RecyclerView.Adapter<AdapterDownloads.MyVi
 
                 // download the file
                 input = connection.getInputStream();
-                output = new FileOutputStream(Environment.getExternalStorageDirectory().getPath()+"/file.zip");
+                output = new FileOutputStream(Environment.getExternalStorageDirectory().getPath()+"/Litebulb/"+itemName+".zip");
 
                 byte data[] = new byte[4096];
                 long total = 0;
@@ -276,7 +271,7 @@ public class AdapterDownloads extends RecyclerView.Adapter<AdapterDownloads.MyVi
             }
             try {
 
-                // Setup HttpURLConnection class to send and receive data from php and mysql
+                // Setup HttpURLConnection class to send and receive data from php and myql
                 conn = (HttpURLConnection) url.openConnection();
                 conn.setReadTimeout(READ_TIMEOUT);
                 conn.setConnectTimeout(CONNECTION_TIMEOUT);
@@ -335,7 +330,8 @@ public class AdapterDownloads extends RecyclerView.Adapter<AdapterDownloads.MyVi
                     JSONObject json_data = jArray.getJSONObject(i);
                     int item_id_of_items = json_data.getInt("id");
                     if (item_id_of_items == itemId) {
-
+                        downloadLink = json_data.getString("main_file");
+                        itemName = json_data.getString("name");
                     }
                 }
             } catch (JSONException e) {
@@ -380,6 +376,8 @@ public class AdapterDownloads extends RecyclerView.Adapter<AdapterDownloads.MyVi
             }
         }
     }
+
+
 
 }
 

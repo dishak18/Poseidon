@@ -1,7 +1,15 @@
+//PAYMENT FRAGMENT
+
+
+
+//ItemClickFragment
+
 package com.example.admin.litebulb;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -55,7 +63,7 @@ public class ItemClickFragment extends Fragment {
     String name, thumbnail, image_url, key, username_from_users_table;
     int id_of_items_table, price, id_of_badges;
     int itemId;
-   // SharedPreferences loginPreferences;
+    // SharedPreferences loginPreferences;
     ImageView top_image, image_author;
     public static final int CONNECTION_TIMEOUT = 10000;
     int item_id_of_items_attrbutes_table;
@@ -74,6 +82,9 @@ public class ItemClickFragment extends Fragment {
     String selectedItem, value, index, prepaid, badges_from_users, votes, rating, comments, sales;
     String user_id, user_id_from_item_table, name_of_badges, id_of_tags_table, name_of_tags, item_id_of_itemstotags_table, tag_id_of_itemstotags_table;
     String exclusive_author;
+
+    private SharedPreferences preferences;
+    private Button buyNow;
 
 
     @Override
@@ -118,6 +129,10 @@ public class ItemClickFragment extends Fragment {
         added_on=(TextView) parentHolder.findViewById(R.id.added_on);
         file_statistics=(TextView) parentHolder.findViewById(R.id.file_statistics);
         tags=(TextView) parentHolder.findViewById(R.id.tags);
+
+        preferences = getContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
+        buyNow = (Button) parentHolder.findViewById(R.id.buy_now_item_click);
+
         all_about_user.setText("");
 
         select_license.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -177,13 +192,13 @@ public class ItemClickFragment extends Fragment {
         });
         return parentHolder;
     }
-/*    @Override
-    public void onStart() {
-        super.onStart();
-        select_license.setSelection(0);
-        //getSelectedItemDetails();
-        new SystemDetails().execute();
-    }*/
+    /*    @Override
+        public void onStart() {
+            super.onStart();
+            select_license.setSelection(0);
+            //getSelectedItemDetails();
+            new SystemDetails().execute();
+        }*/
     private class SystemDetails extends AsyncTask<String, String, String> {
         ProgressDialog pdLoading = new ProgressDialog(referenceActivity);
         HttpURLConnection conn;
@@ -208,7 +223,7 @@ public class ItemClickFragment extends Fragment {
                 url = new URL(AppConfig.URL_SYSTEM);
 
             } catch (MalformedURLException e) {
-                
+
                 e.printStackTrace();
                 return e.toString();
             }
@@ -224,7 +239,7 @@ public class ItemClickFragment extends Fragment {
                 conn.setDoOutput(true);
 
             } catch (IOException e1) {
-                
+
                 e1.printStackTrace();
                 return e1.toString();
             }
@@ -326,7 +341,7 @@ public class ItemClickFragment extends Fragment {
                 url = new URL(AppConfig.URL_ITEM);
 
             } catch (MalformedURLException e) {
-                
+
                 e.printStackTrace();
                 return e.toString();
             }
@@ -342,7 +357,7 @@ public class ItemClickFragment extends Fragment {
                 conn.setDoOutput(true);
 
             } catch (IOException e1) {
-                
+
                 e1.printStackTrace();
                 return e1.toString();
             }
@@ -410,6 +425,21 @@ public class ItemClickFragment extends Fragment {
                         comments=json_data.getString("comments");
                         user_id_from_item_table=json_data.getString("user_id");
 
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("itemPrice",price+"");
+                        editor.apply();
+                        buyNow.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                PaymentFragment fragment1 = new PaymentFragment();
+                                FragmentManager fragmentManager = getFragmentManager();
+                                FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
+                                fragmentTransaction.replace(R.id.contentContainer, fragment1);
+                                fragmentTransaction.addToBackStack(null);
+                                fragmentTransaction.commit();
+                            }
+                        });
+
                         image_url = AppConfig.URL_PHOTOS + thumbnail;
                         Glide.with(getContext())
                                 .load(image_url)
@@ -426,16 +456,16 @@ public class ItemClickFragment extends Fragment {
                         String new_prepaid = prepaid.substring(0, prepaid.length() - 1);
 
                         if (selectedItem.equals("Personal Use License")) {
-                            item_price.setText(price + "");
-                            price_of_prepaid.setText((price - (price * Integer.parseInt(new_prepaid) / 100)) + "");
+                            item_price.setText("$"+price + "");
+                            price_of_prepaid.setText("Pay Just $"+(price - (price * Integer.parseInt(new_prepaid) / 100)) + "");
                             text_under_select_license.setText(getResources().getString(R.string.personal_use_license) + "");
 
                         } else {
                             Log.e("lalalalala", "This is the index for extended " + index);
                             int net_price = price * Integer.parseInt(index);
                             item_price.setText("");
-                            item_price.setText(net_price + "");
-                            price_of_prepaid.setText((net_price - (net_price * Integer.parseInt(new_prepaid) / 100)) + "");
+                            item_price.setText("$"+net_price + "");
+                            price_of_prepaid.setText("Pay Just $"+(net_price - (net_price * Integer.parseInt(new_prepaid) / 100)) + "");
                             text_under_select_license.setText(getResources().getString(R.string.extended_use_license) + "");
                             //text_under_select_license.setText("lalalalala");
                         }
@@ -493,7 +523,7 @@ public class ItemClickFragment extends Fragment {
                 conn.setDoOutput(true);
 
             } catch (IOException e1) {
-                
+
                 e1.printStackTrace();
                 return e1.toString();
             }
@@ -658,7 +688,7 @@ public class ItemClickFragment extends Fragment {
 
             //this method will be running on UI thread
 
-           // pdLoading.dismiss();
+            // pdLoading.dismiss();
             try {
 
                 JSONArray jArray = new JSONArray(result);
@@ -837,7 +867,7 @@ public class ItemClickFragment extends Fragment {
                 url = new URL(AppConfig.URL_ITEMS_TAGS);
 
             } catch (MalformedURLException e) {
-                
+
                 e.printStackTrace();
                 return e.toString();
             }
@@ -853,7 +883,7 @@ public class ItemClickFragment extends Fragment {
                 conn.setDoOutput(true);
 
             } catch (IOException e1) {
-                
+
                 e1.printStackTrace();
                 return e1.toString();
             }
@@ -954,7 +984,7 @@ public class ItemClickFragment extends Fragment {
                 url = new URL(AppConfig.URL_ITEM_ATTRIBUTES);
 
             } catch (MalformedURLException e) {
-                
+
                 e.printStackTrace();
                 return e.toString();
             }
@@ -970,7 +1000,7 @@ public class ItemClickFragment extends Fragment {
                 conn.setDoOutput(true);
 
             } catch (IOException e1) {
-                
+
                 e1.printStackTrace();
                 return e1.toString();
             }
@@ -1144,18 +1174,18 @@ public class ItemClickFragment extends Fragment {
 
                 JSONArray jArray = new JSONArray(result);
                 ArrayList<String> names = new ArrayList<String>();
-               // ArrayList<String> attribute_ids = new ArrayList<String>();
+                // ArrayList<String> attribute_ids = new ArrayList<String>();
 
                 // Extract data from json and store into ArrayList as class objects
                 for(int i=0;i<jArray.length();i++){
                     JSONObject json_data = jArray.getJSONObject(i);
 
                     id_of_attributes_categories_table=json_data.getString("id");
-                   // Log.e("lala", "this is the id of att_cat "+id_of_attributes_categories_table+"   ");
+                    // Log.e("lala", "this is the id of att_cat "+id_of_attributes_categories_table+"   ");
                     for(int j=0; j<attribute_ids_array.length; j++) {
                         if (id_of_attributes_categories_table.equals(category_ids_item_attr_array[j])) {
                             name_of_attributes_categories_table=json_data.getString("name");
-                           // category_id_of_attributes_table = json_data.getString("category_id");
+                            // category_id_of_attributes_table = json_data.getString("category_id");
                             Log.e("lala", "this is the name_of_att_cat_table "+name_of_attributes_categories_table);
                             names.add(name_of_attributes_categories_table);
                         }
@@ -1305,22 +1335,22 @@ public class ItemClickFragment extends Fragment {
                     }
 
 
-                for(int i=0; i<new_array.length; i++)
-                {
-                    int count=0;
-                    for(int j=i+1; j<new_array.length; j++)
+                    for(int i=0; i<new_array.length; i++)
                     {
-
-                        if(new_array[i].equals(new_array[j]))
+                        int count=0;
+                        for(int j=i+1; j<new_array.length; j++)
                         {
-                            count++;
+
+                            if(new_array[i].equals(new_array[j]))
+                            {
+                                count++;
+                            }
+                        }
+                        if(count==0)
+                        {
+                            file_statistics.append(names_of_attributes_categories[i]+":\t\t\t\t\t"+new_array[i].substring(1, new_array[i].length())+"\n\n\n");
                         }
                     }
-                    if(count==0)
-                    {
-                        file_statistics.append(names_of_attributes_categories[i]+":\t\t\t\t\t"+new_array[i].substring(1, new_array[i].length())+"\n\n\n");
-                    }
-                }
                 }catch(StringIndexOutOfBoundsException e)
                 {
                     //throw e;
@@ -1458,5 +1488,5 @@ public class ItemClickFragment extends Fragment {
     }
 
 
-    }
+}
 

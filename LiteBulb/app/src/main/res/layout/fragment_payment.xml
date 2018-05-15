@@ -5,6 +5,12 @@
     android:background="@drawable/gradient_background"
     android:backgroundTint="@android:color/transparent"
     android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/paypal_response"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        />
     <android.support.v7.widget.CardView
         android:layout_width="250dp"
         app:cardCornerRadius="@dimen/card_album_radius"
@@ -58,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:text="Buy Now"
                 android:background="@drawable/gradient_background"
-                android:id="@+id/buy_now"/>
+                android:id="@+id/buy_now_payment"/>
 
 
 
