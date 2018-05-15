@@ -103,7 +103,6 @@ public class UserCollectionsFolderItems extends Fragment {
         });
         myRef = database.getReference().child("items");
         collection_name_tv=(TextView) parentHolder.findViewById(R.id.collection_name);
-        oops=(TextView) parentHolder.findViewById(R.id.oops);
         collection_name_tv.setText(collection_name);
 
         rvCollectionsFolderItems = (RecyclerView) parentHolder.findViewById(R.id.rv_collections_folder_items);
@@ -115,14 +114,6 @@ public class UserCollectionsFolderItems extends Fragment {
         //prepareCards();
         //makeJsonArrayRequestForWeekly();
         new ItemsCollectionsDetails().execute();
-        if(count==0)
-        {
-            oops.setText(getResources().getString(R.string.oops));
-        }
-        else
-        {
-            oops.setText("");
-        }
         adapter_collections_folder_items.notifyDataSetChanged();
         return parentHolder;
 

@@ -33,6 +33,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@id/thumbnail"
+                    android:textStyle="bold"
                     android:layout_marginBottom="@dimen/card_margin"
                     android:textColor="#ef3e46"
                     android:textSize="20sp" />

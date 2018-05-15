@@ -39,6 +39,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="6"
+                    android:textStyle="bold"
                     android:layout_marginBottom="@dimen/card_margin"
                     android:textColor="#ef3e46"
                     android:textSize="20sp" />

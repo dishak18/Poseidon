@@ -28,25 +28,14 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.admin.litebulb.Models.Downloads;
 import com.example.admin.litebulb.R;
-import com.example.admin.litebulb.SQL.AppConfig;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
-
-import static com.example.admin.litebulb.ItemClickFragment.READ_TIMEOUT;
-import static com.example.admin.litebulb.ProfileEdit.CONNECTION_TIMEOUT;
 
 public class AdapterDownloads extends RecyclerView.Adapter<AdapterDownloads.MyViewHolder>  {
 
@@ -58,8 +47,9 @@ public class AdapterDownloads extends RecyclerView.Adapter<AdapterDownloads.MyVi
     private final int RC_PERM_REQ_EXT_STORAGE = 7;
     private String downloadLink;
     private String itemName;
+    private ProgressDialog mProgress;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class MyViewHolder extends RecyclerView.ViewHolder  {
         public TextView item_name, votes, license_name;
         public ImageView thumbnail;
         public Button download_button;
@@ -77,28 +67,39 @@ public class AdapterDownloads extends RecyclerView.Adapter<AdapterDownloads.MyVi
             cardView = (CardView) view.findViewById(R.id.card_view);
             //thumbnail.setOnClickListener(this);
             mProgressDialog = new ProgressDialog(mContext);
-            if(checkPermission()) {
-                download_button.setOnClickListener(this);
-            }
+            checkPermission();
         }
-        public void openItem(int id){
-            itemId = id;
-        }
+        public void openItem(final int id,final String link,final String name){
 
-
-        public void onClick(View view) {
-            Log.e("ADAPTER DOWNLOADS", "this has been clicked + the ID is : "+itemId);
-            //Toast.makeText(mContext, "Item Id : "+itemId, Toast.LENGTH_SHORT).show();
-            new ItemDetails().execute();
-            final AdapterDownloads.DownloadTask downloadTask = new AdapterDownloads.DownloadTask(mContext);
-            downloadTask.execute(AppConfig.URL_PHOTOS+downloadLink);
-            mProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            download_button.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onCancel(DialogInterface dialog) {
-                    downloadTask.cancel(true);
+                public void onClick(View v) {
+                    itemId = id;
+                    downloadLink = link;
+                    itemName = name;
+                    Log.e("ADAPTER DOWNLOADS", "this has been clicked + the ID is : "+itemId);
+                    //Toast.makeText(mContext, "Item Id : "+itemId, Toast.LENGTH_SHORT).show();
+                    mProgress = new ProgressDialog(mContext);
+                    mProgress.setTitle("Please Wait...");
+                    mProgress.show();
+                    final AdapterDownloads.DownloadTask downloadTask = new AdapterDownloads.DownloadTask(mContext);
+                    Log.e("AdapterDownloads","Download Link : "+downloadLink);
+                    downloadTask.execute(downloadLink);
+                    mProgress.dismiss();
+                    mProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                            downloadTask.cancel(true);
+                        }
+                    });
                 }
             });
         }
+
+
+       /* public void onClick(View view) {
+
+        }*/
     }
 
 
@@ -118,6 +119,7 @@ public class AdapterDownloads extends RecyclerView.Adapter<AdapterDownloads.MyVi
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         Downloads Downloads = downloadsList.get(position);
         holder.item_name.setText(Downloads.getItemName());
+        Log.e("ViewHolder","Id is : "+Downloads.getItemId());
         // holder.votes.setText(Downloads.getVotes());
         holder.license_name.setText(Downloads.getDownload_link());
         mProgressDialog = new ProgressDialog(mContext);
@@ -128,7 +130,7 @@ public class AdapterDownloads extends RecyclerView.Adapter<AdapterDownloads.MyVi
                 .error(R.drawable.studio)
                 .into(holder.thumbnail);
 
-        holder.openItem(Downloads.getItemId());
+        holder.openItem(Downloads.getItemId(), Downloads.getDownload_link(), Downloads.getItemName());
 
         /*holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,8 +180,7 @@ public class AdapterDownloads extends RecyclerView.Adapter<AdapterDownloads.MyVi
 
                 // download the file
                 input = connection.getInputStream();
-                output = new FileOutputStream(Environment.getExternalStorageDirectory().getPath()+"/Litebulb/"+itemName+".zip");
-
+                output = new FileOutputStream(Environment.getExternalStorageDirectory().getPath()+"/LiteBulb/"+itemName+".zip");
                 byte data[] = new byte[4096];
                 long total = 0;
                 int count;
@@ -246,101 +247,6 @@ public class AdapterDownloads extends RecyclerView.Adapter<AdapterDownloads.MyVi
 
 
 
-
-    private class ItemDetails extends AsyncTask<String, String, String> {
-
-        HttpURLConnection conn;
-        URL url = null;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            try {
-
-                url = new URL(AppConfig.URL_ITEM);
-
-            } catch (MalformedURLException e) {
-
-                e.printStackTrace();
-                return e.toString();
-            }
-            try {
-
-                // Setup HttpURLConnection class to send and receive data from php and myql
-                conn = (HttpURLConnection) url.openConnection();
-                conn.setReadTimeout(READ_TIMEOUT);
-                conn.setConnectTimeout(CONNECTION_TIMEOUT);
-                conn.setRequestMethod("GET");
-                conn.setDoOutput(true);
-
-            } catch (IOException e1) {
-
-                e1.printStackTrace();
-                return e1.toString();
-
-            }
-
-            try {
-
-                int response_code = conn.getResponseCode();
-
-                if (response_code == HttpURLConnection.HTTP_OK) {
-
-                    InputStream input = conn.getInputStream();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-                    StringBuilder result = new StringBuilder();
-                    String line;
-
-                    while ((line = reader.readLine()) != null) {
-                        result.append(line);
-                    }
-
-                    return (result.toString());
-
-                } else {
-
-                    return ("unsuccessful");
-                }
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                return e.toString();
-            } finally {
-                conn.disconnect();
-            }
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-
-            //this method will be running on UI thread
-
-            // pdLoading.dismiss();
-            try {
-
-                JSONArray jArray = new JSONArray(result);
-                //ArrayList<String> item_ids = new ArrayList<String>();
-
-                for(int i=0;i<jArray.length();i++) {
-                    JSONObject json_data = jArray.getJSONObject(i);
-                    int item_id_of_items = json_data.getInt("id");
-                    if (item_id_of_items == itemId) {
-                        downloadLink = json_data.getString("main_file");
-                        itemName = json_data.getString("name");
-                    }
-                }
-            } catch (JSONException e) {
-
-            }
-
-        }
-
-    }
 
     public boolean checkPermission() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M

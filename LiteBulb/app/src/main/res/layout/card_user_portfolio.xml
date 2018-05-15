@@ -40,13 +40,14 @@
                     android:layout_height="wrap_content">
                     <TextView
                         android:id="@+id/item_name"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:textStyle="bold"
                         android:layout_weight="8"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/card_margin"
                         android:textSize="14sp" />
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:id="@+id/price"
                         android:layout_weight="2"
                         android:textStyle="bold"
@@ -69,7 +70,6 @@
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
                     android:padding="10dp"
-                    android:layout_marginLeft="10dp"
                     android:layout_height="wrap_content">
                     <TextView
                         android:id="@+id/username"
@@ -101,7 +101,7 @@
                         android:focusable="true"
                         android:text="View Demo"
                         android:layout_height="wrap_content"
-                        android:textColor="@drawable/gradient_background"
+                        android:textColor="#ef3e46"
                         android:textSize="@dimen/songs_count" />
 
                     <TextView
@@ -114,7 +114,7 @@
                         android:focusable="true"
                         android:text="Followers"
                         android:layout_height="wrap_content"
-                        android:textColor="@drawable/gradient_background"
+                        android:textColor="#ef3e46"
                         android:textSize="@dimen/songs_count" />
                     <TextView
                         android:id="@+id/following"
@@ -125,7 +125,7 @@
                         android:textStyle="bold"
                         android:focusable="true"
                         android:text="Following"
-                        android:textColor="@drawable/gradient_background"
+                        android:textColor="#ef3e46"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/songs_count" />
                     <Button

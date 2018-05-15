@@ -361,6 +361,7 @@ public class DownloadFragment extends Fragment {
             try {
 
                 JSONArray jArray = new JSONArray(result);
+                //ArrayList<String> item_ids = new ArrayList<String>();
 
                 for(int i=0;i<jArray.length();i++) {
                     JSONObject json_data = jArray.getJSONObject(i);
@@ -369,8 +370,7 @@ public class DownloadFragment extends Fragment {
 
                         if (item_id_of_items.equals(item_ids_array[j])) {
                             Downloads fire =new Downloads();
-
-                            String link=AppConfig.IP_ADDRESS+""+json_data.getString("main_file");
+                            String link=AppConfig.IP_ADDRESS+"uploads"+json_data.getString("main_file");
                             Log.e("DownloadFragment", "this in the loop for the "+i+"th time with name "+ link);
                             fire.setDownload_link(link);
                             fire.setVotes(json_data.getInt("votes"));

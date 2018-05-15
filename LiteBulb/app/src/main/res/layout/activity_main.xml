@@ -30,12 +30,9 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_weight="2"
-        android:layout_marginBottom="8dp"
-        android:layout_alignParentBottom="true"
         app:bb_tabXmlResource="@xml/bottombar_tabs"
         app:bb_inActiveTabColor="#222222"
-        app:bb_activeTabColor="#ef473a"
-        app:bb_showShadow="true"
+        app:bb_activeTabColor="#ef3e46"
         android:scrollbars="horizontal"/>
     </LinearLayout>
 

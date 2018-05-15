@@ -43,7 +43,7 @@
                     android:layout_height="match_parent"
                     android:layout_below="@id/thumbnail"
                     android:textColor="#ef3e46"
-                    android:textSize="@dimen/album_title" />
+                    android:textSize="18dp" />
 
 
             </LinearLayout>

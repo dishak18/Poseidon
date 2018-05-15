@@ -63,7 +63,6 @@ public class AdapterCollectionsFolder extends RecyclerView.Adapter<AdapterCollec
             fragment1.setArguments(args);
             FragmentManager fragmentManager =((AppCompatActivity)view.getContext()).getSupportFragmentManager();
             FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
-            fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
 
         }
@@ -93,8 +92,8 @@ public class AdapterCollectionsFolder extends RecyclerView.Adapter<AdapterCollec
         Collectionsfolder Collectionsfolder = collectionsList.get(position);
         holder.tv_name.setText(Collectionsfolder.getName());
         holder.tv_user_name.setText(Collectionsfolder.getUser_name());
-        holder.tv_votes.setText(Collectionsfolder.getVotes());
-        holder.tv_items.setText(Collectionsfolder.getItems());
+        holder.tv_votes.setText(Collectionsfolder.getVotes()+" votes");
+        holder.tv_items.setText(Collectionsfolder.getItems()+" items");
 
         /*loading Collectionsfolder cover using Glide library*/
         try{

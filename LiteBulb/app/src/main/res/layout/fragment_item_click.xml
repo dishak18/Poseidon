@@ -30,6 +30,8 @@
                     android:textColor="#ef3e46"
                     android:textSize="20sp"
                     android:padding="@dimen/card_margin"
+                    android:layout_gravity="center"
+                    android:gravity="center"
                     android:textStyle="bold"
                     android:background="#fff"
                     android:layout_marginTop="10dp"

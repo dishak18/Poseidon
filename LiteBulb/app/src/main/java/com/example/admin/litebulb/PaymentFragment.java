@@ -28,8 +28,10 @@ public class PaymentFragment extends Fragment {
     private PayPalConfiguration mConfiguration;
     private String mPaypalClientId = "Ad6IZpxI8Q_oFapwnrk0iAGQ914n5qHrpe5iyC5DyaaJDgb0Oyw6LlzeGG6EnLa5TEiCMWXDsc8MQBpP";
     private Intent mService;
+    int price_of_item;
     private int mPaypalRequestCode = 999;
     private SharedPreferences preferences;
+    TextView pay_from_account, payment_text;
     private TextView mResponse;
 
     @Override
@@ -39,10 +41,16 @@ public class PaymentFragment extends Fragment {
         referenceActivity = getActivity();
         parentHolder = inflater.inflate(R.layout.fragment_payment, container,
                 false);
-
+        pay_from_account=(TextView)parentHolder.findViewById(R.id.pay_from_account);
+        payment_text=(TextView) parentHolder.findViewById(R.id.payment_text);
         buyNowPaypal = (Button) parentHolder.findViewById(R.id.buy_now_payment);
         preferences = getContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
         mResponse = (TextView) parentHolder.findViewById(R.id.paypal_response);
+        price_of_item=Integer.parseInt(preferences.getString("itemPrice",""));
+
+        pay_from_account.setText("Pay From Your Account Balance $"+price_of_item);
+        payment_text.setText("You Will Be Redirected To The Choice Of Payment Mathod for $"+price_of_item);
+
         buyNowPaypal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

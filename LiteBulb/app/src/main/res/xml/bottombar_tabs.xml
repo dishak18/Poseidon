@@ -3,23 +3,23 @@
 
         <tab
             id="@+id/tab_featured"
-            icon="@drawable/ic_featured"
+            icon="@mipmap/ic_featured"
             title="Featured" />
         <tab
             id="@+id/tab_authors"
-            icon="@drawable/ic_authors"
+            icon="@mipmap/ic_author"
             title="Authors" />
         <tab
             id="@+id/tab_center"
-            icon="@drawable/ic_center"
+            icon="@mipmap/ic_center"
             title="Home" />
         <tab
             id="@+id/tab_popular"
-            icon="@drawable/ic_popular"
+            icon="@mipmap/ic_popular"
             title="Popular" />
          <tab
             id="@+id/tab_collections"
-            icon="@drawable/ic_collections"
+            icon="@mipmap/ic_collection"
             title="Collections" />
 
     </tabs>
