@@ -13,6 +13,10 @@
         app:cardCornerRadius="@dimen/card_album_radius"
         android:layout_margin="10dp"
         android:padding="10dp">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:scrollbars="vertical"
+            android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,59 +41,51 @@
                 android:layout_height="wrap_content"
                 android:hint="Your full Address (Including Country):"
                 android:id="@+id/address"
-                android:background="#ffebcd"
-                android:layout_marginBottom="10dp"/>
+                android:background="#ffebcd" />
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Bank Account Name:"
                 android:id="@+id/acc_name"
-                android:background="#ffebcd"
-                android:layout_marginBottom="10dp"/>
+                android:background="#ffebcd" />
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Bank Account Number:"
                 android:id="@+id/acc_number"
-                android:background="#ffebcd"
-                android:layout_marginBottom="10dp"/>
+                android:background="#ffebcd" />
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="SWIFT Code:"
                 android:id="@+id/swift_code"
-                android:background="#ffebcd"
-                android:layout_marginBottom="10dp"/>
+                android:background="#ffebcd" />
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Bank Name in Full:"
                 android:id="@+id/bank_name"
-                android:background="#ffebcd"
-                android:layout_marginBottom="10dp"/>
+                android:background="#ffebcd" />
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Bank Branch Address:"
                 android:id="@+id/branch_address"
-                android:background="#ffebcd"
-                android:layout_marginBottom="10dp"/>
+                android:background="#ffebcd" />
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Destination Country:"
                 android:id="@+id/dest_country"
-                android:background="#ffebcd"
-                android:layout_marginBottom="10dp"/>
+                android:background="#ffebcd" />
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="IBAN (if any):"
                 android:id="@+id/iban"
-                android:background="#ffebcd"
-                android:layout_marginBottom="20dp"/>
+                android:background="#ffebcd" />
 
 
             <Button
@@ -102,6 +98,7 @@
                 android:id="@+id/submit"
                 android:layout_marginBottom="25dp"/>
         </LinearLayout>
+        </ScrollView>
 
 
     </android.support.v7.widget.CardView>

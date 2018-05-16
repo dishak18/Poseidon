@@ -9,22 +9,19 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_width="match_parent">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/detail_backdrop_height"
-            android:background="@drawable/litebulb_header"
-            >
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/detail_backdrop_height"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
+                android:layout_marginTop="20dp"
                 android:textAllCaps="true"
+                android:padding="15dp"
+                android:layout_marginBottom="20dp"
                 android:background="@color/input_register"
                 android:text="@string/digital"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/backdrop_title" />
-        </LinearLayout>
 
         <ScrollView
             android:layout_width="match_parent"

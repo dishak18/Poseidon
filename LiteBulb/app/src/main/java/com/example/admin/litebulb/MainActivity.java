@@ -256,7 +256,7 @@ public class MainActivity extends AppCompatActivity {
                         view.performClick();
                         switchToDeposit();
                         //Toast.makeText(MainActivity.this, "Right Drawer - About", Toast.LENGTH_SHORT).show();
-                    } else if (id == R.id.dashboard) {
+                    } else if (id == R.id.logout) {
                         View view= findViewById(R.id.tab_center);
                         view.performClick();
                         switchToLogin();
@@ -372,7 +372,7 @@ public class MainActivity extends AppCompatActivity {
                         view.performClick();
                         switchToDeposit();
                         //Toast.makeText(MainActivity.this, "Right Drawer - About", Toast.LENGTH_SHORT).show();
-                    } else if (id == R.id.dashboard) {
+                    } else if (id == R.id.logout) {
                         View view= findViewById(R.id.tab_center);
                         view.performClick();
                         switchToLogin();
@@ -569,8 +569,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void switchToLogin() {
-        /*Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-        startActivity(intent);*/
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
     }
 
     public void switchToWithdrawal() {

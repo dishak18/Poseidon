@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class SocialProfileFragment extends Fragment {
@@ -27,6 +28,8 @@ public class SocialProfileFragment extends Fragment {
                 false);
         trash1=(TextView) parentHolder.findViewById(R.id.trash1);
         trash2=(TextView) parentHolder.findViewById(R.id.trash2);
+        Toast.makeText(getContext(), "Coming Soon!! Stay Updated", Toast.LENGTH_LONG).show();
+
         trash3=(TextView) parentHolder.findViewById(R.id.trash3);
 
         mediaName=(EditText) parentHolder.findViewById(R.id.mediaName);

@@ -39,7 +39,7 @@ public class DepositFragment extends Fragment {
     int count=0;
     String []deposit_array;
     LinearLayout.LayoutParams dim;
-    LinearLayout lin;
+    RadioGroup lin;
     Button pay;
     RadioButton c[];
     @Override
@@ -56,6 +56,12 @@ public class DepositFragment extends Fragment {
         dim=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         new DepositCollection().execute();
 
+        lin.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                c[1].getText().toString();
+            }
+        });
         // now we have array called deposit_array which has all the values, and radiobuttons c[i] with ids 1000+i respectively
         //so now we will put onclicklistener, and see which is clicked then take simultaneous value from deposit array and pass to paypal
         pay.setOnClickListener(new View.OnClickListener() {

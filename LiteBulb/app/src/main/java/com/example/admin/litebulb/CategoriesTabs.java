@@ -56,12 +56,13 @@ public class CategoriesTabs extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories_tabs);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         mProgress = new ProgressDialog(this);
         mProgress.setMessage("Loading...");
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         mProgress.show();
         mCategoriesRef = FirebaseDatabase.getInstance().getReference().child("categories");
         //floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);

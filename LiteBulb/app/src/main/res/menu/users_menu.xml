@@ -30,5 +30,8 @@
     <item
         android:id="@+id/withdrawel"
         android:title="Withdrawel" />
+        <item
+            android:id="@+id/logout"
+            android:title="Logout" />
     </group>
 </menu>
