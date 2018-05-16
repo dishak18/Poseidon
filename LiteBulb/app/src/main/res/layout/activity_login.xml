@@ -59,7 +59,7 @@
 
             <ImageView
                 android:layout_width="240dp"
-                android:layout_height="120dp"
+                android:layout_height="140dp"
                 android:layout_gravity="center"
                 android:padding="0dp"
                 android:layout_marginTop="0dp"
@@ -137,7 +137,7 @@
                 android:textAllCaps="false" />
 
 
-            <LinearLayout
+            <!--<LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -154,8 +154,8 @@
                     android:text="Login With"
                     android:layout_marginBottom="10dp"
                     android:textColor="#fff"
-                    android:textSize="20dp"/>
-                <!--<ImageButton
+                    android:textSize="20dp"></TextView>
+                &lt;!&ndash;<ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent"
@@ -180,18 +180,18 @@
                     android:background="@android:color/transparent"
                     android:src="@drawable/ic_google_final"
                     android:layout_marginTop="12dp"
-                    android:paddingRight="20dp"/>-->
+                    android:paddingRight="20dp"/>&ndash;&gt;
                 <com.facebook.login.widget.LoginButton
                     android:id="@+id/facebook_login"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-                <!--<ImageButton
+                &lt;!&ndash;<ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent"
                     android:src="@drawable/fb_logo"
                     android:layout_marginTop="12dp"
-                    android:paddingRight="20dp"-->
+                    android:paddingRight="20dp"&ndash;&gt;
                 />
                 <TextView
                     android:layout_width="wrap_content"
@@ -220,7 +220,7 @@
                     android:src="@drawable/ic_google_final"
                     android:layout_marginTop="12dp"
                     android:paddingRight="20dp"/>
-            </LinearLayout>
+            </LinearLayout>-->
 
 
             <Button
@@ -231,7 +231,6 @@
                 android:layout_marginTop="15dp"
                 android:background="@android:color/transparent"
                 android:clickable="true"
-                android:textStyle="bold"
                 android:padding="6dp"
                 android:text="Don't have an account? REGISTER"
                 android:textAllCaps="false"

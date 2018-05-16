@@ -15,9 +15,8 @@
             android:layout_height="wrap_content"
             android:text="Downloads"
             android:textStyle="bold"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textColor="@color/colorPrimary"
+            android:layout_marginLeft="10dp"
+            android:textColor="#ef3e46"
             android:textSize="30sp"/>
         <ScrollView
             android:layout_width="match_parent"

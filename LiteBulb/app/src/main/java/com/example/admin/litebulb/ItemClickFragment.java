@@ -85,6 +85,7 @@ public class ItemClickFragment extends Fragment {
 
     private SharedPreferences preferences;
     private Button buyNow;
+    ProgressDialog pdLoading;
 
 
     @Override
@@ -92,6 +93,7 @@ public class ItemClickFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         referenceActivity = getActivity();
+        pdLoading = new ProgressDialog(referenceActivity);
         itemId = getArguments().getInt("id");
         try{
             parentHolder = inflater.inflate(R.layout.fragment_item_click, container,
@@ -143,7 +145,12 @@ public class ItemClickFragment extends Fragment {
                 file_statistics.setText("");
                 added_on.setText("");
                 all_about_user.setText("");
+
+                /*pdLoading.setMessage("\tLoading...");
+                pdLoading.setCancelable(false);
+                pdLoading.show();*/
                 new SystemDetails().execute();
+              //  pdLoading.dismiss();
             }
 
             @Override
@@ -153,6 +160,7 @@ public class ItemClickFragment extends Fragment {
                 file_statistics.setText("");
                 added_on.setText("");
                 all_about_user.setText("");
+
                 new SystemDetails().execute();
 
             }
@@ -200,7 +208,7 @@ public class ItemClickFragment extends Fragment {
             new SystemDetails().execute();
         }*/
     private class SystemDetails extends AsyncTask<String, String, String> {
-        ProgressDialog pdLoading = new ProgressDialog(referenceActivity);
+        //ProgressDialog pdLoading = new ProgressDialog(referenceActivity);
         HttpURLConnection conn;
         URL url = null;
 
@@ -208,7 +216,7 @@ public class ItemClickFragment extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
 
-            pdLoading.setMessage("\tLoading...");
+           pdLoading.setMessage("\tLoading...");
             pdLoading.setCancelable(false);
             pdLoading.show();
 
@@ -284,7 +292,7 @@ public class ItemClickFragment extends Fragment {
 
             //this method will be running on UI thread
 
-            pdLoading.dismiss();
+            //pdLoading.dismiss();
             try {
 
                 JSONArray jArray = new JSONArray(result);
@@ -317,7 +325,7 @@ public class ItemClickFragment extends Fragment {
 
     }
     private class ItemDetails extends AsyncTask<String, String, String> {
-        ProgressDialog pdLoading = new ProgressDialog(referenceActivity);
+       // ProgressDialog pdLoading = new ProgressDialog(referenceActivity);
         HttpURLConnection conn;
         URL url = null;
 
@@ -326,9 +334,9 @@ public class ItemClickFragment extends Fragment {
             super.onPreExecute();
 
             //this method will be running on UI thread
-            pdLoading.setMessage("\tLoading...");
+            /*pdLoading.setMessage("\tLoading...");
             pdLoading.setCancelable(false);
-            pdLoading.show();
+            pdLoading.show();*/
 
         }
 
@@ -402,7 +410,7 @@ public class ItemClickFragment extends Fragment {
 
             //this method will be running on UI thread
 
-            pdLoading.dismiss();
+           // pdLoading.dismiss();
             try {
 
                 JSONArray jArray = new JSONArray(result);
@@ -484,17 +492,17 @@ public class ItemClickFragment extends Fragment {
 
     }
     private class UsersDetails extends AsyncTask<String, String, String> {
-        ProgressDialog pdLoading = new ProgressDialog(referenceActivity);
+        //ProgressDialog pdLoading = new ProgressDialog(referenceActivity);
         HttpURLConnection conn;
         URL url = null;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
+/*
             pdLoading.setMessage("\tLoading...");
             pdLoading.setCancelable(false);
-            pdLoading.show();
+            pdLoading.show();*/
 
         }
 
@@ -567,7 +575,7 @@ public class ItemClickFragment extends Fragment {
 
             //this method will be running on UI thread
 
-            pdLoading.dismiss();
+           // pdLoading.dismiss();
             try {
 
                 JSONArray jArray = new JSONArray(result);
@@ -731,7 +739,7 @@ public class ItemClickFragment extends Fragment {
     }
 
     private class TagsDetails extends AsyncTask<String, String, String> {
-        ProgressDialog pdLoading = new ProgressDialog(referenceActivity);
+        //ProgressDialog pdLoading = new ProgressDialog(referenceActivity);
         HttpURLConnection conn;
         URL url = null;
 
@@ -739,9 +747,9 @@ public class ItemClickFragment extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
 
-            pdLoading.setMessage("\tLoading...");
+         /*   pdLoading.setMessage("\tLoading...");
             pdLoading.setCancelable(false);
-            pdLoading.show();
+            pdLoading.show();*/
 
         }
 
@@ -813,7 +821,7 @@ public class ItemClickFragment extends Fragment {
 
             //this method will be running on UI thread
 
-            pdLoading.dismiss();
+           // pdLoading.dismiss();
             try {
 
                 JSONArray jArray = new JSONArray(result);
@@ -844,7 +852,7 @@ public class ItemClickFragment extends Fragment {
 
 
     private class ItemsTagsDetails extends AsyncTask<String, String, String> {
-        ProgressDialog pdLoading = new ProgressDialog(referenceActivity);
+        //ProgressDialog pdLoading = new ProgressDialog(referenceActivity);
         HttpURLConnection conn;
         URL url = null;
 
@@ -852,10 +860,10 @@ public class ItemClickFragment extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
 
-            pdLoading.setMessage("\tLoading...");
+           /* pdLoading.setMessage("\tLoading...");
             pdLoading.setCancelable(false);
             pdLoading.show();
-
+*/
         }
 
         @Override
@@ -926,7 +934,7 @@ public class ItemClickFragment extends Fragment {
         @Override
         protected void onPostExecute(String result) {
 
-            pdLoading.dismiss();
+//            pdLoading.dismiss();
             try {
 
                 JSONArray jArray = new JSONArray(result);
@@ -961,7 +969,7 @@ public class ItemClickFragment extends Fragment {
     }
 
     private class ItemAttributesDetails extends AsyncTask<String, String, String> {
-        ProgressDialog pdLoading = new ProgressDialog(referenceActivity);
+      //  ProgressDialog pdLoading = new ProgressDialog(referenceActivity);
         HttpURLConnection conn;
         URL url = null;
 
@@ -969,9 +977,9 @@ public class ItemClickFragment extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
 
-            pdLoading.setMessage("\tLoading...");
+          /*  pdLoading.setMessage("\tLoading...");
             pdLoading.setCancelable(false);
-            pdLoading.show();
+            pdLoading.show();*/
 
         }
 
@@ -1045,7 +1053,7 @@ public class ItemClickFragment extends Fragment {
 
             //this method will be running on UI thread
 
-            pdLoading.dismiss();
+           // pdLoading.dismiss();
             try {
 
                 JSONArray jArray = new JSONArray(result);
@@ -1086,7 +1094,7 @@ public class ItemClickFragment extends Fragment {
 
 
     private class AttributesCategoriesDetails extends AsyncTask<String, String, String> {
-        ProgressDialog pdLoading = new ProgressDialog(referenceActivity);
+       // ProgressDialog pdLoading = new ProgressDialog(referenceActivity);
         HttpURLConnection conn;
         URL url = null;
 
@@ -1094,9 +1102,9 @@ public class ItemClickFragment extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
 
-            pdLoading.setMessage("\tLoading...");
+          /*  pdLoading.setMessage("\tLoading...");
             pdLoading.setCancelable(false);
-            pdLoading.show();
+            pdLoading.show();*/
 
         }
 
@@ -1169,7 +1177,7 @@ public class ItemClickFragment extends Fragment {
 
             //this method will be running on UI thread
 
-            pdLoading.dismiss();
+          //  pdLoading.dismiss();
             try {
 
                 JSONArray jArray = new JSONArray(result);
@@ -1208,7 +1216,7 @@ public class ItemClickFragment extends Fragment {
 
     }
     private class AttributesDetails extends AsyncTask<String, String, String> {
-        ProgressDialog pdLoading = new ProgressDialog(referenceActivity);
+        //ProgressDialog pdLoading = new ProgressDialog(referenceActivity);
         HttpURLConnection conn;
         URL url = null;
 
@@ -1216,9 +1224,9 @@ public class ItemClickFragment extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
 
-            pdLoading.setMessage("\tLoading...");
+            /*pdLoading.setMessage("\tLoading...");
             pdLoading.setCancelable(false);
-            pdLoading.show();
+            pdLoading.show();*/
 
         }
 
@@ -1291,7 +1299,7 @@ public class ItemClickFragment extends Fragment {
 
             //this method will be running on UI thread
 
-            pdLoading.dismiss();
+           // pdLoading.dismiss();
             try {
 
                 JSONArray jArray = new JSONArray(result);
@@ -1371,7 +1379,7 @@ public class ItemClickFragment extends Fragment {
 
 
     private class ItemDetailsForMoreItemsByUser extends AsyncTask<String, String, String> {
-        ProgressDialog pdLoading = new ProgressDialog(referenceActivity);
+      //  ProgressDialog pdLoading = new ProgressDialog(referenceActivity);
         HttpURLConnection conn;
         URL url = null;
 
@@ -1451,7 +1459,7 @@ public class ItemClickFragment extends Fragment {
 
             //this method will be running on UI thread
 
-            pdLoading.dismiss();
+           pdLoading.dismiss();
             try {
 
                 JSONArray jArray = new JSONArray(result);

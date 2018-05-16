@@ -1,6 +1,7 @@
 package com.example.admin.litebulb.Adapters;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.admin.litebulb.ItemClickFragment;
 import com.example.admin.litebulb.Models.ModelUserPortfolio;
+import com.example.admin.litebulb.PaymentFragment;
 import com.example.admin.litebulb.R;
 
 import java.util.List;
@@ -28,24 +30,44 @@ public class AdapterUserPortfolio extends RecyclerView.Adapter<AdapterUserPortfo
     public ImageView thumbnail;
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView tv_item_name, tv_categories, tv_user_name, tv_sales, tv_price;
+        public TextView tv_item_name, tv_categories, tv_user_name, tv_sales, tv_price, tv_buy_now;
         public ImageView thumbnail;
+        private SharedPreferences preferences;
         public CardView cardView;
-        int itemId;
+        int itemId, itemPrice;
 
-        public MyViewHolder(View view) {
+        public MyViewHolder(final View view) {
             super(view);
             view.setOnClickListener(this);
             tv_item_name = (TextView) view.findViewById(R.id.item_name);
             tv_user_name = (TextView) view.findViewById(R.id.username);
             tv_sales = (TextView) view.findViewById(R.id.sales);
             tv_price=(TextView) view.findViewById(R.id.price);
+            tv_buy_now=(TextView) view.findViewById(R.id.buy_now);
             thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
             cardView = (CardView) view.findViewById(R.id.card_view);
             thumbnail.setOnClickListener(this);
+
+            preferences = mContext.getSharedPreferences("preferences", Context.MODE_PRIVATE);
+
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString("itemPrice",itemPrice+"");
+            editor.apply();
+            tv_buy_now.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PaymentFragment fragment1 = new PaymentFragment();
+                    FragmentManager fragmentManager = ((AppCompatActivity)view.getContext()).getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.contentContainer, fragment1);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }
+            });
         }
-        public void openItem(int id){
+        public void openItem(int id, int price){
             itemId = id;
+            itemPrice=price;
         }
 
 
@@ -104,7 +126,7 @@ public class AdapterUserPortfolio extends RecyclerView.Adapter<AdapterUserPortfo
             throw e;
         }
 
-        holder.openItem(ModelUserPortfolio.getItemId());
+        holder.openItem(ModelUserPortfolio.getItemId(), ModelUserPortfolio.getPrice());
 
     }
 

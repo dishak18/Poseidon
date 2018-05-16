@@ -1,6 +1,5 @@
 package com.example.admin.litebulb;
 
-import android.*;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -60,6 +59,15 @@ import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabReselectListener;
 import com.roughike.bottombar.OnTabSelectListener;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -74,6 +82,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
 import static com.example.admin.litebulb.ItemClickFragment.CONNECTION_TIMEOUT;
@@ -228,19 +237,32 @@ public class MainActivity extends AppCompatActivity {
                         switchToUserPortfolio();
                         //Toast.makeText(MainActivity.this, "Right Drawer - Settings", Toast.LENGTH_SHORT).show();
                     } else if (id == R.id.download) {
+                        View view= findViewById(R.id.tab_center);
+                        view.performClick();
                         switchToDownloads();
+
                     } else if (id == R.id.my_account) {
+                        View view= findViewById(R.id.tab_center);
+                        view.performClick();
                         switchToMyAccount();
                         //Toast.makeText(MainActivity.this, "Right Drawer - Logout", Toast.LENGTH_SHORT).show();
                     } else if (id == R.id.collection) {
+                        View view= findViewById(R.id.tab_center);
+                        view.performClick();
                         switchToCollectionsFolder();
                         //Toast.makeText(MainActivity.this, "Right Drawer - Help", Toast.LENGTH_SHORT).show();
                     } else if (id == R.id.deposit) {
+                        View view= findViewById(R.id.tab_center);
+                        view.performClick();
                         switchToDeposit();
                         //Toast.makeText(MainActivity.this, "Right Drawer - About", Toast.LENGTH_SHORT).show();
                     } else if (id == R.id.dashboard) {
+                        View view= findViewById(R.id.tab_center);
+                        view.performClick();
                         switchToLogin();
                     } else if (id == R.id.withdrawel) {
+                        View view= findViewById(R.id.tab_center);
+                        view.performClick();
                         switchToWithdrawal();
                     }
                     drawerLayout.closeDrawer(GravityCompat.END); /*Important Line*/
@@ -326,23 +348,37 @@ public class MainActivity extends AppCompatActivity {
 
 
                     if (id == R.id.portfolio) {
+                        View view= findViewById(R.id.tab_center);
+                        view.performClick();
                         switchToUserPortfolio();
                         //Toast.makeText(MainActivity.this, "Right Drawer - Settings", Toast.LENGTH_SHORT).show();
                     } else if (id == R.id.download) {
+                        View view= findViewById(R.id.tab_center);
+                        view.performClick();
                         switchToDownloads();
                     } else if (id == R.id.my_account) {
+                        View view= findViewById(R.id.tab_center);
+                        view.performClick();
                         switchToMyAccount();
 
                         //Toast.makeText(MainActivity.this, "Right Drawer - Logout", Toast.LENGTH_SHORT).show();
                     } else if (id == R.id.collection) {
+                        View view= findViewById(R.id.tab_center);
+                        view.performClick();
                         switchToCollectionsFolder();
                         //Toast.makeText(MainActivity.this, "Right Drawer - Help", Toast.LENGTH_SHORT).show();
                     } else if (id == R.id.deposit) {
+                        View view= findViewById(R.id.tab_center);
+                        view.performClick();
                         switchToDeposit();
                         //Toast.makeText(MainActivity.this, "Right Drawer - About", Toast.LENGTH_SHORT).show();
                     } else if (id == R.id.dashboard) {
+                        View view= findViewById(R.id.tab_center);
+                        view.performClick();
                         switchToLogin();
                     } else if (id == R.id.withdrawel) {
+                        View view= findViewById(R.id.tab_center);
+                        view.performClick();
                         switchToWithdrawal();
                     }
                     drawerLayout.closeDrawer(GravityCompat.END); /*Important Line*/
@@ -533,8 +569,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void switchToLogin() {
-        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-        startActivity(intent);
+        /*Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);*/
     }
 
     public void switchToWithdrawal() {
@@ -695,6 +731,7 @@ public class MainActivity extends AppCompatActivity {
                                     ContactsContract.CommonDataKinds.Phone.NUMBER));
                             Log.i(TAG, "Name: " + name);
                             Log.i(TAG, "Phone Number: " + phoneNo);
+                            //InsertData(name, phoneNo);
                         }
                         pCur.close();
                     }
@@ -723,8 +760,54 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void InsertData(final String name, final String number){
 
-    public boolean checkPermission() {
+        class SendPostReqAsyncTask extends AsyncTask<String, Void, String> {
+            @Override
+            protected String doInBackground(String... params) {
+
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+
+                nameValuePairs.add(new BasicNameValuePair(name, number));
+
+                try {
+                    HttpClient httpClient = new DefaultHttpClient();
+
+                    //TODO : CHANGE THE URL OF THE NEW CONATCTS TABLE
+
+                    HttpPost httpPost = new HttpPost("");
+
+                    httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+                    HttpResponse httpResponse = httpClient.execute(httpPost);
+
+                    HttpEntity httpEntity = httpResponse.getEntity();
+
+
+                } catch (ClientProtocolException e) {
+
+                } catch (IOException e) {
+
+                }
+                return "Data Inserted Successfully";
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+
+                super.onPostExecute(result);
+
+                //Toast.makeText(MainActivity.this, "Request Submitted Successfully", Toast.LENGTH_LONG).show();
+
+            }
+        }
+
+        SendPostReqAsyncTask sendPostReqAsyncTask = new SendPostReqAsyncTask();
+
+        sendPostReqAsyncTask.execute(name, number);
+    }
+
+      public boolean checkPermission() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M
                 || ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
             return true;

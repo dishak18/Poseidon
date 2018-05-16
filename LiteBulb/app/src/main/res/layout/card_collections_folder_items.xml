@@ -30,23 +30,23 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:weightSum="10"
-                android:layout_marginLeft="5dp"
+                android:layout_margin="5dp"
                 android:orientation="horizontal"
                 android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/item_name"
-                android:layout_width="wrap_content"
-                android:layout_weight="7"
+                android:layout_width="0dp"
+                android:layout_weight="8"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="@dimen/card_margin"
-                android:textColor="#ef3e46"
-                android:textSize="20sp" />
+                android:textSize="15sp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:id="@+id/price"
-                    android:layout_weight="3"
-                    android:textColor="@drawable/gradient_background"
+                    android:textStyle="bold"
+                    android:layout_weight="2"
+                    android:textColor="#ef3e46"
                     android:textSize="24sp"
                     android:layout_height="match_parent" />
             </LinearLayout>
@@ -54,7 +54,7 @@
             <TextView
                 android:id="@+id/categories"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/thumbnail"
                 android:layout_marginBottom="@dimen/card_margin"
                 android:textSize="@dimen/album_title" />
@@ -62,27 +62,28 @@
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
                 android:weightSum="10"
-                android:layout_marginBottom="12dp"
+                android:layout_margin="5dp"
                 android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/user_name"
-                    android:layout_width="wrap_content"
+                    android:layout_weight="4"
+                    android:textStyle="bold"
+                    android:layout_width="0dp"
                     android:layout_gravity="center"
                     android:layout_height="match_parent"
                     android:textSize="@dimen/songs_count" />
 
                 <TextView
                     android:id="@+id/sales_items"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
+                    android:layout_weight="2"
                     android:layout_height="match_parent"
                     android:textSize="@dimen/songs_count" />
                 <TextView
                     android:id="@+id/buy_now"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="5dp"
+                    android:layout_weight="2"
                     android:layout_width="wrap_content"
                     android:layout_gravity="center"
                     android:clickable="true"
@@ -94,11 +95,10 @@
                 <TextView
                     android:id="@+id/view_demo"
                     android:layout_width="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:clickable="true"
                     android:focusable="true"
                     android:text="View Demo"
-                    android:layout_marginLeft="5dp"
                     android:layout_gravity="center"
                     android:textColor="#ef3e46"
                     android:layout_height="match_parent"

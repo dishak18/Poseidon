@@ -1,5 +1,6 @@
 package com.example.admin.litebulb.Adapters;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -120,8 +121,8 @@ public class AdapterDownloads extends RecyclerView.Adapter<AdapterDownloads.MyVi
         Downloads Downloads = downloadsList.get(position);
         holder.item_name.setText(Downloads.getItemName());
         Log.e("ViewHolder","Id is : "+Downloads.getItemId());
-        // holder.votes.setText(Downloads.getVotes());
-        holder.license_name.setText(Downloads.getDownload_link());
+        holder.votes.setText(Downloads.getVotes()+" votes");
+       // holder.license_name.setText(Downloads.getDownload_link());
         mProgressDialog = new ProgressDialog(mContext);
         /*loading Downloads cover using Glide library*/
         Glide.with(mContext)
@@ -250,10 +251,10 @@ public class AdapterDownloads extends RecyclerView.Adapter<AdapterDownloads.MyVi
 
     public boolean checkPermission() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M
-                || ContextCompat.checkSelfPermission(mContext, android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                || ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             return true;
         }
-        if (ActivityCompat.shouldShowRequestPermissionRationale((Activity)mContext, android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale((Activity)mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             AlertDialog.Builder alertBuilder = new AlertDialog.Builder(mContext);
             alertBuilder.setCancelable(true);
             alertBuilder.setTitle("Permission necessary");
@@ -261,13 +262,13 @@ public class AdapterDownloads extends RecyclerView.Adapter<AdapterDownloads.MyVi
             alertBuilder.setPositiveButton("Proceed", new DialogInterface.OnClickListener() {
                 @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
                 public void onClick(DialogInterface dialog, int which) {
-                    ActivityCompat.requestPermissions((Activity)mContext, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, 7);
+                    ActivityCompat.requestPermissions((Activity)mContext, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 7);
                 }
             });
             AlertDialog alert = alertBuilder.create();
             alert.show();
         } else {
-            ActivityCompat.requestPermissions((Activity)mContext, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, RC_PERM_REQ_EXT_STORAGE);
+            ActivityCompat.requestPermissions((Activity)mContext, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, RC_PERM_REQ_EXT_STORAGE);
         }
         return false;
     }

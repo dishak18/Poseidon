@@ -56,6 +56,7 @@ public class CategoriesTabs extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories_tabs);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         mProgress = new ProgressDialog(this);
         mProgress.setMessage("Loading...");
         tabLayout = (TabLayout) findViewById(R.id.tabs);

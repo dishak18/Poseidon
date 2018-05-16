@@ -81,7 +81,7 @@ public class WithdrawalFragment extends Fragment {
             public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
                 if(checkedId==R.id.rb_international_transfer)
                 {
-                    if(et_amount.getText().toString().equals(null))
+                    if(et_amount.getText().toString().equals(""))
                     {
                         Toast.makeText(getContext(), "Please enter amount", Toast.LENGTH_SHORT).show();
                     }
@@ -106,7 +106,7 @@ public class WithdrawalFragment extends Fragment {
                 }
                 else if(checkedId==R.id.rb_moneybookers)
                 {
-                    if(et_amount.getText().toString().equals(null))
+                    if(et_amount.getText().toString().equals(""))
                     {
                         Toast.makeText(getContext(), "Please enter amount", Toast.LENGTH_SHORT).show();
                     }
@@ -130,7 +130,7 @@ public class WithdrawalFragment extends Fragment {
 
                 }else if(checkedId==R.id.rb_paypal)
                 {
-                    if(et_amount.getText().toString().equals(null))
+                    if(et_amount.getText().toString().equals(""))
                     {
                         Toast.makeText(getContext(), "Please enter amount", Toast.LENGTH_SHORT).show();
                     }

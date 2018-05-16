@@ -84,7 +84,7 @@ public class CollectionsItemClick extends Fragment {
         //prepareCards();
         //makeJsonArrayRequestForWeekly();
         new ItemsCollectionsDetails().execute();
-        getActivity().getSupportFragmentManager().popBackStack();
+        //getActivity().getSupportFragmentManager().popBackStack();
         adapter_collections_folder_items.notifyDataSetChanged();
         return parentHolder;
 

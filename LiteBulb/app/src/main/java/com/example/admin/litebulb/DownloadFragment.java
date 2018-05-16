@@ -47,6 +47,7 @@ public class DownloadFragment extends Fragment {
     private List<Downloads> downloadedItems;
     private AdapterDownloads adapter_downloads;
     String []item_ids_array;
+    ProgressDialog pdLoading;
     RecyclerView rv_downloads;
     SharedPreferences loginPreferences;
     @Override
@@ -57,6 +58,7 @@ public class DownloadFragment extends Fragment {
         parentHolder = inflater.inflate(R.layout.fragment_download, container,
                 false);
         downloadedItems = new ArrayList<>();
+        pdLoading = new ProgressDialog(referenceActivity);
         adapter_downloads = new AdapterDownloads(getActivity(), downloadedItems );
         RecyclerView.LayoutManager mLayoutManager= new LinearLayoutManager(getContext());
         rv_downloads=(RecyclerView) parentHolder.findViewById(R.id.recycler_view_download);
@@ -73,7 +75,7 @@ public class DownloadFragment extends Fragment {
     }
 
     private class UsersDetails extends AsyncTask<String, String, String> {
-        ProgressDialog pdLoading = new ProgressDialog(referenceActivity);
+
         HttpURLConnection conn;
         URL url = null;
 
@@ -155,7 +157,7 @@ public class DownloadFragment extends Fragment {
 
             //this method will be running on UI thread
 
-            pdLoading.dismiss();
+           // pdLoading.dismiss();
             try {
 
                 JSONArray jArray = new JSONArray(result);
@@ -356,8 +358,7 @@ public class DownloadFragment extends Fragment {
         protected void onPostExecute(String result) {
 
             //this method will be running on UI thread
-
-            // pdLoading.dismiss();
+            pdLoading.dismiss();
             try {
 
                 JSONArray jArray = new JSONArray(result);

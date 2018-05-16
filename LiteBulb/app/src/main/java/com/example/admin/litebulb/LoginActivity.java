@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -19,28 +18,8 @@ import android.widget.Toast;
 import com.example.admin.litebulb.SQL.AppConfig;
 import com.example.admin.litebulb.SQL.SQLiteHandler;
 import com.example.admin.litebulb.SQL.SessionManager;
-import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FacebookAuthProvider;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
 
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
@@ -66,23 +45,23 @@ public class LoginActivity extends Activity {
     private ImageButton back_btn;
     private Boolean saveLogin;
 
-    private SignInButton googleButton;
-    private GoogleApiClient mGoogleApiClient;
+    /*    private SignInButton googleButton;
+        private GoogleApiClient mGoogleApiClient;
 
 
-    private static final int RC_SIGN_IN = 9001;
+        private static final int RC_SIGN_IN = 9001;
 
-    //GOOGLE SIGN IN
-    private FirebaseAuth mAuth;
-    private GoogleSignInClient mGoogleSignInClient;
-    private ProgressDialog mProgress;
-    private String googleName;
-    private String googleEmail;
+        //GOOGLE SIGN IN
+        private FirebaseAuth mAuth;
+        private GoogleSignInClient mGoogleSignInClient;
+        private ProgressDialog mProgress;
+        private String googleName;
+        private String googleEmail;
 
-    //FACEBOOK SIGN IN
-    private static final String TAG = "FacebookLogin";
-    private CallbackManager mCallbackManager;
-    private LoginButton loginButton;
+        //FACEBOOK SIGN IN
+        private static final String TAG = "FacebookLogin";
+        private CallbackManager mCallbackManager;
+        private LoginButton loginButton;*/
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,7 +74,7 @@ public class LoginActivity extends Activity {
         btnLinkToRegister = (Button) findViewById(R.id.register);
         back_btn=(ImageButton) findViewById(R.id.back);
 
-        googleButton = (SignInButton) findViewById(R.id.google_sign_in);
+       /* googleButton = (SignInButton) findViewById(R.id.google_sign_in);
         username=inputName.getText().toString().trim();
         loginButton = (LoginButton) findViewById(R.id.facebook_login);
 
@@ -119,7 +98,7 @@ public class LoginActivity extends Activity {
                 Log.d(TAG, "facebook:onError", error);
             }
         });
-
+*/
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -135,7 +114,7 @@ public class LoginActivity extends Activity {
                 .requestEmail()
                 .build();
 
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+/*        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         mAuth = FirebaseAuth.getInstance();
 
         mProgress = new ProgressDialog(this);
@@ -146,7 +125,7 @@ public class LoginActivity extends Activity {
             public void onClick(View view) {
                 signIn();
             }
-        });
+        });*/
 
         //CheckBox remember=(CheckBox)findViewById(R.id.rem) ;
         /*SystemBarTintManager tintManager = new SystemBarTintManager(this);
@@ -254,7 +233,7 @@ public class LoginActivity extends Activity {
 
     }
 
-    private void signIn() {
+   /* private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
@@ -352,7 +331,7 @@ public class LoginActivity extends Activity {
                         // [END_EXCLUDE]
                     }
                 });
-    }
+    }*/
 
 
     public void doSomethingElse() {

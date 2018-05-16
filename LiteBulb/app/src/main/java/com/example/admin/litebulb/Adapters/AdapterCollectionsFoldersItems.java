@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,7 +34,7 @@ public class AdapterCollectionsFoldersItems extends RecyclerView.Adapter<Adapter
         public ImageView thumbnail;
         private SharedPreferences preferences;
         public CardView cardView;
-        Button buy_now;
+        TextView buy_now;
         int itemId, itemPrice;
 
         public MyViewHolder(final View view) {
@@ -46,6 +45,7 @@ public class AdapterCollectionsFoldersItems extends RecyclerView.Adapter<Adapter
             tv_user_name = (TextView) view.findViewById(R.id.user_name);
             tv_sales_items = (TextView) view.findViewById(R.id.sales_items);
             tv_price=(TextView) view.findViewById(R.id.price);
+            buy_now=(TextView) view.findViewById(R.id.buy_now);
             thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
             cardView = (CardView) view.findViewById(R.id.card_view);
             thumbnail.setOnClickListener(this);

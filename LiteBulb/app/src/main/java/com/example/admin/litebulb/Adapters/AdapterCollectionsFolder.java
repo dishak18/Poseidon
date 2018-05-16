@@ -28,7 +28,7 @@ public class AdapterCollectionsFolder extends RecyclerView.Adapter<AdapterCollec
     public ImageView thumbnail;
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView tv_name, tv_user_name, tv_votes, tv_items;
+        public TextView tv_name, tv_user_name, tv_votes, tv_items, view_items;
         public ImageView thumbnail;
         public CardView cardView;
         int collectionsId;
@@ -41,9 +41,11 @@ public class AdapterCollectionsFolder extends RecyclerView.Adapter<AdapterCollec
             tv_items = (TextView) view.findViewById(R.id.items);
             tv_user_name = (TextView) view.findViewById(R.id.user_name);
             tv_votes = (TextView) view.findViewById(R.id.votes);
+            view_items=(TextView) view.findViewById(R.id.view_items);
             thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
             cardView = (CardView) view.findViewById(R.id.card_view);
-            thumbnail.setOnClickListener(this);
+           // thumbnail.setOnClickListener(this);
+            view_items.setOnClickListener(this);
         }
         public void openItem(int id, String user_name, String collection_name){
             collectionsId = id;
@@ -63,6 +65,8 @@ public class AdapterCollectionsFolder extends RecyclerView.Adapter<AdapterCollec
             fragment1.setArguments(args);
             FragmentManager fragmentManager =((AppCompatActivity)view.getContext()).getSupportFragmentManager();
             FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.contentContainer, fragment1);
+            fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
 
         }
