@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -112,9 +111,6 @@ public class BlankFragment2 extends Fragment {
                             /*txtResponse.setText(jsonResponse);*/
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(referenceActivity,
-                                    "Error: " + e.getMessage(),
-                                    Toast.LENGTH_LONG).show();
                         }
                         hidepDialog();
                     }
@@ -122,8 +118,6 @@ public class BlankFragment2 extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
-                Toast.makeText(referenceActivity,
-                        error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
         try{

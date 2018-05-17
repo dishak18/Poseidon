@@ -28,7 +28,7 @@ public class SocialProfileFragment extends Fragment {
                 false);
         trash1=(TextView) parentHolder.findViewById(R.id.trash1);
         trash2=(TextView) parentHolder.findViewById(R.id.trash2);
-        Toast.makeText(getContext(), "Coming Soon!! Stay Updated", Toast.LENGTH_LONG).show();
+
 
         trash3=(TextView) parentHolder.findViewById(R.id.trash3);
 
@@ -41,6 +41,12 @@ public class SocialProfileFragment extends Fragment {
         profileLink3=(EditText) parentHolder.findViewById(R.id.profileLink3);
 
         save=(Button) parentHolder.findViewById(R.id.save);
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(), "Coming Soon!! Stay Updated", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         trash1.setOnClickListener(new View.OnClickListener() {
             @Override

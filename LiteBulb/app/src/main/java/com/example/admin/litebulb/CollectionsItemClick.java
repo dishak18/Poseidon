@@ -206,7 +206,7 @@ public class CollectionsItemClick extends Fragment {
                 //user_name_user_array = user_ids_of_user_table.toArray(new String[user_ids_of_user_table.size()]);
 
             } catch (JSONException e) {
-                Toast.makeText(referenceActivity, e.toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(referenceActivity,"Please check your internet connection", Toast.LENGTH_LONG).show();
             }
             new ItemsDetails().execute();
         }
@@ -344,7 +344,7 @@ public class CollectionsItemClick extends Fragment {
                 //user_name_user_array = user_ids_of_user_table.toArray(new String[user_ids_of_user_table.size()]);
 
             } catch (JSONException e) {
-                Toast.makeText(referenceActivity, e.toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(referenceActivity, "Check your internet connection and try again later", Toast.LENGTH_LONG).show();
             }
             //new CollectionsDetails().execute();
         }

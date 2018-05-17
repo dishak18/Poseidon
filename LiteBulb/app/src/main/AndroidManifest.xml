@@ -11,7 +11,7 @@
         android:name=".SQL.AppController"
         android:allowBackup="true"
         android:icon="@drawable/studio"
-        android:label="LiteBulb"
+        android:label="LiteBulb Studio"
         android:roundIcon="@drawable/studio"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">

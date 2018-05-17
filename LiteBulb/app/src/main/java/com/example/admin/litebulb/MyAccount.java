@@ -17,7 +17,6 @@ public class MyAccount extends AppCompatActivity implements PasscodeFragment.OnF
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_account);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
         TabLayout tabLayout=(TabLayout) findViewById(R.id.tabLayout);
         tabLayout.addTab(tabLayout.newTab().setText("Profile Edit"));
         tabLayout.addTab(tabLayout.newTab().setText("Passcode"));

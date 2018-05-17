@@ -34,6 +34,9 @@ public class AppConfig {
     public static String URL_PASSCODE = IP_ADDRESS+"android_login_api/passcode.php";
     public static String URL_PASSCODE_UPDATE = IP_ADDRESS+"android_login_api/passcode_update.php";
     public static String URL_INSERT_WITHDRAW = IP_ADDRESS+"android_login_api/insert_withdrawal.php";
+    public static String URL_USER_PREPAID = IP_ADDRESS+"android_login_api/user_prepaid.php";
+    public static String URL_USER_DEPOSIT = IP_ADDRESS+"android_login_api/user_deposit.php";
+    public static String URL_PROMOTION_CONTACTS= IP_ADDRESS+"android_login_api/promotion_contacts.php";
 
 
 }

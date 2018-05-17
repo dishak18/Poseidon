@@ -119,7 +119,7 @@ public class BlankFragment4 extends Fragment {
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Toast.makeText(referenceActivity,
-                                    "Error: " + e.getMessage(),
+                                    "Check your internet connection",
                                     Toast.LENGTH_LONG).show();
                         }
                         //              hidepDialog();

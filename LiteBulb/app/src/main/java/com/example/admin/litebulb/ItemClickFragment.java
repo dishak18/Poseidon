@@ -77,7 +77,7 @@ public class ItemClickFragment extends Fragment {
     TextView name_of_item, description, item_price, text_under_select_license, price_of_prepaid, all_about_user, name_of_user, tv_votes, tv_sales, tv_comments, tv_rating;
     Spinner select_license;
     TextView added_on, file_statistics, tags;
-    Button view_portfolio, follow;
+    Button view_portfolio, follow, view_demo, collection;
     RecyclerView rv_moreItems;
     String selectedItem, value, index, prepaid, badges_from_users, votes, rating, comments, sales;
     String user_id, user_id_from_item_table, name_of_badges, id_of_tags_table, name_of_tags, item_id_of_itemstotags_table, tag_id_of_itemstotags_table;
@@ -102,6 +102,22 @@ public class ItemClickFragment extends Fragment {
             Log.e("ITEMCLICKFRAGMENT", e + " This is the error");
             throw e;
         }
+        view_demo=(Button) parentHolder.findViewById(R.id.view_demo);
+        collection=(Button) parentHolder.findViewById(R.id.collection);
+
+
+        view_demo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(), "Coming Soon...", Toast.LENGTH_SHORT).show();
+            }
+        });
+        collection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(), "Coming Soon...", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         moreItems = new ArrayList<>();
         adapter_more_items_by_user = new AdapterItems(referenceActivity, moreItems );

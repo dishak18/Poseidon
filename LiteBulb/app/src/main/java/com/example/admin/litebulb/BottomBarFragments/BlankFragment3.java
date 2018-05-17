@@ -193,13 +193,13 @@ public class BlankFragment3 extends Fragment {
     }
     private void makeJsonArrayRequestForFeaturedAuthors() {
 
-        showpDialog();
+       // showpDialog();
 
         JsonArrayRequest req = new JsonArrayRequest(AppConfig.URL_USER_FEATURED,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        //showpDialog();
+                        showpDialog();
                         try {
                             int count_featured_authors=0;
                             for (int i = 0; i < response.length(); i++) {
@@ -236,9 +236,6 @@ public class BlankFragment3 extends Fragment {
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(referenceActivity,
-                                    "Error: " + e.getMessage(),
-                                    Toast.LENGTH_LONG).show();
                         }
 
                        // hidepDialog();
@@ -252,7 +249,7 @@ public class BlankFragment3 extends Fragment {
                 Toast.makeText(referenceActivity,
                         "Please check your network connection.",
                         Toast.LENGTH_LONG).show();
-                hidepDialog();
+               // hidepDialog();
             }
         });
         try{
@@ -278,7 +275,7 @@ public class BlankFragment3 extends Fragment {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        //showpDialog();
+                       // showpDialog();
                         try {
                             int count_weekly=0;
                             int count_featured_items=0;
@@ -366,9 +363,6 @@ public class BlankFragment3 extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
-                Toast.makeText(referenceActivity,
-                        "Please check your network connection.",
-                        Toast.LENGTH_LONG).show();
                 hidepDialog();
             }
         });

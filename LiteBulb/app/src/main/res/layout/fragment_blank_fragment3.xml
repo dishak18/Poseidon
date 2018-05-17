@@ -9,142 +9,149 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_width="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="@drawable/litebulb_studio_header">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:textAllCaps="true"
                 android:padding="15dp"
                 android:layout_marginBottom="20dp"
                 android:background="@color/input_register"
+                android:alpha="0.7"
                 android:text="@string/digital"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/backdrop_title" />
-
+        </LinearLayout>
         <ScrollView
             android:layout_width="match_parent"
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
             android:layout_height="match_parent">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:weightSum="10"
-            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:weightSum="10"
+                    android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="8"
-                android:layout_height="match_parent"
-                android:textColor="#000000"
-                android:text="Weekly Freebies"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:layout_gravity="end"
-                android:id="@+id/view_weekly"
-                android:gravity="end"
-                android:text="@string/view"
-                android:textSize="@dimen/view_size"
-                android:clickable="true"
-                android:focusable="true"/>
-        </LinearLayout>
-        <include layout="@layout/rv_weekly" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:weightSum="10"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="8"
+                        android:layout_height="match_parent"
+                        android:textColor="#000000"
+                        android:text="Weekly Freebies"/>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:layout_gravity="end"
+                        android:id="@+id/view_weekly"
+                        android:gravity="end"
+                        android:text="@string/view"
+                        android:textSize="@dimen/view_size"
+                        android:clickable="true"
+                        android:focusable="true"/>
+                </LinearLayout>
+                <include layout="@layout/rv_weekly" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:weightSum="10"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="8"
-                android:layout_height="match_parent"
-                android:textColor="#000000"
-                android:text="Featured Items"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:layout_gravity="end"
-                android:gravity="end"
-                android:id="@+id/view_featured_items"
-                android:textSize="@dimen/view_size"
-                android:text="@string/view"
-                android:focusable="true"
-                android:clickable="true"/>
-        </LinearLayout>
-        <include layout="@layout/rv_featured_items" />
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:weightSum="10"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="8"
-                android:layout_height="match_parent"
-                android:textColor="#000000"
-                android:text="Featured Authors"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:layout_gravity="end"
-                android:gravity="end"
-                android:id="@+id/view_featured_authors"
-                android:textSize="@dimen/view_size"
-                android:text="@string/view"
-                android:clickable="true"
-                android:focusable="true"/>
-        </LinearLayout>
-        <include layout="@layout/rv_feautured_authors" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:weightSum="10"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="8"
-                android:layout_height="match_parent"
-                android:textColor="#000000"
-                android:text="All Items"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:layout_gravity="end"
-                android:gravity="end"
-                android:id="@+id/view_items"
-                android:textSize="@dimen/view_size"
-                android:text="@string/view"
-                android:clickable="true"
-                android:focusable="true"/>
-        </LinearLayout>
-        <include layout="@layout/rv_items_all" />
-        <!-- this is our listview where we will display the fetched data -->
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="8"
+                        android:layout_height="match_parent"
+                        android:textColor="#000000"
+                        android:text="Featured Items"/>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:layout_gravity="end"
+                        android:gravity="end"
+                        android:id="@+id/view_featured_items"
+                        android:textSize="@dimen/view_size"
+                        android:text="@string/view"
+                        android:focusable="true"
+                        android:clickable="true"/>
+                </LinearLayout>
+                <include layout="@layout/rv_featured_items" />
 
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:weightSum="10"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="8"
+                        android:layout_height="match_parent"
+                        android:textColor="#000000"
+                        android:text="Featured Authors"/>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:layout_gravity="end"
+                        android:gravity="end"
+                        android:id="@+id/view_featured_authors"
+                        android:textSize="@dimen/view_size"
+                        android:text="@string/view"
+                        android:clickable="true"
+                        android:focusable="true"/>
+                </LinearLayout>
+                <include layout="@layout/rv_feautured_authors" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:weightSum="10"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="8"
+                        android:layout_height="match_parent"
+                        android:textColor="#000000"
+                        android:text="All Items"/>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:layout_gravity="end"
+                        android:gravity="end"
+                        android:id="@+id/view_items"
+                        android:textSize="@dimen/view_size"
+                        android:text="@string/view"
+                        android:clickable="true"
+                        android:focusable="true"/>
+                </LinearLayout>
+                <include layout="@layout/rv_items_all" />
+                <!-- this is our listview where we will display the fetched data -->
 
 
-    </LinearLayout>
+
+
+            </LinearLayout>
         </ScrollView>
     </LinearLayout>
 </FrameLayout>

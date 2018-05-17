@@ -23,6 +23,7 @@
                 android:id="@+id/thumbnail"
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
+                android:layout_marginBottom="10dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:scaleType="fitXY" />
@@ -33,6 +34,7 @@
                 android:weightSum="10"
                 android:id="@+id/lin"
                 android:layout_below="@+id/thumbnail"
+                android:layout_marginBottom="10dp"
                 android:orientation="horizontal">
 
 
@@ -53,7 +55,7 @@
                     android:gravity="center"
                     android:textColor="#fff"
                     android:background="@drawable/shapes"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_below="@id/title"
                     android:textSize="@dimen/songs_count" />
             </LinearLayout>

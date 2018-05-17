@@ -31,7 +31,7 @@ public class SalesLicense extends Fragment {
                 false);
         fullLicense=(Switch) parentHolder.findViewById(R.id.full_license);
         personalUseLicense=(Switch) parentHolder.findViewById(R.id.personal_use_license);
-        Toast.makeText(getContext(), "Coming Soon!! Stay Updated", Toast.LENGTH_LONG).show();
+
 
         save=(Button) parentHolder.findViewById(R.id.save);
 
@@ -40,6 +40,8 @@ public class SalesLicense extends Fragment {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Toast.makeText(getContext(), "Coming Soon!! Stay Updated", Toast.LENGTH_SHORT).show();
 
                 /*GetData();
 

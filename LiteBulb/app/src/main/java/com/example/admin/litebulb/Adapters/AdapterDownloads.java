@@ -181,7 +181,7 @@ public class AdapterDownloads extends RecyclerView.Adapter<AdapterDownloads.MyVi
 
                 // download the file
                 input = connection.getInputStream();
-                output = new FileOutputStream(Environment.getExternalStorageDirectory().getPath()+"/LiteBulb/"+itemName+".zip");
+                output = new FileOutputStream(Environment.getExternalStorageDirectory().getPath()+"/LiteBulb Studio/"+itemName+".zip");
                 byte data[] = new byte[4096];
                 long total = 0;
                 int count;
@@ -278,7 +278,7 @@ public class AdapterDownloads extends RecyclerView.Adapter<AdapterDownloads.MyVi
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
             } else {
-                Toast.makeText(mContext, "Permission Denied !, Retrying.", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(mContext, "Permission Denied !, Retrying.", Toast.LENGTH_SHORT).show();
                 checkPermission();
             }
         }

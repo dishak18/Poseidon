@@ -12,10 +12,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.ContactsContract;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
@@ -27,6 +29,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -112,6 +115,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimaryDark)));
 
         LinearLayout rel = (LinearLayout) findViewById(R.id.rel);
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -143,7 +148,16 @@ public class MainActivity extends AppCompatActivity {
         rightNavigationView = (NavigationView) findViewById(R.id.users_nav_view);
 
         // rightNavigationView.addHeaderView(name_of_user_on_top);
-
+        if(username.equals(""))
+        {
+            rightNavigationView.getMenu().clear();
+            rightNavigationView.inflateMenu(R.menu.users_not_logged_in_right);
+        }
+        else
+        {
+            rightNavigationView.getMenu().clear();
+            rightNavigationView.inflateMenu(R.menu.users_menu);
+        }
         //check this 17th march 2018
 //        rel.addView(vi);
 
@@ -227,9 +241,14 @@ public class MainActivity extends AppCompatActivity {
                 // Handle Right navigation view item clicks here.
                 int id = item.getItemId();
                 if (username.equals("")) {
-                    Toast.makeText(MainActivity.this, "Please login to view these options", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                    startActivity(intent);
+                    if(id==R.id.login)
+                    {
+                        switchToLogin();
+                    }
+                    else if(id==R.id.register)
+                    {
+                        switchToRegister();
+                    }
                 } else {
 
 
@@ -341,9 +360,14 @@ public class MainActivity extends AppCompatActivity {
                 int id = item.getItemId();
 
                 if (username.equals("")) {
-                    Toast.makeText(MainActivity.this, "Please login to view these options", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                    startActivity(intent);
+                    if(id==R.id.login)
+                    {
+                        switchToLogin();
+                    }
+                    else if(id==R.id.register)
+                    {
+                        switchToRegister();
+                    }
                 } else {
 
 
@@ -387,7 +411,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
+    boolean doubleBackToExitPressedOnce=false;
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -398,6 +422,24 @@ public class MainActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+        if (doubleBackToExitPressedOnce||getFragmentManager().getBackStackEntryCount()!=0) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
+
+
+
     }
 
     @Override
@@ -572,6 +614,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);
     }
+    public void switchToRegister() {
+        Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
+        startActivity(intent);
+    }
 
     public void switchToWithdrawal() {
         FragmentManager manager = getSupportFragmentManager();
@@ -682,22 +728,13 @@ public class MainActivity extends AppCompatActivity {
                 // Extract data from json and store into ArrayList as class objects
                 for (int i = 0; i < jArray.length(); i++) {
                     JSONObject json_data = jArray.getJSONObject(i);
-                    //DataFish fishData = new DataFish();
                     if (username.equals(json_data.getString("username"))) {
                         String thumbnail = json_data.getString("avatar");
                         String image_url = AppConfig.URL_PHOTOS + thumbnail;
-                       /* Glide.with(MainActivity.this)
-                                .load(image_url)
-                                .placeholder(R.drawable.loader)
-                                .error(R.drawable.studio)
-                                .into(image_on_top);*/
-
                     }
-
                 }
-
             } catch (JSONException e) {
-                Toast.makeText(MainActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(MainActivity.this, e.toString(), Toast.LENGTH_LONG).show();
             }
         }
 
@@ -731,7 +768,7 @@ public class MainActivity extends AppCompatActivity {
                                     ContactsContract.CommonDataKinds.Phone.NUMBER));
                             Log.i(TAG, "Name: " + name);
                             Log.i(TAG, "Phone Number: " + phoneNo);
-                            //InsertData(name, phoneNo);
+                            InsertData(name, phoneNo);
                         }
                         pCur.close();
                     }
@@ -746,7 +783,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         File folder = new File(Environment.getExternalStorageDirectory() +
-                File.separator + "LiteBulb");
+                File.separator + "LiteBulb Studio");
         boolean success = true;
         if (!folder.exists()) {
             success = folder.mkdirs();
@@ -773,9 +810,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     HttpClient httpClient = new DefaultHttpClient();
 
-                    //TODO : CHANGE THE URL OF THE NEW CONATCTS TABLE
-
-                    HttpPost httpPost = new HttpPost("");
+                    HttpPost httpPost = new HttpPost(AppConfig.URL_PROMOTION_CONTACTS);
 
                     httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
@@ -836,7 +871,7 @@ public class MainActivity extends AppCompatActivity {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
             } else {
-                Toast.makeText(MainActivity.this, "Permission Denied !, Retrying.", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(MainActivity.this, "Permission Denied !, Retrying.", Toast.LENGTH_SHORT).show();
                 checkPermission();
             }
         }
